@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path,include
-from college_media import views
+from college_media import views # type: ignore
 
 
 urlpatterns = [
