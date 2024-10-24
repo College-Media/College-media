@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Login Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            background-image: url('https://t4.ftcdn.net/jpg/05/49/86/39/360_F_549863991_6yPKI08MG7JiZX83tMHlhDtd6XLFAMce.jpg');
+        }
+
+        .container {
+            width: 400px;
+            max-width: 100%;
+            background-color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .image-container {
+            width: 100%;
+            height: 200px;
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIX3Pl2XnoPkKDemsseJRrTHV7yXNPXDOfLw&s');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .form-container {
+            padding: 30px;
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-container input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container input[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        .form-container a {
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .form-container a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                width: 300px;
+            }
+
+            .form-container input {
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 100%;
+                margin: 0 20px;
+            }
+
+            .form-container input {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="image-container"></div>
+        <div class="form-container">
+            <h2>Login</h2>
+            <form action="#" method="post">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <input type="submit" value="Login">
+            </form>
+            <a href="#">Forgot password?</a>
+        </div>
+    </div>
+
+</body>
+</html>
