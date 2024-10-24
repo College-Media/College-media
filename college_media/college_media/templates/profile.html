@@ -169,6 +169,63 @@
         .post-in-profile{
             cursor: pointer;
         }
+        h2 {
+            margin-top: 0;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        label{
+            margin:0;
+        }
+        input[type="text"]
+        {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    #overlay {
+        display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+    #editProfileForm {
+        
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    max-width: 500px;
+    height: 500px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    border-radius: 8px;
+}
+.closeBtn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 30px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
         /*--------MOBILE VIEW--------*/
         .mobile-top,
         .mobile-bottom {
@@ -266,6 +323,7 @@
             }
         }
     </style>
+   <script src='{% static "js\profile.js" %}'></script>
 </head>
 
 <body>
@@ -380,7 +438,24 @@
                 </svg></div>
                <div>Start posting</div>
         </div>
+        
     </div>
+    <div id="overlay"></div>
+    <div id="editProfileForm">
+        <button id="closeButton" class="closeBtn">&times;</button>
+        <h2>Edit Profile</h2>
+        <form>
+            <div class="profile-in-edit">
+                <div class="profile-image"></div>
+            </div>
+            <label for="name">USERNAME:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name"><br><br>
+    
+            
+            <button type="submit">Save</button>
+        </form>
+    </div>
+    
 </body>
 
 </html>
