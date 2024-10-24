@@ -14,6 +14,8 @@ def send_mail():
     
     send_mail(subject, message, email_from, recipient_list) # type: ignore
 
+def profile(request):
+    return render(request,"profile.html")
 
 
 def password_reset(request):
