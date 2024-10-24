@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path,include
-import college_media.views
+from college_media import views
 
 
 urlpatterns = [
