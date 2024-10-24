@@ -12,6 +12,8 @@ def home(request):
     send_mail(subject, message, email_from, recipient_list)
     return render(request,"login.html")
 
+def profile(request):
+    return render(request,"profile.html")
 
 
 def password_reset(request):
