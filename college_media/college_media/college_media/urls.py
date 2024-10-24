@@ -8,7 +8,7 @@ urlpatterns = [
     path('', views.home,name="home"),
     path('forgot-password',views.password_reset,name="forgot password"),
     path('profile',views.profile,name="profile"), #Showing the profile 
-    path("addmin_dash/",include('admin_app.urls')),
+    path("admin_dash/",include('admin_app.urls')),
     path("staff_dash/",include('staff_app.urls')),
     path("user_dash/",include('user_app.urls'))
 ]
