@@ -6,3 +6,6 @@ def home(request):
 
 def password_reset(request):
     return render(request,"forgot-password.html")
+
+def profile(request):
+    return render(request,"profile.html")
