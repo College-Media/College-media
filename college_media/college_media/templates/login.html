@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .main {
+            display: flex;
+            flex-direction: row;
+            width: 80%; 
+            max-width: 900px;
+            height: 70vh;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            background-color: white;
+        }
+
+        .left {
+            flex: 1;
+           /* padding: 30px;*/
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: linear-gradient(rgba(234, 164, 94, 0.521), rgba(128, 179, 212, 0.592));
+        }
+
+        .right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-image: linear-gradient(rgba(108, 218, 221, 0.656), rgba(172, 99, 201, 0.592));
+        }
+        .right img {
+            width: 100%;       
+            height: 100%;      
+            object-fit: contain; 
+        }
+        .outer-icon {
+            padding: 10%;
+            margin-right: 5px;
+        }
+        .input-container {
+            position: relative;
+            margin-bottom: 20px;
+            width: 80%; 
+            max-width: 350px; 
+        }
+
+        .input-container i {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            color: #888;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px 10px 10px 40px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-field:focus {
+            border-color: #2e7ece;
+        }
+
+        .forgot-password {
+            text-align: left;
+            display: block;
+            margin-bottom: 17px;
+            margin-left: 10px;
+            color: #2872bb;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            margin: 5%;
+            width: 90%;
+            max-width: 250px; 
+            padding: 12px;
+            font-weight: bolder;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            background-color: #2e7ece;
+            color: white;
+            background-image: linear-gradient(rgba(213, 33, 123, 0.57), rgba(190, 132, 64, 0.718));
+            border: none;
+            border-radius: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1c5b9c;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 768px) {
+            .main {
+                flex-direction: column;
+                height: auto; 
+                width: 95%; 
+            }
+
+            .left, .right {
+                width: 100%; /* Full width for both sections */
+            }
+
+            .right {
+                height: auto; /* Allow the right section to adjust */
+            }
+
+            button, .input-field {
+                font-size: 16px; /* Slightly increase font size for better touch target */
+            }
+
+            .outer-icon {
+                width: 30%; /* Adjust icon size */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .right {
+                height: auto; /* Further adjustment for very small devices */
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+    <div class="main">
+        <!-- Left Div with User Icon and Login Form -->
+        <div class="left">
+            <img class="outer-icon" src="{% static 'images/user.png' %}" width="30%">
+            <form>
+                <div class="input-container">
+                    <i class="fa fa-user"></i>
+                    <input class="input-field" type="text" placeholder="Username" name="username" required>
+                </div>
+                <div class="input-container">
+                    <i class="fa fa-lock"></i>
+                    <input class="input-field" type="password" placeholder="Password" name="password" required>
+                </div>
+                <a href="#" class="forgot-password">Forgot Password?</a>
+                <button type="submit" >Login</button>
+            </form>
+        </div>
+
+        <!-- Right Div with Image Fitted Properly -->
+        <div class="right">
+            <img src="{% static 'images/community.png' %}">
+        </div>
+    </div>
+
+</body>
+</html>
