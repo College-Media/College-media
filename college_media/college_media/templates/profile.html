@@ -115,6 +115,7 @@
         }
         .right-profile ul{
             padding: 0;
+           
             display:flex;
             align-items:start;
             flex-direction: column;
@@ -125,9 +126,9 @@
         .right-profile li:first-child{
             font-size: large;
         }
-       .profile-image{
-            
-        border-radius: 50%;
+       .profile-image,#profile-image-edit{
+            cursor: pointer;
+            border-radius: 50%;
             background-image: url('{% static "images/aradhya.jpeg" %}');
             border: 1px solid rgba(144, 138, 138, 0.678);
             min-width: 90px;
@@ -177,13 +178,17 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            row-gap: 10px;
+            background-color: #ddd;
+            width:100%;
         }
         label{
-            margin:0;
+        
+          margin-right:auto;
         }
         input[type="text"]
         {
-            width: 100%;
+            width: 90%;
             padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ddd;
@@ -199,6 +204,16 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
 }
+#profile-pic-overlay {
+    display: none;
+    min-width: 90px;
+    position: fixed;
+    height: 90px;
+    width:90px;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    border-radius: 50%;
+}
     #editProfileForm {
         
     position: fixed;
@@ -206,13 +221,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1001;
-    max-width: 500px;
+    max-width: 600px;
     height: 500px;
-    padding: 20px;
+    /*padding: 20px;*/
     border: 1px solid #ddd;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 350px;
     text-align: center;
     border-radius: 8px;
 }
@@ -225,6 +240,41 @@
     background: none;
     cursor: pointer;
 }
+.subBtn{
+    margin:0px;
+    padding:10px 30px;
+    background-color: rgb(218, 236, 236);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    border:1px solid rgb(174, 173, 173);
+    font-size: medium;
+    font-weight:bold;
+}
+#profile-edit-pic-table{
+      width:100%;
+      cursor: pointer;
+      position: absolute;
+      border-top-left-radius:10px ;
+      border-top-right-radius: 10px;
+      bottom: 0%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);;
+      z-index: 10001;
+      margin-left: 0;
+}
+#profile-edit-pic-table ul{
+            padding: 0;
+            margin:0;
+            list-style-type: none;
+        }
+        #profile-edit-pic-table li{
+            
+            padding: 15px;
+            text-align: center;
+            border-top:1px solid rgb(147, 143, 143);
+        }
+        #profile-edit-pic-table li:first-child{
+            border-top: none;
+        }
 
         /*--------MOBILE VIEW--------*/
         .mobile-top,
@@ -446,14 +496,22 @@
         <h2>Edit Profile</h2>
         <form>
             <div class="profile-in-edit">
-                <div class="profile-image"></div>
+               
+                <div id="profile-image-edit"> <div id="profile-pic-overlay"></div></div>
+                
             </div>
-            <label for="name">USERNAME:</label>
+            <label for="name">Username:</label>
             <input type="text" id="name" name="name" placeholder="Enter your name"><br><br>
-    
             
-            <button type="submit">Save</button>
+            <button type="submit" class="subBtn">Save</button>
         </form>
+        <div id="profile-edit-pic-table">
+            <ul>
+                <li>Upload New profile</li>
+                <li>Remove profile</li>
+                <li>Cancel</li>
+            </ul>
+        </div>
     </div>
     
 </body>
