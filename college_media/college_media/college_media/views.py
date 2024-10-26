@@ -8,6 +8,7 @@ def home(request):
     return render(request,"login.html")
 def send_mail():
     subject = 'Welcome to our website'
+    
     message = 'Thank you for registering at our site.'
     recipient_list = ['aradhyashetty74@gmail.com','adithyamaiyam.2002@gmail.com']  # The recipient’s email
     email_from = settings.DEFAULT_FROM_EMAIL
