@@ -123,6 +123,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "assets",
 ]
 
+AUTH_USER_MODEL = 'staff_app.CoustomUser'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
