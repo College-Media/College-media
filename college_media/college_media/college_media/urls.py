@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.home,name="home"),
     path('forgot-password',views.password_reset,name="forgot password"),
     path('profile',views.profile,name="profile"), #Showing the profile 
+    path('logout',views.logout_user,name="logout"), #logout url
     path('login',views.login_page,name="login"),
     path("admin_dash/",include('admin_app.urls')),
     path("staff_dash/",include('staff_app.urls')),
