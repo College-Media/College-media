@@ -1,7 +1,7 @@
-from django.shortcuts import render,redirect
-from django.contrib.auth import authenticate,login,logout
+from django.shortcuts import render,redirect # type: ignore
+from django.contrib.auth import authenticate,login,logout # type: ignore
 from staff_app.models import *
-from django.contrib import messages
+from django.contrib import messages # type: ignore
 # Create your views here.
 def welcome(request):
     return render(request,"welcome.html")
