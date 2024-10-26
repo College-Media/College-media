@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.core.mail import send_mail # type: ignore
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from staff_app.models import *
 
@@ -77,12 +78,17 @@ def login_page(request):
           
             if user is not None:
                 p=CoustomUser.objects.get(username=user)
+                print(p)
+                print(p.is_staff)
+                print(p.is_student)
                 if p.is_staff:
                     login(request,user)
-                    redirect("staff_dash/add_student/")
+                    messages.success(request,'Login successfull')
+                    return render(request,"staff_pages/add_students.html")
                 elif p.is_student:
+                    print("hello there")
                     login(request,user)
-                    redirect("staff_dash/add_student/")
+                    return render(request,"home.html")
                 else:
                     return render(request,'login.html')
                 # if user is not None:
