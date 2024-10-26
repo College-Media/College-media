@@ -14,7 +14,11 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('overlay').style.display = 'none';
     });
     document.getElementById('profile-image-edit').addEventListener('click',function(){
-        document.getElementById('profile-pic-overlay').style.display='block';
+        
         document.getElementById('profile-edit-pic-table').style.display='block';
+        document.getElementById('overlay').style.display = 'block';
+    });
+    document.getElementById('cancelBtn').addEventListener('click',function(){
+        document.getElementById('overlay2').style.display = 'block';
     });
 });
