@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.urls import path,include
 from college_media import views # type: ignore
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -13,5 +14,6 @@ urlpatterns = [
     path("admin_dash/",include('admin_app.urls')),
     path("staff_dash/",include('staff_app.urls')),
     path("user_dash/",include('user_app.urls')),
-    path('search_student/',views.search_student,name="search_student")
-]
+    path('search_student',views.search_student,name="search_student")
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

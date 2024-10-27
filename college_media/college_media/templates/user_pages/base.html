@@ -97,7 +97,7 @@
 
         /*CSS for Right side*/
 
-        .right {
+        /*.right {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -227,6 +227,128 @@
         .post-likes-num {
             max-width: 100px;
             text-align: center;
+        }*/
+        .right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: scroll;
+            width: 100%;
+            height: 100%;
+        }
+
+        .post {
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            row-gap: 4%;
+            border-bottom: 1px solid rgb(182, 180, 180);
+            max-width: 100%;
+            width: 400px;
+            height: 500px;
+            box-sizing: border-box;
+        }
+
+        .post-head {
+            display: flex;
+            flex-direction: row;
+            margin: 5px;
+        }
+
+        .post-profile {
+            display: flex;
+            flex-direction: row;
+            column-gap: 5px;
+            align-items: center;
+            margin-right: auto;
+        }
+
+        .post-profile-img {
+            border-radius: 50%;
+            border: 2px solid rgba(63, 61, 61, 0.678);
+            width: 30px;
+            height: 30px;
+        }
+
+        .post-menu-icon {
+            margin-bottom: 0;
+            position: relative;
+            display: inline-block;
+        }
+
+        .post-menu-icon:hover {
+            cursor: pointer;
+        }
+
+        #post-menu-table {
+            max-width: 125px;
+            position: absolute;
+            right: 0;
+            display: none;
+            width: 125px;
+            border: 1px solid rgb(131, 126, 126);
+            border-radius: 10px;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.908);
+        }
+
+        #post-menu-table ul {
+            list-style-type: none;
+            padding: 2px;
+            margin: 0;
+            text-align: center;
+        }
+
+        #post-menu-table li {
+            margin: auto;
+            border-top: 1px solid rgb(164, 161, 161);
+            color: rgb(72, 70, 70);
+            font-size: medium;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        #post-menu-table li:hover {
+            cursor: pointer;
+        }
+
+        #post-menu-table li:first-child {
+            border: none;
+            color: rgb(171, 17, 17);
+        }
+
+        .post-body {
+            margin: 4px;
+            border-radius: 4px;
+            border: 1px solid rgba(110, 108, 108, 0.963);
+            width: 100%;
+            max-width: inherit;
+            height: 386px;
+            object-fit: cover;
+        }
+
+        .post-foot {
+            margin: 4px;
+            padding-bottom: 5px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-like {
+            margin: 2px;
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            max-width: 50%;
+        }
+
+        .like {
+            fill: rgb(233, 48, 48);
+        }
+
+        .post-likes-num {
+            max-width: 100px;
+            text-align: center;
         }
 
         /*--------MOBILE VIEW--------*/
@@ -327,7 +449,7 @@
 
 
         }
-    }
+    
     .container {
         max-width: 500px;
         margin: auto;
@@ -486,7 +608,6 @@
             </li>
         </ul>
     </div>
-    <div class="right">
         <!--start of form-->
       
         <div id="message-container">
@@ -526,8 +647,8 @@
                     </div>
     
                 </div><!--End of Post-head-->
-                <div class="post-body">
-                </div><!--End of Post-body-->
+                <image class="post-body" src="{{post.image.url}}">
+                </image><!--End of Post-body-->
                 <div class="post-foot">
                     <div class="post-like">
                         <svg class = "like" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24px" height="24px">
