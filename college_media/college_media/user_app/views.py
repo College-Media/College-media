@@ -3,11 +3,12 @@ from user_app.models import *
 from staff_app.models import *
 from django.shortcuts import get_object_or_404
 # Create your views here.
-def welcome(request):
-    return render(request,"home.html")
+from django.contrib.auth.decorators import login_required
+@login_required
 
 def home(request):
     return render(request,"user_pages/user_home.html")
+@login_required
 def add_post(request):
     if request.method=='POST':
         title=request.POST['title']
