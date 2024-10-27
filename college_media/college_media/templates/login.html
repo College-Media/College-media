@@ -177,6 +177,24 @@
                 height: auto; /* Further adjustment for very small devices */
             }
         }
+        .message {
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+            display: none; /* Hide initially */
+        }
+        .green {
+            background-color: black; /* For success */
+            color: white; /* Change text color for better visibility */
+        }
+        .red {
+            background-color: red; /* For error */
+            color: white;
+        }
+        .warning {
+            background-color: blue; /* For warning */
+            color: white;
+        }
     </style>
     <script src='{% static "js\login.js" %}'></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -210,9 +228,11 @@
     <div id="message-container">
         {% if messages %}
             {% for message in messages %}
-                <div class="message {{ message.tags }}" style="display: block;">
-                    
-                   
+                {% if message.tags == 'success' %}
+                    <div class="green"> {{ message}}</div>
+                {% elif message.tags == 'warning'%}
+                    <div class="red"> {{ message}}</div>
+                {% endif %} 
             {% endfor %}
         {% endif %}
     </div>
@@ -220,8 +240,8 @@
 
 
 
-    <div id="message-container">
-        {% if messages %}
+    
+        {% comment %} {% if messages %}
             {% for message in messages %}
                 <div class="message" style="
                     padding: 20px; 
@@ -238,19 +258,18 @@
                     {% elif message.tags == 'error' %}
                         background-color: red;
                     {% elif message.tags == 'warning' %}
-                        background-color: blue;
+                       <div class="failCred">
+    <span id="svgSymbol"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#FFFFFF"><path d="m338-290 142-142 142 142 48-48-142-142 142-142-48-48-142 142-142-142-48 48 142 142-142 142 48 48ZM479.68-59q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z"/></svg></span>
+    <span id="msg">{{ message }}</span>
+   </div>
                     {% endif %}
-                ">
-                    {{ message }}
-                </div>
+
+        
             {% endfor %}
         {% endif %}
-  
+   {% endcomment %}
 
    
-   <div class="failCred">
-    <span id="svgSymbol"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#FFFFFF"><path d="m338-290 142-142 142 142 48-48-142-142 142-142-48-48-142 142-142-142-48 48 142 142-142 142 48 48ZM479.68-59q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z"/></svg></span>
-    <span id="msg">Invalid Credentials</span>
-   </div>
+   
 </body>
 </html>
