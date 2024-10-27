@@ -7,7 +7,9 @@ def welcome(request):
     return render(request,"home.html")
 
 def home(request):
-    return render(request,"user_pages/user_home.html")
+    posts=Student.objects.all()
+    print(posts)
+    return render(request,"user_pages/user_home.html",{'posts':posts})
 
 def add_post(request):
     if request.method=='POST':
