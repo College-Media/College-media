@@ -25,8 +25,7 @@ def home(request):
             # remember=request.POST['rem']/
             request.session['remember']='1'
             user=authenticate(username=name,password=pass1)
-            print(user)
-          
+            print(user)          
             if user:
                 p=CoustomUser.objects.get(username=user)
                 if p.is_staff:
@@ -52,9 +51,9 @@ def home(request):
             #         return render(request,"user.html")
             # else:
             #     messages.warning(request,"please enter correct email and password")
-            #     return render(request,'login.html') 
-        
+            #     return render(request,'login.html')
         return render(request,'login.html')
+
 def login_page(request):
      # if not request.user.is_anonymous:
         #     if request.session['remember']=='1':
@@ -94,8 +93,7 @@ def login_page(request):
                 # if user is not None:
                 #     if user.is_staff:
             #         # request.session['messege']='admin'
-            #         login(request,user)
-                    
+            #         login(request,user)                    
             #         p=CoustomUser.objects.filter(username=user)
             #         return render(request,"home.html")
             #     elif user.is_student:
@@ -106,15 +104,11 @@ def login_page(request):
             #         return render(request,"user.html")
             # else:
             #     messages.warning(request,"please enter correct email and password")
-            #     return render(request,'login.html') 
-            else:
-                messages.warning(request,"please enter correct email and password")
-                return render(request,'login.html') 
-        
+            #     return render(request,'login.html')         
         return render(request,'login.html')
+
 def send_mail():
-    subject = 'Welcome to our website'
-    
+    subject = 'Welcome to our website'    
     message = 'Thank you for registering at our site.'
     recipient_list = ['aradhyashetty74@gmail.com','adithyamaiyam.2002@gmail.com']  # The recipient’s email
     email_from = settings.DEFAULT_FROM_EMAIL    
@@ -131,3 +125,15 @@ def logout_user(request):
     logout(request)
     return render(request,"login.html")
 
+def search_student(request):
+     if request.method=="POST":
+        search_student=request.POST.get("roll_number")
+        student=Student.objects.all()
+        print(student)
+        # for stu in student:
+        #     if stu.roll_number==search_student:
+        #         print("Student found")
+        #         break
+        #     else:
+        #         print("Student not found")
+     return render(request,"search.html")
