@@ -117,8 +117,7 @@ def send_mail():
     
     message = 'Thank you for registering at our site.'
     recipient_list = ['aradhyashetty74@gmail.com','adithyamaiyam.2002@gmail.com']  # The recipient’s email
-    email_from = settings.DEFAULT_FROM_EMAIL
-    
+    email_from = settings.DEFAULT_FROM_EMAIL    
     send_mail(subject, message, email_from, recipient_list) # type: ignore
 
 def profile(request):
@@ -127,3 +126,8 @@ def profile(request):
 
 def password_reset(request):
     return render(request,"forgot-password.html")
+
+def logout_user(request):
+    logout(request)
+    return render(request,"login.html")
+
