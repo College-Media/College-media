@@ -27,7 +27,7 @@ def add_student(request):
             user.save()
             custom_user_instance = get_object_or_404(CoustomUser, username=roll_num)
             print(custom_user_instance)
-            student_add=Student.objects.create(user= custom_user_instance,roll_number=roll_num,name=name,email=email,section=section,school=school_name,dob=dob)
+            student_add=Student.objects.create(user=custom_user_instance,roll_number=roll_num,name=name,email=email,section=section,school=school_name,dob=dob)
             messages.success(request,"student added success")
             redirect("staff_dash/add_student/")
     return render(request,"staff_pages/add_students.html")
