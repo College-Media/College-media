@@ -148,3 +148,62 @@ def search_student(request):
     #     #     else:
     #     #         print("Student not found")
     #  return render(request,"search.html")
+import random  
+def reset_password(request):
+    if request.method=="POST":
+        btn=request.POST.get('btn')
+        if btn=='1':
+            request.session["a"]=str(random.randrange(1000,9999))
+            print(request.session["a"])
+            
+        if btn=='1':
+                mail=request.POST.get('mail')
+                print(mail)
+                is_exists=CoustomUser.objects.filter(email=mail)
+                request.session['email']=mail
+                if is_exists:
+                    
+                    subject = "College_media | OTP"   
+                    message =f"hi your one time password is:"+request.session['a']
+                    recipient_list = [mail]  # The recipient’s email
+                    email_from = settings.DEFAULT_FROM_EMAIL    
+                    send_mail(subject, message, email_from, recipient_list)
+                    
+                    
+                    
+                    
+                    
+                    
+
+    
+                    # message =f"hi your one time password is:"+request.session['a']
+                    # email_from =settings.EMAIL_HOST_USER
+                    # recipient_list=[mail]
+                    # send_mail(subject1,message,email_from,recipient_list) # type: ignore
+                    return render(request,'reset_password.html',{'type':2})
+                else:
+                    messages.success(request,"email not exists ")
+                    return render(request,'reset_password.html',{'type':1}) 
+        elif btn=='2':
+                otp=request.POST.get('otp')
+                print(otp)
+                a=request.session['a']
+                
+                if otp==a:
+                  return render(request,'reset_password.html',{'type':3})  
+                else:
+                    messages.success(request,"please enter the correct otp")
+                    return render(request,'reset_password.html',{'type':2}) 
+        else:
+               pas=request.POST.get('pas')
+               cpas=request.POST.get('cpas')
+               if pas==cpas:
+                    mail=request.session['email']
+                    user=CoustomUser.objects.get(username=mail)
+                    user.set_password(pas)
+                    user.save()
+                    return redirect("login")
+               else:
+                    messages.success(request,"enter the password correctly")
+                    return render(request,'reset_password.html',{'type':3}) 
+    return render(request,'reset_password.html',{'type':1})

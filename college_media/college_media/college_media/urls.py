@@ -7,7 +7,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home,name="home"),
-    path('forgot-password',views.password_reset,name="forgot password"),
+    path('forgot-password',views.reset_password,name="forgot password"),
     path('profile',views.profile,name="profile"), #Showing the profile 
     path('logout',views.logout_user,name="logout"), #logout url
     path('login',views.login_page,name="login"),
