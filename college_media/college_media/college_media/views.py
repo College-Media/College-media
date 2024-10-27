@@ -107,6 +107,9 @@ def login_page(request):
             # else:
             #     messages.warning(request,"please enter correct email and password")
             #     return render(request,'login.html') 
+            else:
+                messages.warning(request,"please enter correct email and password")
+                return render(request,'login.html') 
         
         return render(request,'login.html')
 def send_mail():
