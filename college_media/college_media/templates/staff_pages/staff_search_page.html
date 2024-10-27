@@ -485,50 +485,36 @@
         </ul>
     </div>
     <div class="right">
-        <!--start of form-->
-      
-        <div id="message-container">
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="message {{ message.tags }}" style="display: block;">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-        <div class="container">
-            <h2>Student Details Form</h2>
-            <form action="/staff_dash/add_student/" method="POST">
+        
+        <div class="search-container">
+        
+  
+            <form action="/search_student" method="POST">
                 {% csrf_token %}
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
+                <h2>Search for Student / Staff by Roll Number or Name</h2>
+                <input type="text" id="searchInput" name="roll_number" placeholder="Enter Roll Number">
+                <button onclick="searchStudent()">Search</button>
+                <div class="results" id="results"></div>
+            </form></div>
         
-                <label for="roll">Roll Number:</label>
-                <input type="text" id="roll" name="roll" required>
-        
-                <label for="email">Email ID:</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="dob">Date of Birth:</label>
-                <input type="text" id="dob" name="dob" placeholder="02-02-2003" required>
-        
-                <label for="class">Class:</label>
-                <input type="text" id="class" name="class" required>
-        
-                <label for="section">Section:</label>
-                <input type="text" id="section" name="section" required>
-        
-                <input type="submit" value="Submit">
-            </form>
-            <div class="footer">
-                &copy; 2023 Student Management System
-            </div>
-        </div>
     </div>
-        <!--start of Form-->
-
-    <!--DESIGN FOR MOBILE VIEW-->
-
+    <script>
+        function searchStudent() {
+            const rollNumber = document.getElementById("searchInput").value;
+            fetch(`/search_student?roll=${rollNumber}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("results").innerHTML = data ? 
+                        `<p>Student Name: ${data.name}<br>Roll Number: ${data.roll_number}</p>` :
+                        "<p>No student found</p>";
+                });
+        }
+        document.querySelector('.menu-items a[href="/logout"]').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.location.href = "/search";
+        });
+        
+    </script>
 
     <div class="mobile-bottom">
         <ul>
