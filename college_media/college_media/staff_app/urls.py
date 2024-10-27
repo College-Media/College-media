@@ -6,5 +6,3 @@ urlpatterns = [
     path('', views.welcome),
     path("add_student/",views.add_student,name="add_student"),
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
