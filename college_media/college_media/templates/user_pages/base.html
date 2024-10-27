@@ -395,7 +395,7 @@
         color: white;
     }
     {% block style %}
-    
+
     {% endblock style %}
     </style>
 </head>
@@ -500,35 +500,85 @@
         </div>
         {% block content %}
         
-        <div class="container">
-            <h2>Student Details Form</h2>
-            <form action="/staff_dash/add_student/" method="POST">
-                {% csrf_token %}
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-        
-                <label for="roll">Roll Number:</label>
-                <input type="text" id="roll" name="roll" required>
-        
-                <label for="email">Email ID:</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="dob">Date of Birth:</label>
-                <input type="text" id="dob" name="dob" placeholder="02-02-2003" required>
-        
-                <label for="class">Class:</label>
-                <input type="text" id="class" name="class" required>
-        
-                <label for="section">Section:</label>
-                <input type="text" id="section" name="section" required>
-        
-                <input type="submit" value="Submit">
-            </form>
-            <div class="footer">
-                &copy; 2023 Student Management System
-            </div>
+        <div class="right">
+            <!--start of Post-->
+            <div class="post">
+                <div class="post-head">
+                    <div class="post-profile">
+                        <div class="post-profile-img"></div>
+                        <div class="post-profile-name">Aradhya</div>
+                    </div>
+                    <div class="post-menu">
+                        <div class="post-menu-icon" onclick="fun1()">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                fill="#5f6368">
+                                <path
+                                    d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z" />
+                            </svg>
+                            <div id="post-menu-table">
+                                <ul>
+                                    <li><a href="#" style="text-decoration: none;color:red">Report</a></li>
+                                    <li onclick="fun()">Cancel</li>
+                                </ul>
+                            </div>
+                        </div>
+    
+                    </div>
+    
+                </div><!--End of Post-head-->
+                <div class="post-body">
+                </div><!--End of Post-body-->
+                <div class="post-foot">
+                    <div class="post-like">
+                        <svg class = "like" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24px" height="24px">
+                            <path
+                                d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
+                        </svg>
+                        <div class="post-likes-num">120000 <span>Likes</span></div>
+    
+                    </div>
+                </div><!--End of Post-footer-->
+            </div><!--End of Post-->
+            <!--start of Post-->
+            <div class="post">
+                <div class="post-head">
+                    <div class="post-profile">
+                        <div class="post-profile-img"></div>
+                        <div class="post-profile-name">Aradhya</div>
+                    </div>
+                    <div class="post-menu">
+                        <div class="post-menu-icon" onclick="fun1()">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                fill="#5f6368">
+                                <path
+                                    d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z" />
+                            </svg>
+                            <div id="post-menu-table">
+                                <ul>
+                                    <li><a href="#" style="text-decoration: none;color:red">Report</a></li>
+                                    <li onclick="fun()">Cancel</li>
+                                </ul>
+                            </div>
+                        </div>
+    
+                    </div>
+    
+                </div><!--End of Post-head-->
+                <div class="post-body">
+                </div><!--End of Post-body-->
+                <div class="post-foot">
+                    <div class="post-like">
+                        <svg class = "like" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24px" height="24px">
+                            <path
+                                d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
+                        </svg>
+                        <div class="post-likes-num">120000 <span>Likes</span></div>
+    
+                    </div>
+                </div><!--End of Post-footer-->
+            </div><!--End of Post-->
         </div>
-    </div>
+    
     {% endblock content %}
         <!--start of Form-->
 
