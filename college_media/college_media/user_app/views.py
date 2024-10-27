@@ -7,7 +7,7 @@ def welcome(request):
     return render(request,"home.html")
 
 def home(request):
-    posts=Student.objects.all()
+    posts = Post.objects.select_related('student').all()  # Use select_related to fetch related student data efficiently
     print(posts)
     return render(request,"user_pages/user_home.html",{'posts':posts})
 

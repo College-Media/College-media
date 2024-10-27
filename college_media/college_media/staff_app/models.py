@@ -16,7 +16,7 @@ class Student(models.Model):
     section=models.CharField(max_length=10, blank=True)
     school=models.CharField(max_length=100, blank=True)
     dob=models.CharField(max_length=20, blank=True)
-    profile_image = models.ImageField(upload_to='profile_image/', blank=True, null=True)
+    profile_image=models.ImageField(upload_to='profile_image/', blank=True, null=True)
     
     def __str__(self):
         return self.roll_number
