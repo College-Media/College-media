@@ -25,3 +25,9 @@ def add_post(request):
         return render(request,"index.html")
     
     return render(request,"user_pages/add_post.html")
+
+def user_profile(request):
+    user=request.user
+    student_info=Student.objects.get(user=user)
+    
+    return render(request,"user_pages/user_profile.html",{'student_info':student_info})
