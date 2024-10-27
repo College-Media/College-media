@@ -7,7 +7,8 @@ from django.contrib.auth.decorators import login_required
 @login_required
 
 def home(request):
-    return render(request,"user_pages/user_home.html")
+    posts=Post.objects.all()
+    return render(request,"user_pages/user_home.html",{"posts":posts})
 @login_required
 def add_post(request):
     if request.method=='POST':
