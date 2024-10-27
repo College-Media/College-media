@@ -86,7 +86,7 @@ def login_page(request):
                     return render(request,"staff_pages/staf_home.html")
                 elif p.is_student:
                     login(request,user)
-                    return render(request,"user_pages/user_home.html")
+                    return redirect("user_dash/home/")
                 else:
                     return render(request,'login.html')
                 # if user is not None:
