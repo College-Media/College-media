@@ -8,6 +8,7 @@ def welcome(request):
 
 def home(request):
     return render(request,"user_pages/user_home.html")
+
 def add_post(request):
     if request.method=='POST':
         title=request.POST['title']
@@ -21,5 +22,4 @@ def add_post(request):
         print("hello there")
         return render(request,"index.html")
     
-    return render(request,"add_post.html")
     return render(request,"user_pages/add_post.html")

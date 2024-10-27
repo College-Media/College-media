@@ -13,5 +13,5 @@ urlpatterns = [
     path("admin_dash/",include('admin_app.urls')),
     path("staff_dash/",include('staff_app.urls')),
     path("user_dash/",include('user_app.urls')),
-    path('search_student',views.search_student,name="search_student")
+    path('search_student/',views.search_student,name="search_student")
 ]
