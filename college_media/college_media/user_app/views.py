@@ -6,3 +6,5 @@ def welcome(request):
 
 def home(request):
     return render(request,"user_pages/user_home.html")
+def add_post(request):
+    return render(request,"user_pages/add_post.html")
