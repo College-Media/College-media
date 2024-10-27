@@ -34,3 +34,6 @@ def add_student(request):
 
 def home(request):
     return render(request,"staff_pages/staf_home.html")
+
+def option_student_add(request):
+    return render(request,"staff_pages/add_student_option.html")
