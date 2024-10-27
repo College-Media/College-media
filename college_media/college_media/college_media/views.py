@@ -87,7 +87,7 @@ def login_page(request):
                 elif p.is_student:
                     print("hello there")
                     login(request,user)
-                    return render(request,"home.html")
+                    return render(request,"user_pages/user_home.html")
                 else:
                     return render(request,'login.html')
                 # if user is not None:
