@@ -36,3 +36,28 @@
     </div>
 </body>
 </html>
+
+
+
+<div class="container" id="add-post">
+    <h1>Add a New Post</h1>
+    <form id="post-form" action='add_post' method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" id="title" class="form-control" name="title" required>
+        </div>
+
+        <div class="form-group">
+            <label for="image" class="form-label">Upload Image</label>
+            <input type="file" id="img" class="form-control" name="img" accept="image/*" required>
+        </div>
+
+        <div class="form-group">
+            <label for="body" class="form-label">Post Body</label>
+            <textarea id="body" class="form-control" name="body" rows="5" required></textarea>
+        </div>
+
+        <button type="submit" class="btn">Submit Post</button>
+    </form>
+</div>
