@@ -85,7 +85,6 @@ def login_page(request):
                     messages.success(request,'Login successfull')
                     return render(request,"staff_pages/staf_home.html")
                 elif p.is_student:
-                    print("hello there")
                     login(request,user)
                     return render(request,"user_pages/user_home.html")
                 else:
@@ -115,7 +114,12 @@ def send_mail():
     send_mail(subject, message, email_from, recipient_list) # type: ignore
 
 def profile(request):
-    return render(request,"profile.html")
+    user=request.user
+    users=CoustomUser.objects.get(username=user)
+    if users.is_staff:
+        return render(request,"staff_pages/staff_profile.html")
+    else:
+        return render(request,"profile.html")
 
 
 def password_reset(request):

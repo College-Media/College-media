@@ -1,0 +1,552 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Profile</title>
+    
+        <style>
+            body {
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+                margin: 0;
+    
+            }
+    
+            .left {
+                height: 100vh;
+                border-right: 1px solid rgba(133, 130, 130, 0.474);
+                min-width: 120px;
+    
+                /* background-image: linear-gradient(rgba(83, 138, 206, 0.463), rgba(195, 179, 105, 0.436))*/
+            }
+    
+            .left .logo-image {
+                border-radius: 50%;
+                background-image: url('{% static "images/media-img.jfif" %}');
+                border: 1px solid rgba(144, 138, 138, 0.678);
+                min-width: 90px;
+                width: 90px;
+                height: 90px;
+                margin: 10px 2px;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+    
+            .left ul:first-child {
+                margin-bottom: 20px;
+            }
+    
+            .left ul {
+                list-style-type: none;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                row-gap: 20px;
+                flex-grow: 1;
+                justify-content: flex-start;
+                padding: 30px;
+            }
+    
+            .menu-items {
+                display: flex;
+                align-items: center;
+                column-gap: 8px;
+                padding: 8px;
+                width: 100%;
+                padding-left: 20px;
+            }
+    
+            .menu-items:hover {
+                border-radius: 10px;
+                background-color: rgba(234, 232, 228, 0.807);
+            }
+    
+            .menu-items:hover .icon {
+                fill: black;
+                width: 28px;
+            }
+    
+            .left a,
+            .logo-name {
+                text-decoration: none;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                color: black;
+                font-size: 18px;
+                flex: 1;
+            }
+    
+            .profile,
+            .mview-logo {
+                border-radius: 50%;
+                background-image: url('{% static "images\aradhya.jpeg" %}');
+                border: 3px solid rgba(85, 79, 79, 0.678);
+                width: 30px;
+                height: 30px;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+            .right{
+                display: flex;
+                flex-direction:column;
+               
+               width: 100%;
+               height:100vh;
+            }
+            .right-top{
+               background-color: rgb(238, 238, 238);
+                width:100%;
+                height:30%;
+               align-items: center;
+                display:flex;
+                flex-direction: row;
+                border-bottom:1px solid rgb(160, 158, 158);
+            }
+            .right-profile{
+                margin:auto;
+                display: flex;
+                flex-direction: row;
+                column-gap: 10px;
+            }
+            .right-profile ul{
+                padding: 0;
+               
+                display:flex;
+                align-items:start;
+                flex-direction: column;
+                text-decoration: none;
+                list-style-type: none;
+                
+            }
+            .right-profile li:first-child{
+                font-size: large;
+            }
+           .profile-image,#profile-image-edit{
+                cursor: pointer;
+                border-radius: 50%;
+                background-image: url('{% static "images/aradhya.jpeg" %}');
+                border: 1px solid rgba(144, 138, 138, 0.678);
+                min-width: 90px;
+                width: 90px;
+                height: 90px;
+                margin: 10px 2px;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+            .edit{
+                padding: 10px;
+                align-items: center;
+                margin-left:auto;
+                  position: relative;
+                display: inline-block;
+            }
+            .editBtn{
+                
+                border-radius: 10px;
+                background-color: rgba(10, 10, 156, 0.718);
+                padding:10px;
+                color:rgb(251, 250, 252);
+                font-size: medium;
+                font-weight: bold;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            .right-bottom{
+                margin:auto;
+                background-color: rgb(215, 216, 217);
+                display: flex;
+                font-size: xx-large;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width:100%;
+                height:100%;
+            }
+            .post-in-profile{
+                cursor: pointer;
+            }
+            h2 {
+                margin-top: 0;
+            }
+            form{
+             display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                row-gap: 10px;
+               position: fixed;
+                width:100%;
+            }
+          form label{
+            margin-right: auto;
+            margin-left:20%;
+     margin-top: 10px;
+          }
+            
+            input[type="text"]
+            {
+                /*margin:0 auto 10px 10px;*/
+                padding: 10px;
+                width: 60%;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+        #overlay{
+            display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+    /*#profile-pic-overlay {
+        display: none;
+        min-width: 90px;
+        position: fixed;
+        height: 90px;
+        width:90px;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        border-radius: 50%;
+    }*/
+    
+    #overlay2 {
+       display: none;
+        position: fixed;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(211, 208, 208, 0.5);
+        z-index: 1002;
+    }
+        #editProfileForm {
+            display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1001;
+        max-width: 600px;
+        height: 500px;
+      
+        border: 1px solid #ddd;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 350px;
+        text-align: center;
+        border-radius: 8px;
+    }
+    .closeBtn {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        font-size: 30px;
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+    #subBtn{
+        display: block;
+        margin:0px;
+        padding:10px 30px;
+        background-color: rgb(218, 236, 236);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        border:1px solid rgb(174, 173, 173);
+        font-size: medium;
+        font-weight:bold;
+    }
+    #profile-edit-pic-table{
+         display: none;
+          width:100%;
+          cursor: pointer;
+          position: fixed;
+       
+          border-top-left-radius:10px;
+          border-top-right-radius: 10px;
+          background-color: white;
+          bottom: 0;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);;
+          z-index: 1003;
+          margin-left: 0;
+          transition: height 0.5s ease-out; 
+        
+    }
+    
+    #profile-edit-pic-table ul{
+                padding: 0;
+                margin:0;
+                list-style-type: none;
+            }
+            #profile-edit-pic-table li{
+                color:rgb(210, 20, 20);
+                padding: 15px;
+                text-align: center;
+                border-top:1px solid rgb(147, 143, 143);
+            }
+            #profile-edit-pic-table li:first-child{
+                border-top: none;
+                color:black;
+            }
+    
+            /*--------MOBILE VIEW--------*/
+            .mobile-top,
+            .mobile-bottom {
+                display: none;
+            }
+    
+            @media (max-width:940px) {
+                .menu-items a {
+                    display: none;
+                }
+    
+                .logo-image {
+                    width: 85px;
+                }
+            }
+    
+            @media (max-width:600px) {
+                body {
+                    display: flex;
+                    flex-direction: column;
+                }
+    
+                .left {
+                    display: none;
+                }
+    
+                .mview-logo {
+                    background-image: url('{% static "images/media-img.jfif" %}');
+                }
+    
+                .mobile-top {
+                    display: flex;
+                    margin: 0;
+                    width: 100%;
+                }
+    
+                .mobile-top ul {
+                    list-style-type: none;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: flex-end;
+                    justify-content: flex-end;
+                    column-gap: 20px;
+                    padding: 0;
+                    width: 100%;
+                }
+    
+                .mobile-top svg,
+                .mobile-bottom svg {
+                    fill: black;
+                    width: 35px;
+                    height: 35px;
+                }
+    
+                .mobile-top li:first-child {
+                    margin-right: auto;
+                    padding: 4px;
+                }
+    
+                .mobile-bottom {
+                    margin: 100%;
+                    display: flex;
+                    justify-content: center;
+                    position: absolute;
+                    bottom: 0px;
+                    z-index: 1;
+                    background-color: white;
+                    border-top: 1px solid rgb(176, 172, 172);
+                }
+    
+                .mobile-bottom ul {
+                    list-style-type: none;
+                    display: flex;
+                    flex-direction: row;
+                    margin: 0;
+                    column-gap: 10%;
+                    max-width: 100%;
+                    padding: 5px;
+                    flex-wrap: nowrap;
+                    flex: 100%;
+                    overflow: hidden;
+                }
+    
+                .mobile-bottom li {
+                    flex-grow: 1;
+                }
+    
+                .right,
+                .post,
+                .mobile-top,
+                .mobile-bottom {
+                    width: 100%;
+                    margin: 0;
+                    padding: 0;
+                }
+            }
+        </style>
+       <script src='{% static "js\profile.js" %}'></script>
+</head>
+
+<body>
+    <div class="mobile-top">
+        <ul>
+            <li class="mobile-top-logo">
+                <div class="mview-logo"></div>
+            </li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path
+                        d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Zm320-300Zm0 420q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80ZM320-280h320v-280q0-66-47-113t-113-47q-66 0-113 47t-47 113v280Z" />
+                </svg></li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path
+                        d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                </svg></li>
+        </ul>
+    </div>
+    <div class="left">
+        <ul>
+            <li>
+                <div class="logo-image"></div>
+                <p class="logo-name">College-Media</p>
+            </li>
+            <li class="menu-items">
+                <svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path class="icon"
+                        d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
+                </svg>
+                <a href="/staff_dash/home/">Home</a>
+            </li>
+            <li class="menu-items">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path class="icon"
+                        d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+                </svg>
+                <a href="/search_student">Search</a>
+            </li>
+            <li class="menu-items">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                fill="#5f6368">
+                <path class="icon"
+                    d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+            </svg>
+                <a href="/staff_dash/add_student/">Add Student</a>
+            </li>
+            <li class="menu-items">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path class="icon"
+                        d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                </svg>
+                <a href="#">Post</a>
+            </li>
+            <li class="menu-items">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path class="icon"
+                        d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
+                </svg>
+                <a href="#">Chat</a>
+            </li>
+            
+            <li class="menu-items">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path class="icon"
+                        d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Zm320-300Zm0 420q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80ZM320-280h320v-280q0-66-47-113t-113-47q-66 0-113 47t-47 113v280Z" />
+                </svg>
+                <a href="#">Notifications</a>
+            </li>
+            <li class="menu-items">
+                <div class="profile"></div>
+                <a href="/profile">Profile</a>
+            </li>
+            <li class="menu-items">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path class="icon"
+                        d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                </svg>
+                <a href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+    <div class="right">
+        <div class="right-top">
+            <div class="right-profile">
+               
+                <div id="profile-image-edit" style="background-image: url('{% static "images/aradhya.jpeg" %}');"></div>
+                
+                <ul>
+                   
+                    <li><label>mediaofcollege@gmail.com</label></li>
+                    <li><label>Arush</label></li>
+                    <li><label>2023-2025</label></li>
+                </ul>
+            </div>
+            <div class="edit"> 
+                <button class="editBtn">EDIT PROFILE</button>
+            </div>
+        </div>
+        <div class="right-bottom">
+               <a href="/user_dash/add_post"><div class="post-in-profile"><svg xmlns="http://www.w3.org/2000/svg" height="100px" viewBox="0 -960 960 960" width="100px"
+                fill="#5f6368">
+                <path class="icon"
+                    d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                </svg></div></a>
+               <div>Start posting</div>
+        </div>
+    </div>
+
+
+    <div class="mobile-bottom">
+        <ul>
+            <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path
+                        d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
+                </svg></li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path
+                        d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+                </svg></li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path
+                        d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                </svg></li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path
+                        d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
+                </svg></li>
+            <li>
+                <div class="profile"></div>
+            </li>
+        </ul>
+    </div>
+</body>
+<script src='{% static "js\home.js" %}'></script>
+</html>
+
+
+
+
