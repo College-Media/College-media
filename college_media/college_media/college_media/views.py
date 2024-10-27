@@ -83,7 +83,7 @@ def login_page(request):
                 if p.is_staff:
                     login(request,user)
                     messages.success(request,'Login successfull')
-                    return render(request,"staff_pages/add_students.html")
+                    return render(request,"staff_pages/staf_home.html")
                 elif p.is_student:
                     print("hello there")
                     login(request,user)
@@ -126,14 +126,21 @@ def logout_user(request):
     return render(request,"login.html")
 
 def search_student(request):
-     if request.method=="POST":
-        search_student=request.POST.get("roll_number")
-        student=Student.objects.all()
-        print(student)
-        # for stu in student:
-        #     if stu.roll_number==search_student:
-        #         print("Student found")
-        #         break
-        #     else:
-        #         print("Student not found")
-     return render(request,"search.html")
+    user=request.user
+    users=CoustomUser.objects.get(username=user)
+    search_student=request.POST.get("roll_number")
+    if users.is_staff:
+        return render(request,"staff_pages/staff_search_page.html")
+    else:
+        return render(request,"search.html")
+     
+        
+    #     student=Student.objects.all()
+    #     print(student)
+    #     # for stu in student:
+    #     #     if stu.roll_number==search_student:
+    #     #         print("Student found")
+    #     #         break
+    #     #     else:
+    #     #         print("Student not found")
+    #  return render(request,"search.html")

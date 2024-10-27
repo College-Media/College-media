@@ -31,3 +31,6 @@ def add_student(request):
             messages.success(request,"student added success")
             redirect("staff_dash/add_student/")
     return render(request,"staff_pages/add_students.html")
+
+def home(request):
+    return render(request,"staff_pages/staf_home.html")
