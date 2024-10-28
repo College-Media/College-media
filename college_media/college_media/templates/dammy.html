@@ -1,74 +1,478 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image with Accept and Reject Buttons</title>
+    <title>home</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+   
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        /* Container styling */
-        .action-container {
+        body {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            width: 200px;
-            padding: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            align-items: flex-start;
+            justify-content: flex-start;
+            margin: 0;
+
         }
 
-        /* Image styling */
-        .profile-image {
-            background-image: url('{% static "images/profile-pic.jpg" %}');
-            width: 100px;
-            height: 100px;
+        {% comment %} .left {
+            height: 100vh;
+            border-right: 1px solid rgba(133, 130, 130, 0.474);
+            min-width: 120px;
+
+            /* background-image: linear-gradient(rgba(83, 138, 206, 0.463), rgba(195, 179, 105, 0.436))*/
+        } {% endcomment %}
+
+        .left {
+            position: fixed; /* Fixes the sidebar in place */
+            top: 0;
+            left: 0;
+            height: 100vh;
+            border-right: 1px solid rgba(133, 130, 130, 0.474);
+            min-width: 120px;
+        }
+        
+        .left .logo-image {
             border-radius: 50%;
+            background-image: url('{% static "images/media-img.jfif" %}');
+            border: 1px solid rgba(144, 138, 138, 0.678);
+            min-width: 90px;
+            width: 90px;
+            height: 90px;
+            margin: 10px 2px;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            margin-bottom: 15px;
         }
 
-        /* Button styling */
-        .button-container {
+        .left ul:first-child {
+            margin-bottom: 20px;
+        }
+
+        .left ul {
+            list-style-type: none;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            flex-direction: column;
+            row-gap: 20px;
+            flex-grow: 1;
+            justify-content: flex-start;
+            padding: 30px;
+        }
+
+        .menu-items {
+            display: flex;
+            align-items: center;
+            column-gap: 8px;
+            padding: 8px;
             width: 100%;
+            padding-left: 20px;
         }
 
-        .btn {
-            padding: 8px 16px;
-            font-size: 14px;
-            font-weight: bold;
-            color: white;
-            border: none;
-            border-radius: 4px;
+        .menu-items:hover {
+            border-radius: 10px;
+            background-color: rgba(234, 232, 228, 0.807);
+        }
+
+        .menu-items:hover .icon {
+            fill: black;
+            width: 28px;
+        }
+
+        .left a,        
+        .logo-name {
+            text-decoration: none;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: black;
+            font-size: 18px;
+            flex: 1;
+        }
+
+        .profile,
+        .mview-logo {
+            border-radius: 50%;
+            background-image: url('{% static "images\aradhya.jpeg" %}');
+            border: 3px solid rgba(85, 79, 79, 0.678);
+            width: 30px;
+            height: 30px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /*CSS for Right side*/
+
+        .right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: scroll;
+            width: 100%;
+            height: 100%;
+        }
+
+        .post {
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            row-gap: 4%;
+            border-bottom: 1px solid rgb(182, 180, 180);
+            max-width: 100%;
+            width: 400px;
+            height: 500px;
+            box-sizing: border-box;
+        }
+
+        .post-head {
+            display: flex;
+            flex-direction: row;
+            margin: 5px;
+
+        }
+
+        .post-profile {
+            display: flex;
+            flex-direction: row;
+            column-gap: 5px;
+            align-items: center;
+            margin-right: auto;
+        }
+
+        .post-profile-img {
+            border-radius: 50%;
+            background-image: url('{% static "images\aradhya.jpeg" %}');
+            border: 2px solid rgba(63, 61, 61, 0.678);
+            width: 30px;
+            height: 30px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .post-menu-icon {
+            margin-bottom: 0;
+            position: relative;
+            display: inline-block;
+        }
+        .post-menu-icon:hover{
             cursor: pointer;
-            width: 45%;
         }
 
-        .accept-btn {
-            background-color: #4CAF50; /* Green */
+        #post-menu-table {
+            max-width: 125px;
+            position: absolute;
+            right: 0;
+            display: none;
+            width: 125px;
+            border: 1px solid rgb(131, 126, 126);
+            border-radius: 10px;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.908);
         }
 
-        .reject-btn {
-            background-color: #f44336; /* Red */
+        #post-menu-table ul {
+            list-style-type: none;
+            padding: 2px;
+            margin: 0;
+            text-align: center;
         }
+
+        #post-menu-table li {
+            margin: auto;
+            border-top: 1px solid rgb(164, 161, 161);
+            color: rgb(72, 70, 70);
+            font-size: medium;
+            font-weight: bold;
+            padding: 10px;
+        
+        }
+        #post-menu-table li:hover{
+            cursor: pointer;
+        }
+
+        #post-menu-table li:first-child {
+            border: none;
+            color: rgb(171, 17, 17)
+        }
+
+        .post-body {
+            margin: 4px;
+            border-radius: 4px;
+            border: 1px solid rgba(110, 108, 108, 0.963);
+            background-image: url('{% static "images/abl.jpeg" %}');
+
+            height: 700px;
+            max-width: inherit;
+            max-height: 800px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+        }
+
+        .post-foot {
+            margin: 4px;
+            padding-bottom: 5px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-like {
+            margin: 2px;
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            max-width: 50%;
+        }
+        .like {
+            fill:rgb(233, 48, 48);
+            
+        }
+
+        .post-likes-num {
+            max-width: 100px;
+            text-align: center;
+        }
+
+        /*--------MOBILE VIEW--------*/
+        .mobile-top,
+        .mobile-bottom {
+            display: none;
+        }
+
+        @media (max-width:940px) {
+            .menu-items a {
+                display: none;
+            }
+
+            .logo-image {
+                width: 85px;
+            }
+        }
+
+        @media (max-width:600px) {
+            body {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .left {
+                display: none;
+            }
+
+            .mview-logo {
+                background-image: url('{% static "images/media-img.jfif" %}');
+            }
+
+            .mobile-top {
+                display: flex;
+                margin: 0;
+                width: 100%;
+            }
+
+            .mobile-top ul {
+                list-style-type: none;
+                display: flex;
+                flex-direction: row;
+                align-items: flex-end;
+                justify-content: flex-end;
+                column-gap: 20px;
+                padding: 0;
+                width: 100%;
+            }
+
+            .mobile-top svg,
+            .mobile-bottom svg {
+                fill: black;
+                width: 35px;
+                height: 35px;
+            }
+
+            .mobile-top li:first-child {
+                margin-right: auto;
+                padding: 4px;
+            }
+
+            .mobile-bottom {
+                margin: 100%;
+                display: flex;
+                justify-content: center;
+                position: absolute;
+                bottom: 0px;
+                z-index: 1;
+                background-color: white;
+                border-top: 1px solid rgb(176, 172, 172);
+            }
+
+            .mobile-bottom ul {
+                list-style-type: none;
+                display: flex;
+                flex-direction: row;
+                margin: 0;
+                column-gap: 10%;
+                max-width: 100%;
+                padding: 5px;
+                flex-wrap: nowrap;
+                flex: 100%;
+                overflow: hidden;
+            }
+
+            .mobile-bottom li {
+                flex-grow: 1;
+            }
+
+            .right,
+            .post,
+            .mobile-top,
+            .mobile-bottom {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        }
+        
+
     </style>
 </head>
+
 <body>
-
-<div class="action-container">
-    <!-- Profile image -->
-    <div class="profile-image"></div>
-    <p>Hello there</p>
-    <!-- Buttons -->
-    <div class="button-container">
-        <button class="btn accept-btn">Accept</button>
-        <button class="btn reject-btn">Reject</button>
+    <div class="mobile-top">
+        <ul>
+            <li class="mobile-top-logo">
+                <div class="mview-logo"></div>
+            </li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path
+                        d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Zm320-300Zm0 420q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80ZM320-280h320v-280q0-66-47-113t-113-47q-66 0-113 47t-47 113v280Z" />
+                </svg></li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path
+                        d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                </svg></li>
+        </ul>
     </div>
-</div>
+    <div class="left">
+        <ul>
+            <li>
+                <div class="logo-image"></div>
+                <p class="logo-name">College-Media</p>
+            </li>
+            <li class="menu-items">
+                <svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path class="icon"
+                        d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
+                </svg>
+                <a href="/user_dash/home/">Home</a>
+            </li>
+            <li class="menu-items">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path class="icon"
+                        d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+                </svg>
+                <a href="/search_student">Search</a>
+            </li>
+            <li class="menu-items">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path class="icon"
+                        d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                </svg>
+                <a href="#">Post</a>
+            </li>
+            <li class="menu-items">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path class="icon"
+                        d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
+                </svg>
+                <a href="#">Chat</a>
+            </li>
+            <li class="menu-items">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path class="icon"
+                        d="m300-300 280-80 80-280-280 80-80 280Zm180-120q-25 0-42.5-17.5T420-480q0-25 17.5-42.5T480-540q25 0 42.5 17.5T540-480q0 25-17.5 42.5T480-420Zm0 340q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Zm0-320Z" />
+                </svg>
+                <a href="#">Explore</a>
+            </li>
+            <li class="menu-items">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path class="icon"
+                        d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Zm320-300Zm0 420q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80ZM320-280h320v-280q0-66-47-113t-113-47q-66 0-113 47t-47 113v280Z" />
+                </svg>
+                <a href="#">Notifications</a>
+            </li>
+            <li class="menu-items">
+                <div class="profile"></div>
+                <a href="#">Profile</a>
+            </li>
+            <li class="menu-items">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path class="icon"
+                        d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                </svg>
+                <a href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+    
 
+    <!--DESIGN FOR MOBILE VIEW-->
+    <script>
+        function searchStudent() {
+            const rollNumber = document.getElementById("searchInput").value;
+            fetch(`/search_student?roll=${rollNumber}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("results").innerHTML = data ? 
+                        `<p>Student Name: ${data.name}<br>Roll Number: ${data.roll_number}</p>` :
+                        "<p>No student found</p>";
+                });
+        }
+        document.querySelector('.menu-items a[href="/logout"]').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.location.href = "/search";
+        });
+        
+    </script>
+
+    <div class="mobile-bottom">
+        <ul>
+            <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path
+                        d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
+                </svg></li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path
+                        d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+                </svg></li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path
+                        d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                </svg></li>
+            <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
+                    <path
+                        d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
+                </svg></li>
+            <li>
+                <div class="profile"></div>
+            </li>
+        </ul>
+    </div>
 </body>
+<script src='{% static "js\home.js" %}'></script>
 </html>
