@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect # type: ignore
 from django.contrib.auth import authenticate,login,logout # type: ignore
 from staff_app.models import *
+from user_app.models import *
 from django.contrib import messages # type: ignore
 # Create your views here.
 from django.shortcuts import get_object_or_404
@@ -33,7 +34,14 @@ def add_student(request):
     return render(request,"staff_pages/add_students.html")
 
 def home(request):
-    return render(request,"staff_pages/staf_home.html")
+    posts = Post.objects.select_related('student').filter(is_approved=True)  # Use select_related to fetch related student data efficiently
+    print(posts)
+    return render(request,"staff_pages/staf_home.html",{'posts':posts})
 
 def option_student_add(request):
     return render(request,"staff_pages/add_student_option.html")
+
+def staff_post_request(request):
+    post=Post.objects.select_related('student').filter(is_approved=False )
+    
+    return render(request,"staff_pages/staff_post_request.html",{"posts":post})

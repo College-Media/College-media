@@ -82,8 +82,8 @@ def login_page(request):
                 print(p.is_student)
                 if p.is_staff:
                     login(request,user)
-                    messages.success(request,'Login successfull')
-                    return render(request,"staff_pages/staf_home.html")
+                    # messages.success(request,'Login successfull')
+                    return redirect("staff_dash/home/")
                 elif p.is_student:
                     login(request,user)
                     return redirect("user_dash/home/")
