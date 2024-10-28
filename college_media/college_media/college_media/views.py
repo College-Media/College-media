@@ -106,7 +106,7 @@ def login_page(request):
             #     return render(request,'login.html')         
         return render(request,'login.html')
 
-def send_mail():
+def maheshaa():
     subject = 'Welcome to our website'    
     message = 'Thank you for registering at our site.'
     recipient_list = ['aradhyashetty74@gmail.com','adithyamaiyam.2002@gmail.com']  # The recipient’s email
@@ -163,24 +163,17 @@ def reset_password(request):
                 request.session['email']=mail
                 if is_exists:
                     
-                    subject = "College_media | OTP"   
-                    message =f"hi your one time password is:"+request.session['a']
-                    recipient_list = [mail]  # The recipient’s email
-                    email_from = settings.DEFAULT_FROM_EMAIL    
-                    send_mail(subject, message, email_from, recipient_list)
-                    
-                    
-                    
-                    
-                    
-                    
+                   subject = "College_media | OTP"
+                   message = f"Hi, your one-time password is: {request.session['a']}"
+                   recipient_list = [mail]  # The recipient’s email
+                   email_from = settings.DEFAULT_FROM_EMAIL
 
-    
+                   send_mail(subject, message, email_from, recipient_list)
                     # message =f"hi your one time password is:"+request.session['a']
                     # email_from =settings.EMAIL_HOST_USER
                     # recipient_list=[mail]
                     # send_mail(subject1,message,email_from,recipient_list) # type: ignore
-                    return render(request,'reset_password.html',{'type':2})
+                   return render(request,'reset_password.html',{'type':2})
                 else:
                     messages.success(request,"email not exists ")
                     return render(request,'reset_password.html',{'type':1}) 
@@ -199,7 +192,7 @@ def reset_password(request):
                cpas=request.POST.get('cpas')
                if pas==cpas:
                     mail=request.session['email']
-                    user=CoustomUser.objects.get(username=mail)
+                    user=CoustomUser.objects.get(email=mail)
                     user.set_password(pas)
                     user.save()
                     return redirect("login")
