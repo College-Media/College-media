@@ -132,22 +132,36 @@ def logout_user(request):
 def search_student(request):
     user=request.user
     users=CoustomUser.objects.get(username=user)
-    search_student=request.POST.get("roll_number")
-    if users.is_staff:
-        return render(request,"staff_pages/staff_search_page.html")
-    else:
-        return render(request,"search.html")
-     
+    if request.method == "POST":
+        roll_number = request.POST.get("roll_number")  # Retrieve the roll number from the form        
+        try:          
+            # Attempt to find a student with the provided roll number
+            student = Student.objects.filter(roll_number__icontains=roll_number)
+            if student:
+                if users.is_staff:
+                    return render(request,"staff_pages/staff_search_page.html",{'student':student})
+                else:
+                    return render(request, "search.html", {'student': student})  
+            else:
+                if users.is_staff:
+                        return render(request,"staff_pages/staff_search_page.html",{'message': "No student found with this roll number."})
+                else:
+                        return render(request, "search.html", {'message': "No student found with this roll number."})     
         
-    #     student=Student.objects.all()
-    #     print(student)
-    #     # for stu in student:
-    #     #     if stu.roll_number==search_student:
-    #     #         print("Student found")
-    #     #         break
-    #     #     else:
-    #     #         print("Student not found")
-    #  return render(request,"search.html")
+        except Student.DoesNotExist:
+            if users.is_staff:
+                return render(request,"staff_pages/staff_search_page.html",{'message': "No student found with that roll number."})
+            else:
+                return render(request, "search.html", {'message': "No student found with that roll number."})             
+
+    # If the request is GET, simply render the form without any student data
+    
+    if users.is_staff:
+         return render(request,"staff_pages/staff_search_page.html")
+    else:
+        return render(request, "search.html")
+        
+        
 import random  
 def reset_password(request):
     if request.method=="POST":
