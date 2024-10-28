@@ -334,38 +334,56 @@
                 padding: 0;
             }
         }
-        /* Student Details Card */
-.student-card {
-    width: 100%;
-    max-width: 500px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-    color: #333;
-}
+        {% comment %} css code for post card of accept and reject {% endcomment %}
+        /* Container styling */
+        .action-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 200px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-.student-card h3 {
-    text-align: center;
-    font-size: 22px;
-    color: #007BFF;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
-}
+        /* Image styling */
+        .profile-image {
+            background-image: url('{% static "images/profile-pic.jpg" %}');
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin-bottom: 15px;
+        }
 
-.student-card p {
-    font-size: 16px;
-    margin: 10px 0;
-}
+        /* Button styling */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
 
-.student-card p strong {
-    color: #555;
-}
+        .btn {
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 45%;
+        }
 
+        .accept-btn {
+            background-color: #4CAF50; /* Green */
+        }
+
+        .reject-btn {
+            background-color: #f44336; /* Red */
+        }
     </style>
 </head>
 
@@ -399,7 +417,7 @@
                     <path class="icon"
                         d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
                 </svg>
-                <a href="/user_dash/home/">Home</a>
+                <a href="/staff_dash/home/">Home</a>
             </li>
             <li class="menu-items">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
@@ -411,11 +429,19 @@
             </li>
             <li class="menu-items">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                fill="#5f6368">
+                <path class="icon"
+                    d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+            </svg>
+                <a href="/staff_dash/option_student_add/">Add Student</a>
+            </li>
+            <li class="menu-items">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                     fill="#5f6368">
                     <path class="icon"
                         d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
                 </svg>
-                <a href="#">Post</a>
+                <a href="/user_dash/add_post">Post</a>
             </li>
             <li class="menu-items">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
@@ -425,14 +451,7 @@
                 </svg>
                 <a href="#">Chat</a>
             </li>
-            <li class="menu-items">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                    fill="#5f6368">
-                    <path class="icon"
-                        d="m300-300 280-80 80-280-280 80-80 280Zm180-120q-25 0-42.5-17.5T420-480q0-25 17.5-42.5T480-540q25 0 42.5 17.5T540-480q0 25-17.5 42.5T480-420Zm0 340q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Zm0-320Z" />
-                </svg>
-                <a href="#">Explore</a>
-            </li>
+            
             <li class="menu-items">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                     fill="#5f6368">
@@ -443,7 +462,7 @@
             </li>
             <li class="menu-items">
                 <div class="profile"></div>
-                <a href="#">Profile</a>
+                <a href="/profile">Profile</a>
             </li>
             <li class="menu-items">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
@@ -456,49 +475,20 @@
         </ul>
     </div>
     <div class="right">
-        <div class="search-container">
-        
-  
-            <form action="/search_student/" method="POST">
-                {% csrf_token %}
-                <h2>Search for Student / Staff by Roll Number or Name</h2>
-                <input type="text" id="searchInput" name="roll_number" placeholder="Enter Roll Number">
-                <button onclick="searchStudent()">Search</button>
-                <div class="results" id="results"></div>
-            </form></div>
-            {% if student %}
-            <h3>Student Details</h3>
-            {% for stu in student  %}
-            <div class="student-card">
-                
-                <h3><strong>Roll Number:</strong> {{ stu.roll_number }}</h3>
-                <p><strong>Name:</strong> {{ stu.name }}</p>
-                <p><strong>Email:</strong> {{ stu.email }}</p>
+        <div class="action-container">
+            <!-- Profile image -->
+            <div class="profile-image"></div>
+            <p>Hello there</p>
+            <!-- Buttons -->
+            <div class="button-container">
+                <button class="btn accept-btn">Accept</button>
+                <button class="btn reject-btn">Reject</button>
             </div>
-            {% endfor %} 
-            {% elif message %}
-            <p>{{ message }}</p>
-            {% endif %}  
+        </div>
     </div>
 
     <!--DESIGN FOR MOBILE VIEW-->
-    <script>
-        function searchStudent() {
-            const rollNumber = document.getElementById("searchInput").value;
-            fetch(`/search_student?roll=${rollNumber}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById("results").innerHTML = data ? 
-                        `<p>Student Name: ${data.name}<br>Roll Number: ${data.roll_number}</p>` :
-                        "<p>No student found</p>";
-                });
-        }
-        document.querySelector('.menu-items a[href="/logout"]').addEventListener('click', function(event) {
-            event.preventDefault();
-            window.location.href = "/search";
-        });
-        
-    </script>
+
 
     <div class="mobile-bottom">
         <ul>

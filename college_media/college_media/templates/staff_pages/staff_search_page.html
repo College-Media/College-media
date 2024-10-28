@@ -394,6 +394,38 @@
         background-color: blue; /* For warning */
         color: white;
     }
+    /* Student Details Card */
+.student-card {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.student-card h3 {
+    text-align: center;
+    font-size: 22px;
+    color: #007BFF;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.student-card p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.student-card p strong {
+    color: #555;
+}
+
     </style>
 </head>
 
@@ -489,19 +521,32 @@
         <div class="search-container">
         
   
-            <form action="/search_student" method="POST">
+            <form action="/search_student/" method="POST">
                 {% csrf_token %}
                 <h2>Search for Student / Staff by Roll Number or Name</h2>
                 <input type="text" id="searchInput" name="roll_number" placeholder="Enter Roll Number">
                 <button onclick="searchStudent()">Search</button>
                 <div class="results" id="results"></div>
             </form></div>
-        
+            {% if student %}
+            <h3>Student Details</h3>
+            {% for stu in student  %}
+            <div class="student-card">
+                
+                <h3><strong>Roll Number:</strong> {{ stu.roll_number }}</h3>
+                <p><strong>Name:</strong> {{ stu.name }}</p>
+                <p><strong>Email:</strong> {{ stu.email }}</p>
+            </div>
+            {% endfor %} 
+            {% elif message %}
+            <p>{{ message }}</p>
+            {% endif %}  
+            
     </div>
     <script>
         function searchStudent() {
             const rollNumber = document.getElementById("searchInput").value;
-            fetch(`/search_student?roll=${rollNumber}`)
+            fetch(`search_student?roll=${rollNumber}`)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById("results").innerHTML = data ? 
