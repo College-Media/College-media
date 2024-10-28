@@ -31,3 +31,5 @@ def user_profile(request):
     student_info=Student.objects.get(user=user)
     
     return render(request,"user_pages/user_profile.html",{'student_info':student_info})
+def user_serach(request):
+    return render(request,"user_pages/user_search.html")

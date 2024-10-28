@@ -1,0 +1,64 @@
+{% extends "user_pages/base.html" %}
+<!-- search_student.html -->
+{% block content %}
+<div class="search-container">
+    <input type="text" id="student-search" placeholder="Search student by name..." autocomplete="off">
+    <ul id="suggestions-list" class="suggestions-dropdown"></ul>
+</div>
+{% endblock %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("student-search");
+        const suggestionsList = document.getElementById("suggestions-list");
+
+        searchInput.addEventListener("input", async function () {
+            const query = searchInput.value;
+
+            if (query.length > 0) {
+                try {
+                    const response = await fetch(`/student-suggestions/?term=${query}`);
+                    const data = await response.json();
+
+                    suggestionsList.innerHTML = "";  // Clear old suggestions
+                    data.forEach(name => {
+                        const suggestionItem = document.createElement("li");
+                        suggestionItem.classList.add("suggestion-item");
+                        suggestionItem.textContent = name;
+                        suggestionsList.appendChild(suggestionItem);
+
+                        // Add click event to each suggestion item
+                        suggestionItem.addEventListener("click", function () {
+                            searchInput.value = name;
+                            suggestionsList.innerHTML = "";  // Clear suggestions
+                        });
+                    });
+                } catch (error) {
+                    console.error("Error fetching suggestions:", error);
+                }
+            } else {
+                suggestionsList.innerHTML = "";  // Clear suggestions if input is empty
+            }
+        });
+    });
+</script>
+
+<style>
+    .suggestions-dropdown {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        border: 1px solid #ddd;
+        max-height: 150px;
+        overflow-y: auto;
+        width: 200px;
+        position: absolute;
+    }
+    .suggestion-item {
+        padding: 8px;
+        cursor: pointer;
+    }
+    .suggestion-item:hover {
+        background-color: #f0f0f0;
+    }
+</style>

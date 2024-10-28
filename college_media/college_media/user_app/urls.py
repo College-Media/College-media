@@ -6,6 +6,8 @@ urlpatterns = [
     path('home/',views.home,name="home"),
     path("add_post",views.add_post,name="add_post"),
     path("user_profile",views.user_profile,name="user_profile"),
+    path("user_serach",views.user_serach,name="user_profile"),
+    
 ]
 
 if settings.DEBUG:
