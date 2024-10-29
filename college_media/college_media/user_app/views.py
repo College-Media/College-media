@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from user_app.models import *
 from staff_app.models import *
 from django.shortcuts import get_object_or_404
@@ -24,7 +24,7 @@ def add_post(request):
         posts.save()
         print(title,body)
         print("hello there")
-        return render(request,"index.html")
+        return redirect('/user_dash/add_post')
     
     return render(request,"user_pages/add_post.html")
 
