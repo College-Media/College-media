@@ -1,0 +1,84 @@
+{% extends "staff_pages/staff_base.html" %}
+
+{% block style %}
+.container {
+    margin: 3rem auto;
+    max-width: 700px;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #343a40;
+    font-size: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #007bff;
+    color: white;
+    font-size: 1.25rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+{% endblock style %}
+
+{% block content %}
+<div class="container" id="add-post">
+    <h1>Add a New Post</h1>
+    <form id="post-form" action='add_post' method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" id="title" class="form-control" name="title" required>
+        </div>
+
+        <div class="form-group">
+            <label for="image" class="form-label">Upload Image</label>
+            <input type="file" id="img" class="form-control" name="img" accept="image/*" required>
+        </div>
+
+        <div class="form-group">
+            <label for="body" class="form-label">Post Body</label>
+            <textarea id="body" class="form-control" name="body" rows="5" required></textarea>
+        </div>
+
+        <button type="submit" class="btn">Submit Post</button>
+    </form>
+</div>
+{% endblock content %}
