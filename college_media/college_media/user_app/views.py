@@ -30,16 +30,5 @@ def add_post(request):
 
 def user_profile(request):
     user=request.user
-    student_info=Student.objects.get(user=user)
-    
+    student_info=Student.objects.get(user=user)     
     return render(request,"user_pages/user_profile.html",{'student_info':student_info})
-def user_serach(request):
-    # Check for AJAX request and presence of 'term' in query parameters
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest' and 'term' in request.GET:
-        term = request.GET.get('term').capitalize()
-        students = Student.objects.filter(name__istartswith=term)
-        suggestions = list(students.values_list('name', flat=True)[:5])
-        return JsonResponse(suggestions, safe=False)
-
-    # Render the template if not an AJAX request
-    return render(request, "user_pages/user_search.html")

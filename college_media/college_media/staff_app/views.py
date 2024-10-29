@@ -42,6 +42,5 @@ def option_student_add(request):
     return render(request,"staff_pages/add_student_option.html")
 
 def staff_post_request(request):
-    post=Post.objects.select_related('student').filter(is_approved=False )
-    
+    post=Post.objects.select_related('student').filter(is_approved=False )    
     return render(request,"staff_pages/staff_post_request.html",{"posts":post})
