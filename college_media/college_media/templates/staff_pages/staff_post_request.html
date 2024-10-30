@@ -2,18 +2,29 @@
 
 {% block style %}
 /* Container for the Accept/Reject buttons */
-.post-foot .post-action-buttons {
+.post-foot {
     display: flex;
+    flex-direction:column;
     justify-content: flex-end;
-    gap: 10px;
+    row-gap: 10px;
     margin-top: 10px;
-    margin-bottom:20px;
+   
+   
 }
-
+.post-action-buttons{
+    display:flex;
+   
+    flex-direction:row;
+    column-gap:20px;
+    justify-content:center;
+    align-items:center;
+}
 /* Style for the Accept button */
-.accept-button {
-    padding: 8px 16px;
+.accept-button,.reject-button {
+    padding: 10px ;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     border-radius: 4px;
+    font-size:32px;
     background-color: #4CAF50; /* Green */
     color: white;
     border: none;
@@ -21,7 +32,7 @@
     font-size: 14px;
     font-weight: bold;
     transition: background-color 0.3s ease;
-    margin-bottom:20px;
+    
 }
 
 /* Hover effect for the Accept button */
@@ -31,15 +42,10 @@
 
 /* Style for the Reject button */
 .reject-button {
-    padding: 8px 16px;
-    border-radius: 4px;
+   
     background-color: #f44336; /* Red */
     color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+   
 }
 
 /* Hover effect for the Reject button */
@@ -102,6 +108,7 @@
                         </svg>
                         <div class="post-likes-num">120000 <span>Likes</span></div>
                     </div>
+                    
                     <div class="post-action-buttons">
                         <form action="/staff_dash/approve_or_reject_post/" method="POST">
                             {% csrf_token %}
