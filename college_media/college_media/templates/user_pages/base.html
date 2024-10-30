@@ -602,6 +602,11 @@
             font-weight: bold;
         
         }
+        .img1{
+            width:100%;
+            height:100%;
+            border-radius: 50%;
+        }
     </style>
 </head>
 
@@ -680,7 +685,7 @@
             <li class="menu-items">
                 {% if user.is_authenticated and student_profile %}
                     {% if student_profile.profile_image %}
-                    <div class="profile"><img src="{{ student_profile.profile_image.url }}" ></div>
+                    <div class="profile"><img class="img1" src="{{ student_profile.profile_image.url }}" ></div>
                     <a href="/user_dash/user_profile">Profile</a>
                     {% else %}
                     <div id="profile-image-placeholder">

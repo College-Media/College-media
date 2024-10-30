@@ -87,7 +87,6 @@
         .profile,
         .mview-logo {
             border-radius: 50%;
-            background-image: url('{% static "images\aradhya.jpeg" %}');
             border: 3px solid rgba(85, 79, 79, 0.678);
             width: 30px;
             height: 30px;
@@ -530,6 +529,11 @@
         font-weight: bold;
     
     }
+    .img1{
+        width:100%;
+        height:100%;
+        border-radius: 50%;
+    }
     </style>
 </head>
 
@@ -607,8 +611,21 @@
                 <a href="/staff_dash/staff_post_request">Post Request</a>
             </li>
             <li class="menu-items">
-                <div class="profile"></div>
-                <a href="/profile">Profile</a>
+                {% if user.is_authenticated and student_profile %}
+                    {% if student_profile.profile_image %}
+                    <div class="profile"><img src="{{ student_profile.profile_image.url }}" class="img1"></div>
+                    <a href="/user_dash/user_profile">Profile</a>
+                    {% else %}
+                    <div id="profile-image-placeholder">
+                        {{ student_profile.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
+                    </div>
+                    <a href="/user_dash/user_profile">Profile</a>
+                    {% endif %}
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+    
+            
             </li>
             <li class="menu-items">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
