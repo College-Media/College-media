@@ -10,7 +10,7 @@
         <div class="post">
             <div class="post-head">
                 <div class="post-profile">
-                    <img src="{{ post.student.profile_image.url }}"  class="post-profile-img" alt="Profile Picture">
+                <img src="{{ post.student.profile_image.url }}"  class="post-profile-img" alt="Profile Picture">
                     <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
                 </div>
                 <div class="post-menu">
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <!-- Post Image -->
-            <img src="{{post.image.url}}" class="post-body" alt="Post Image">
+            <div class="post-body"><img src="{{post.image.url}}"  alt="Post Image"></div>
             {% comment %} <p>{{post.content}}</p> {% endcomment %}
             <div class="post-foot">
                 <div class="post-like">
