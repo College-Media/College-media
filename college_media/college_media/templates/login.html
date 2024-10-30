@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,10 +17,11 @@
             align-items: center;
             min-height: 100vh;
         }
+
         .main {
             display: flex;
             flex-direction: row;
-            width: 80%; 
+            width: 80%;
             max-width: 900px;
             height: 70vh;
             border: 1px solid #ddd;
@@ -31,7 +33,7 @@
 
         .left {
             flex: 1;
-           /* padding: 30px;*/
+            /* padding: 30px;*/
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -47,20 +49,23 @@
             position: relative;
             background-image: linear-gradient(rgba(108, 218, 221, 0.656), rgba(172, 99, 201, 0.592));
         }
+
         .right img {
-            width: 100%;       
-            height: 100%;      
-            object-fit: contain; 
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
+
         .outer-icon {
             padding: 10%;
             margin-right: 5px;
         }
+
         .input-container {
             position: relative;
             margin-bottom: 20px;
-            width: 80%; 
-            max-width: 350px; 
+            width: 80%;
+            max-width: 350px;
         }
 
         .input-container i {
@@ -102,7 +107,7 @@
         button {
             margin: 5%;
             width: 90%;
-            max-width: 250px; 
+            max-width: 250px;
             padding: 12px;
             font-weight: bolder;
             font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -119,15 +124,18 @@
         button:hover {
             background-color: #1c5b9c;
         }
-        .SuccessCred,.failCred{
-          
+
+
+        /* .SuccessCred,
+        .failCred {
+
             border-radius: 10px;
             background-color: rgb(23, 128, 9);
-            width:300px;
-            height:50px;
-            position:fixed;
-            right:4px;
-            top:4px;
+            width: 300px;
+            height: 50px;
+            position: fixed;
+            right: 4px;
+            top: 4px;
             display: flex;
             flex-direction: row;
             column-gap: 10px;
@@ -135,70 +143,109 @@
             color: white;
             justify-content: flex-start;
             align-items: center;
-            box-shadow:0 4px 8px rgba(88, 1, 1, 0.2); ;
+            box-shadow: 0 4px 8px rgba(88, 1, 1, 0.2);
+            ;
         }
-        .SuccessCred,.failCred{
+
+        .SuccessCred,
+        .failCred {
             display: none;
         }
-        .failCred{
+
+        .failCred {
             background-color: rgb(183, 28, 28);
         }
-        #svgSymbol{
-             margin-left:10px;
-        }
-        
+
+        #svgSymbol {
+            margin-left: 10px;
+        } */
+
         /* Responsive design for smaller screens */
         @media (max-width: 768px) {
             .main {
                 flex-direction: column;
-                height: auto; 
-                width: 95%; 
+                height: auto;
+                width: 95%;
             }
 
-            .left, .right {
-                width: 100%; /* Full width for both sections */
+            .left,
+            .right {
+                width: 100%;
+                /* Full width for both sections */
             }
 
             .right {
-                height: auto; /* Allow the right section to adjust */
+                height: auto;
+                /* Allow the right section to adjust */
             }
 
-            button, .input-field {
-                font-size: 16px; /* Slightly increase font size for better touch target */
+            button,
+            .input-field {
+                font-size: 16px;
+                /* Slightly increase font size for better touch target */
             }
 
             .outer-icon {
-                width: 30%; /* Adjust icon size */
+                width: 30%;
+                /* Adjust icon size */
+            }
+            .message{
+                
             }
         }
 
         @media (max-width: 480px) {
             .right {
-                height: auto; /* Further adjustment for very small devices */
+                height: auto;
+                /* Further adjustment for very small devices */
             }
         }
+
         .message {
-            padding: 20px;
-            margin: 20px;
-            border-radius: 5px;
-            display: none; /* Hide initially */
+            margin: 10px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            flex-grow:1;
+            padding:0 10px;
+            justify-content: center;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            column-gap: 10px;
+            height: 50px;
+            color:rgb(252, 252, 252);
+            font-weight: bold;
+            max-width: 300px;
+            background-color: rgb(16, 108, 33);
+            
+            border-radius: 10px;
         }
-        .green {
-            background-color: black; /* For success */
-            color: white; /* Change text color for better visibility */
+
+
+        /* .green {
+            background-color: black;
+            
+            color: white;
+           
         }
+
         .red {
-            background-color: red; /* For error */
+            background-color: red;
+            
             color: white;
         }
+
         .warning {
-            background-color: blue; /* For warning */
+            background-color: blue;
+            
             color: white;
-        }
+        } */
     </style>
     <script src='{% static "js\login.js" %}'></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+
 <body>
 
     <div class="main">
@@ -209,14 +256,16 @@
                 {% csrf_token %}
                 <div class="input-container">
                     <i class="fa fa-user"></i>
-                    <input class="input-field" id="username" value="" type="text" placeholder="Username" name="roll" required>
+                    <input class="input-field" id="username" value="" type="text" placeholder="Username" name="roll"
+                        required>
                 </div>
                 <div class="input-container">
                     <i class="fa fa-lock"></i>
-                    <input class="input-field" id="password" value="" type="password" placeholder="Password" name="password" required>
+                    <input class="input-field" id="password" value="" type="password" placeholder="Password"
+                        name="password" required>
                 </div>
                 <a href="/forgot-password" class="forgot-password">Forgot Password?</a>
-                <button type="submit" >Login</button>
+                <button type="submit">Login</button>
             </form>
         </div>
 
@@ -225,7 +274,7 @@
             <img src="{% static 'images/community.png' %}">
         </div>
     </div>
-    <div id="message-container">
+    <!-- <div id="message-container">
         {% if messages %}
             {% for message in messages %}
                 {% if message.tags == 'success' %}
@@ -252,7 +301,7 @@
                     {% if message.tags == 'success' %}
                         <div class="SuccessCred">
                         <span id="svgSymbol"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#FFFFFF"><path d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z"/></svg></span>
-                        <span id="msg">L{{ message }}</span>
+                        <span id="msg">{{ message }}</span>
                        </div>
                 </div>
                     {% elif message.tags == 'error' %}
@@ -267,9 +316,13 @@
         
             {% endfor %}
         {% endif %}
-   {% endcomment %}
+   {% endcomment %} -->
 
-   
-   
+    <div class="message">
+        <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="white"><path d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z"/></svg></div>
+        <div class="message-text">Messages displays here</div>
+    </div>
+
 </body>
+
 </html>
