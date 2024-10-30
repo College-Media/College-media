@@ -169,3 +169,11 @@ def reset_password(request):
                     messages.success(request,"enter the password correctly")
                     return render(request,'reset_password.html',{'type':3}) 
     return render(request,'reset_password.html',{'type':1})
+
+def add_post(request):
+    user=request.user
+    users=CoustomUser.objects.get(username=user)
+    if users.is_staff:
+         return render(request,"staff_pages/add_post.html")
+    else:
+        return render(request, "user_pages/add_post.html")
