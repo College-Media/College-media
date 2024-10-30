@@ -7,52 +7,7 @@ from staff_app.models import *
 
 # Create your views here.
 def home(request):
-        # if not request.user.is_anonymous:
-        #     if request.session['remember']=='1':
-        #         user=request.user
-        #         if user.is_student:
-        #             login(request,user)
-        #             return redirect('user_dash/home')
-        #         elif user.is_staff:
-        #             login(request,user)
-        #             return redirect("staff_dash/add_student/")
-        print("login page")
-                
-        if request.method=="POST":
-            name=request.POST.get('roll')
-            pass1=request.POST.get('password')
-            print(name ,pass1)
-            # remember=request.POST['rem']/
-            request.session['remember']='1'
-            user=authenticate(username=name,password=pass1)
-            print(user)          
-            if user:
-                p=CoustomUser.objects.get(username=user)
-                if p.is_staff:
-                    login(request,user)
-                    redirect("staff_dash/add_student/")
-                elif p.is_student:
-                    login(request,user)
-                    redirect("staff_dash/add_student/")
-                else:
-                    return render(request,'login.html')
-                # if user is not None:
-                #     if user.is_staff:
-            #         # request.session['messege']='admin'
-            #         login(request,user)
-                    
-            #         p=CoustomUser.objects.filter(username=user)
-            #         return render(request,"home.html")
-            #     elif user.is_student:
-            #         # request.session['messege']='s_p'
-            #         login(request,user)
-            #         redirect("staff_dash/add_student/")
-            #     else:
-            #         return render(request,"user.html")
-            # else:
-            #     messages.warning(request,"please enter correct email and password")
-            #     return render(request,'login.html')
-        return render(request,'login.html')
+        return render(request,'home.html')
 
 def login_page(request):
      # if not request.user.is_anonymous:

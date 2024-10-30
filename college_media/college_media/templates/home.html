@@ -71,16 +71,21 @@
             padding: 8px;
             width: 100%;
             padding-left: 20px;
+            cursor:pointer;
         }
 
         .menu-items:hover {
+            cursor:pointer;
             border-radius: 10px;
             background-color: rgba(234, 232, 228, 0.807);
         }
-
+        svg{
+            cursor:pointer;
+        }
         .menu-items:hover .icon {
             fill: black;
             width: 28px;
+          
         }
 
         .left a,        
@@ -144,15 +149,21 @@
 
         .post-profile-img {
             border-radius: 50%;
-            background-image: url('{% static "images\aradhya.jpeg" %}');
+           position:relative;
             border: 2px solid rgba(63, 61, 61, 0.678);
             width: 30px;
             height: 30px;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+           
         }
-
+        .post-profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            border-radius: 50%;
+        }
         .post-menu-icon {
             margin-bottom: 0;
             position: relative;
@@ -363,7 +374,7 @@
                 <div class="logo-image"></div>
                 <p class="logo-name">College-Media</p>
             </li>
-            <li class="menu-items">
+            <li class="menu-items"  onclick="window.location='/user_dash/home/'">
                 <svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="24px"
                     fill="#5f6368">
                     <path class="icon"
@@ -450,6 +461,7 @@
 
                 </div>
 
+
             </div><!--End of Post-head-->
             <div class="post-body">
             </div><!--End of Post-body-->
@@ -459,7 +471,7 @@
                         <path
                             d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
                     </svg>
-                    <div class="post-likes-num">120000 <span>Likes</span></div>
+                    <div class="post-likes-num">12 <span>Likes</span></div>
 
                 </div>
             </div><!--End of Post-footer-->
@@ -509,11 +521,11 @@
 
     <div class="mobile-bottom">
         <ul>
-            <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+            <li><a href="/user_dash/home/"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                     fill="#5f6368">
                     <path
                         d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
-                </svg></li>
+                </svg></a></li>
             <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                     fill="#5f6368">
                     <path
