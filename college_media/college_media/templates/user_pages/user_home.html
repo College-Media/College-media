@@ -1,6 +1,20 @@
 
 {% extends "user_pages/base.html" %}
-{% load static %}
+{% block style %}
+ #profile-image-placeholder {
+        width: 45px;
+        height: 44px;
+        background-color: #ccc;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        border-radius: 50%;
+        font-weight: bold;
+    
+    }
+{% endblock style %}
 {% block content %}
 <div class="right">
     <!--start of Post-->
@@ -10,8 +24,16 @@
         <div class="post">
             <div class="post-head">
                 <div class="post-profile">
-                <img src="{{ post.student.profile_image.url }}"  class="post-profile-img" alt="Profile Picture">
+                    {% if post.student.profile_image %}
+                    <img src="{{ post.student.profile_image.url }}"  class="post-profile-img" alt="Profile Picture">
                     <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
+                    {% else %}
+                    <div id="profile-image-placeholder"">
+                        {{ post.student.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
+                    </div>
+                    <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
+                    {% endif %}
+                    
                 </div>
                 <div class="post-menu">
                     <div class="post-menu-icon" onclick="fun1()">
