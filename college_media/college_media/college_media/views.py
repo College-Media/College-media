@@ -7,7 +7,7 @@ from staff_app.models import *
 
 # Create your views here.
 def home(request):
-        return render(request,'home.html')
+        return render(request,'login.html')
 
 def login_page(request):
      # if not request.user.is_anonymous:

@@ -43,6 +43,7 @@ def add_student(request):
             redirect("staff_dash/add_student/")
     return render(request,"staff_pages/add_students.html")
 
+
 def home(request):
     posts = Post.objects.select_related('student').filter(is_approved=True)  # Use select_related to fetch related student data efficiently
     print(posts)

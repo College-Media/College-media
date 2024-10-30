@@ -7,6 +7,7 @@
     justify-content: flex-end;
     gap: 10px;
     margin-top: 10px;
+    margin-bottom:20px;
 }
 
 /* Style for the Accept button */
@@ -20,6 +21,7 @@
     font-size: 14px;
     font-weight: bold;
     transition: background-color 0.3s ease;
+    margin-bottom:20px;
 }
 
 /* Hover effect for the Accept button */
@@ -44,6 +46,19 @@
 .reject-button:hover {
     background-color: #d32f2f; /* Darker red */
 }
+#profile-image-placeholder {
+    width: 45px;
+    height: 44px;
+    background-color: #ccc;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    border-radius: 50%;
+    font-weight: bold;
+
+}
 
 {% endblock style %}
 {% block content %}
@@ -53,8 +68,16 @@
             <div class="post">
                 <div class="post-head">
                     <div class="post-profile">
+                        {% if post.student.profile_image %}
                         <img src="{{ post.student.profile_image.url }}"  class="post-profile-img" alt="Profile Picture">
                         <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
+                        {% else %}
+                        <div id="profile-image-placeholder"">
+                            {{ post.student.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
+                        </div>
+                        <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
+                        {% endif %}
+                        
                     </div>
                     <div class="post-menu">
                         <div class="post-menu-icon" onclick="fun1()">
@@ -82,7 +105,7 @@
                     <div class="post-action-buttons">
                         <form action="/staff_dash/approve_or_reject_post/" method="POST">
                             {% csrf_token %}
-                            <button type="submit" name="accept" value={{post.id}} class="accept-button">Accept</button>
+                            <button type="submit" name="accept" value={{post.id}} class="accept-button" onclick="changeColor(this)">Accept</button>
                         </form>
                         <form action="/staff_dash/approve_or_reject_post/" method="POST">
                             {% csrf_token %}
@@ -93,5 +116,9 @@
                 </div>
             </div>
             {% endfor %}
-
+            <script>
+                function changeColor(button) {
+                    button.style.backgroundColor = 'yellow';
+                }
+                </script>
 {% endblock content %}
