@@ -80,9 +80,16 @@
                         <div class="post-likes-num">120000 <span>Likes</span></div>
                     </div>
                     <div class="post-action-buttons">
-                        <button class="accept-button">Accept</button>
-                        <button class="reject-button">Reject</button>
+                        <form action="/staff_dash/approve_or_reject_post/" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" name="accept" value={{post.id}} class="accept-button">Accept</button>
+                        </form>
+                        <form action="/staff_dash/approve_or_reject_post/" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" name="reject"  value={{post.id}}  class="reject-button">Reject</button>
+                        </form>
                     </div>
+                    
                 </div>
             </div>
             {% endfor %}
