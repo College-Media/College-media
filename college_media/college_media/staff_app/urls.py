@@ -10,6 +10,8 @@ urlpatterns = [
     path("option_student_add/",views.add_student,name="option_student_add"),
     path("staff_post_request",views.staff_post_request,name="staff_post_request"),
     path('approve_or_reject_post/', views.approve_or_reject_post, name='approve_post_or_reject_post'), # type: ignore
+    path("staff_profile",views.staff_profile,name="staff_profile"),
+    
 
 
 ]

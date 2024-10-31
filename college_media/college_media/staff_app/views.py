@@ -82,3 +82,8 @@ def approve_or_reject_post(request):
             post.delete()
             return redirect('/staff_dash/staff_post_request')
     return redirect('/staff_dash/staff_post_request')        
+
+def staff_profile(request):
+    user=request.user
+    student_info=Student.objects.get(user=user)     
+    return render(request,"staff_pages/staff_profile.html",{'student_info':student_info})
