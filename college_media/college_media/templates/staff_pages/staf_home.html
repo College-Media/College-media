@@ -579,7 +579,7 @@
                     <img src="{{ post.student.profile_image.url }}" class="post-profile-img" alt="Profile Picture">
                     <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
                     {% else %}
-                    <div id="profile-image-placeholder"">
+                    <div id="profile-image-placeholder">
                             {{ post.student.name|slice:" :2"|upper }} <!-- First two letters of the student's name -->
                     </div>
                     <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
