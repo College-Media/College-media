@@ -20,6 +20,7 @@
         }
 
         .left {
+            flex-basis:200px;
             position: fixed;
             /* Fixes the sidebar in place */
             top: 0;
@@ -71,7 +72,8 @@
             background-color: rgba(234, 232, 228, 0.807);
         }
 
-        .menu-items:hover .icon {
+       svg {
+            cursor: pointer;
             fill: black;
             width: 28px;
         }
@@ -98,144 +100,17 @@
 
         /*CSS for Right side*/
 
-        /*.right {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-y: scroll;
-            width: 100%;
-            height: 100%;
-        }
-
-        .post {
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            row-gap: 4%;
-            border-bottom: 1px solid rgb(182, 180, 180);
-            max-width: 100%;
-            width: 400px;
-            height: 500px;
-            box-sizing: border-box;
-        }
-
-        .post-head {
-            display: flex;
-            flex-direction: row;
-            margin: 5px;
-
-        }
-
-        .post-profile {
-            display: flex;
-            flex-direction: row;
-            column-gap: 5px;
-            align-items: center;
-            margin-right: auto;
-        }
-
-        .post-profile-img {
-            border-radius: 50%;
-            background-image: url('{% static "images\aradhya.jpeg" %}');
-            border: 2px solid rgba(63, 61, 61, 0.678);
-            width: 30px;
-            height: 30px;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        .post-menu-icon {
-            margin-bottom: 0;
-            position: relative;
-            display: inline-block;
-        }
-        .post-menu-icon:hover{
-            cursor: pointer;
-        }
-
-        #post-menu-table {
-            max-width: 125px;
-            position: absolute;
-            right: 0;
-            display: none;
-            width: 125px;
-            border: 1px solid rgb(131, 126, 126);
-            border-radius: 10px;
-            z-index: 1;
-            background-color: rgba(255, 255, 255, 0.908);
-        }
-
-        #post-menu-table ul {
-            list-style-type: none;
-            padding: 2px;
-            margin: 0;
-            text-align: center;
-        }
-
-        #post-menu-table li {
-            margin: auto;
-            border-top: 1px solid rgb(164, 161, 161);
-            color: rgb(72, 70, 70);
-            font-size: medium;
-            font-weight: bold;
-            padding: 10px;
-        
-        }
-        #post-menu-table li:hover{
-            cursor: pointer;
-        }
-
-        #post-menu-table li:first-child {
-            border: none;
-            color: rgb(171, 17, 17)
-        }
-
-        .post-body {
-            margin: 4px;
-            border-radius: 4px;
-            border: 1px solid rgba(110, 108, 108, 0.963);
-            background-image: url('{% static "images/abl.jpeg" %}');
-
-            height: 700px;
-            max-width: inherit;
-            max-height: 800px;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-
-        }
-
-        .post-foot {
-            margin: 4px;
-            padding-bottom: 5px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .post-like {
-            margin: 2px;
-            display: flex;
-            flex-direction: column;
-            align-items: start;
-            max-width: 50%;
-        }
-        .like {
-            fill:rgb(233, 48, 48);
-            
-        }
-
-        .post-likes-num {
-            max-width: 100px;
-            text-align: center;
-        }*/
+      
         .right {
+            margin-left:230px; 
             display: flex;
+            background-color: rgba(225, 224, 226, 0.182);
             flex-direction: column;
             align-items: center;
-            overflow: auto;
-            width: 100%;
+            overflow-y: auto;
+            flex-grow: 1;
             height: 100%;
+            row-gap: 30px;
         }
 
         .post {
@@ -248,6 +123,7 @@
             width: 400px;
             height: 500px;
             box-sizing: border-box;
+            box-shadow:  0 1px 4px 0 rgba(0, 0, 0, 0.081), 0 1px 4px 0 rgba(0, 0, 0, 0.053);
         }
 
         .post-head {
@@ -322,15 +198,14 @@
         }
 
         .post-body {
+            overflow: hidden;
             margin: 4px;
             border-radius: 4px;
             border: 1px solid rgba(110, 108, 108, 0.963);
-            position: relative;
             height: 700px;
             max-width: inherit;
             max-height: 800px;
-
-
+            box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
 
         .post-body img {
@@ -377,6 +252,10 @@
             .logo-image {
                 width: 85px;
             }
+            .menu-items {
+              justify-content : center;
+              padding-left: 0;
+            }
         }
 
         @media (max-width:600px) {
@@ -409,8 +288,11 @@
                 padding: 0;
                 width: 100%;
             }
-
-            .mobile-top svg,
+            .mobile-top svg{
+                fill: black;
+                width: 20px;
+                height: 20px;
+            }            
             .mobile-bottom svg {
                 fill: black;
                 width: 35px;
