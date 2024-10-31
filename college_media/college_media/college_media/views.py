@@ -37,13 +37,16 @@ def login_page(request):
                 print(p.is_student)
                 if p.is_staff:
                     login(request,user)
-                    # messages.success(request,'Login successfull')
+                    messages.success(request,'Login successfull')
                     return redirect("staff_dash/home/")
                 elif p.is_student:
                     login(request,user)
                     return redirect("user_dash/home/")
                 else:
                     return render(request,'login.html')
+            else:
+                messages.error(request,'pleace enter valid email id or password',extra_tags='invalid')
+                return redirect("/")
                 # if user is not None:
                 #     if user.is_staff:
             #         # request.session['messege']='admin'
