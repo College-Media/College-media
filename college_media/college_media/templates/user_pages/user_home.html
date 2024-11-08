@@ -1,19 +1,20 @@
 
 {% extends "user_pages/base.html" %}
 {% block style %}
- #profile-image-placeholder {
-        width: 45px;
-        height: 44px;
-        background-color: #ccc;
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        border-radius: 50%;
-        font-weight: bold;
-    
-    }
+#profile-image-placeholder {
+    width: 30px;
+    height: 30px;
+    background-color: #ccc;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border-radius: 50%;
+    border:1px solid black;
+    font-weight: bold;
+    cursor:pointer;
+}
 {% endblock style %}
 {% block content %}
 <div class="right">
@@ -21,9 +22,10 @@
     {% for post in posts  %}
     
         <!-- Start of Post -->
+         
         <div class="post">
             <div class="post-head">
-                <div class="post-profile">
+                <div class="post-profile" onclick="window.location='/user_dash/user_profile'">
                     {% if post.student.profile_image %}
                     <img src="{{ post.student.profile_image.url }}"  class="post-profile-img" alt="Profile Picture">
                     <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
@@ -40,10 +42,12 @@
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368">
                             <path d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z" />
                         </svg>
+                        
                         <div id="post-menu-table">
                             <ul>
-                                <li><a href="#" style="text-decoration: none;color:red">Report</a></li>
+                                <li><a href="# " style="text-decoration: none;color:black;">About</a></li>
                                 <li onclick="fun()">Cancel</li>
+                                <li><a href="#" style="text-decoration: none;color:red">Report</a></li>
                             </ul>
                         </div>
                     </div>

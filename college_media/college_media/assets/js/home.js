@@ -3,6 +3,6 @@ function fun1() {
     menuTable.style.display = "block";
   }
 function fun() { 
-  var cancel = document.getElementById("post-menu-table"); 
-    cancel.style.display = "none";
+  var menuTable = document.querySelector("#post-menu-table"); 
+  menuTable.style.display = "none";
   }
