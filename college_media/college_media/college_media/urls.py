@@ -11,7 +11,8 @@ urlpatterns = [
     path('profile',views.profile,name="profile"), #Showing the profile 
     path('logout',views.logout_user,name="logout"), #logout url
     path('login',views.login_page,name="login"),
-    path("admin_dash/",include('admin_app.urls')),
+    path("admin_dash/",include('admin_app.urls')),    
+    path("chat",views.message,name="message"),
     path("staff_dash/",include('staff_app.urls')),
     path("user_dash/",include('user_app.urls')),
     path('search_student/',views.search_student,name="search_student"),

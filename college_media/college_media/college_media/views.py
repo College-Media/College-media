@@ -180,3 +180,11 @@ def add_post(request):
          return render(request,"staff_pages/add_post.html")
     else:
         return render(request, "user_pages/add_post.html")
+    
+def message(request): #funtion for msg page render
+    user=request.user
+    users=CoustomUser.objects.get(username=user)
+    if users.is_staff:
+         return render(request,"staff_pages/staff_chat.html")
+    else:
+        return render(request, "user_pages/user_chat.html")

@@ -1,0 +1,56 @@
+{% extends "staff_pages/staff_base.html" %}
+{% block style %}
+.message {
+    display: flex;
+    margin: 10px 0;
+    align-items: center;
+}
+.message.received {
+    justify-content: flex-start;
+}
+.message.sent {
+    justify-content: flex-end;
+}
+.message-text {
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    max-width: 70%;
+    line-height: 1.5;
+}
+.message.received .message-text {
+    background-color: #333;
+    color: #fff;
+}
+.message.sent .message-text {
+    background-color: #007bff;
+    color: #fff;
+}
+.timestamp {
+    font-size: 10px;
+    color: #666;
+    text-align: center;
+    margin: 5px 0;
+}
+{% endblock style %}
+
+{% block content %}
+    <div class="right">
+        <div class="timestamp">Sat 19:05</div>
+        <div class="message received">
+            <div class="message-text">Maryadi teguka</div>
+        </div>
+        <div class="timestamp">Sat 22:06</div>
+        <div class="message sent">
+            <div class="message-text">After that small clip video heg eth</div>
+        </div>
+        <div class="timestamp">09:26</div>
+        <div class="message received">
+            <div class="message-text">Ad likit</div>
+        </div>
+        <div class="timestamp">10:18</div>
+        <div class="message sent">
+            <div class="message-text">Mtee</div>
+        </div>
+    </div>
+{% endblock content %}

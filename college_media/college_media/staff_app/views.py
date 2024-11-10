@@ -17,6 +17,7 @@ def mail_send(subject,message,mail):
     
 def welcome(request):
     return render(request,"welcome.html")
+
 def add_student(request):
     
     if request.method=="POST":
@@ -87,3 +88,4 @@ def staff_profile(request):
     user=request.user
     student_info=Student.objects.get(user=user)     
     return render(request,"staff_pages/staff_profile.html",{'student_info':student_info})
+
