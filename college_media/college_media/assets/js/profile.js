@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('profile-edit-pic-table').style.display='none';
        
     });
-    document.getElementById('profile-image-edit').addEventListener('click',function(){
+    document.getElementById('profile-in-edit').addEventListener('click',function(){
         document.getElementById('overlay2').style.display = 'block';
         document.getElementById('profile-edit-pic-table').style.display='block';
        
