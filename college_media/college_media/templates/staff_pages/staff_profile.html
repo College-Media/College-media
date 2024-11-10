@@ -10,11 +10,14 @@ body {
 }
 
 .left {
-    height: 100vh;
-    border-right: 1px solid rgba(133, 130, 130, 0.474);
-    min-width: 120px;
-
-    /* background-image: linear-gradient(rgba(83, 138, 206, 0.463), rgba(195, 179, 105, 0.436))*/
+    position: fixed;  /* Make the left sidebar fixed */
+top: 0;
+left: 0;
+height: 100vh;
+min-width: 120px;
+border-right: 1px solid rgba(133, 130, 130, 0.474);
+background-color: #fff; /* Optional background color */
+z-index: 1; /* Ensure it stays on top */
 }
 
 .left .logo-image {
@@ -85,11 +88,12 @@ body {
 }
 
 .right {
-    display: flex;
-    flex-direction: column;
-
-    width: 100%;
-    height: 100vh;
+    margin-left: 120px;  /* Offset by the width of the left sidebar */
+height: 100vh;
+display: flex;
+flex-direction: column;
+width: calc(100% - 120px); /* Fill remaining space */
+overflow-y: auto; 
 }
 
 .right-top {

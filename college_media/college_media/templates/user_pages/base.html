@@ -592,7 +592,7 @@
             <li class="menu-items" onclick="window.location='/user_dash/user_profile'">
                 {% if user.is_authenticated and student_profile %}
                 {% if student_profile.profile_image %}
-                <div class="profile"><img class="img1" src="{{ student_profile.profile_image.url }}"></div>
+                <div class="profile"><img class="img1" src="{{ student_profile.profile_image.url }}" class="img"></div>
                 <a href="/user_dash/user_profile">Profile</a>
                 {% else %}
                 <div id="profile-image-placeholder" onclick="window.location='/user_dash/user_profile'">
@@ -742,12 +742,12 @@
             <li onclick="window.location=''">    
                 {% if user.is_authenticated and student_profile %}
                 {% if student_profile.profile_image %}
-                <div class="profile"><img src="{{ student_profile.profile_image.url }}" ></div>
+                <a href="/user_dash/user_profile">   <div class="profile"><img src="{{ student_profile.profile_image.url }}" class="img1"></div></a>
                
                 {% else %}
-                <div id="profile-image-placeholder">
+                <a href="/user_dash/user_profile"> <div id="profile-image-placeholder">
                     {{ student_profile.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
-                </div>
+                </div></a>
              
                 {% endif %}
         {% else %}
