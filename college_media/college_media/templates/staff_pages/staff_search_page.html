@@ -49,8 +49,7 @@
             <h3>Student Details</h3>
             {% for stu in student  %}
             <div class="student-card">
-                
-                <h3><strong>Roll Number:</strong> {{ stu.roll_number }}</h3>
+                <h3><strong>Roll Number:</strong><a href="{% url 'student_detail' stu.roll_number %}"> {{ stu.roll_number }}</a></h3>
                 <p><strong>Name:</strong> {{ stu.name }}</p>
                 <p><strong>Email:</strong> {{ stu.email }}</p>
             </div>
@@ -66,16 +65,23 @@
             fetch(`search_student?roll=${rollNumber}`)
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById("results").innerHTML = data ? 
-                        `<p>Student Name: ${data.name}<br>Roll Number: ${data.roll_number}</p>` :
-                        "<p>No student found</p>";
+                    if (data) {
+                        // Display search results with clickable roll number
+                        document.getElementById("results").innerHTML = `
+                            <p>Student Name: ${data.name}</p>
+                            <p>Roll Number: 
+                        `;
+                    } else {
+                        document.getElementById("results").innerHTML = "<p>No student found</p>";
+                    }
                 });
         }
+    
         document.querySelector('.menu-items a[href="/logout"]').addEventListener('click', function(event) {
             event.preventDefault();
             window.location.href = "/search";
         });
-        
     </script>
+    
     {% endblock content %}
    

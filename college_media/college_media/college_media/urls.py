@@ -13,6 +13,7 @@ urlpatterns = [
     path('login',views.login_page,name="login"),
     path("admin_dash/",include('admin_app.urls')),    
     path("chat",views.message,name="message"),
+     path('student_details/<str:roll_number>/', views.student_detail, name='student_detail'),
     path("staff_dash/",include('staff_app.urls')),
     path("user_dash/",include('user_app.urls')),
     path('search_student/',views.search_student,name="search_student"),
