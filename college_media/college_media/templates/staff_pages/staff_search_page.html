@@ -49,7 +49,7 @@
             <h3>Student Details</h3>
             {% for stu in student  %}
             <div class="student-card">
-                <h3><strong>Roll Number:</strong><a href="{% url 'student_detail' stu.roll_number %}"> {{ stu.roll_number }}</a></h3>
+                <h3><strong>Roll Number:</strong><a href="{% url 'student_detail' stu.id %}"> {{ stu.roll_number }}</a></h3>
                 <p><strong>Name:</strong> {{ stu.name }}</p>
                 <p><strong>Email:</strong> {{ stu.email }}</p>
             </div>

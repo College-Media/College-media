@@ -1,6 +1,5 @@
 {% extends "user_pages/base.html" %}
 {% block style %}
-{% endblock style %}
 /* Student Details Card */
 .student-card {
     width: 100%;
@@ -32,30 +31,57 @@
 .student-card p strong {
     color: #555;
 }
+{% endblock style %}
 {% block content %}
-<div class="right">
-    <div class="search-container">
-    
-
-        <form action="/search_student/" method="POST">
-            {% csrf_token %}
-            <h2>Search for Student / Staff by Roll Number or Name</h2>
-            <input type="text" id="searchInput" name="roll_number" placeholder="Enter Roll Number">
-            <button onclick="searchStudent()">Search</button>
-            <div class="results" id="results"></div>
-        </form></div>
-        {% if student %}
-        <h3>Student Details</h3>
-        {% for stu in student  %}
-        <div class="student-card">
+    <div class="right">
+        
+        <div class="search-container">
+        
+  
+            <form action="/search_student/" method="POST">
+                {% csrf_token %}
+                <h2>Search for Student / Staff by Roll Number or Name</h2>
+                <input type="text" id="searchInput" name="roll_number" placeholder="Enter Roll Number">
+                <button onclick="searchStudent()">Search</button>
+                <div class="results" id="results"></div>
+            </form></div>
+            {% if student %}
+            <h3>Student Details</h3>
+            {% for stu in student  %}
+            <div class="student-card">
+                <h3><strong>Roll Number:</strong><a href="{% url 'student_detail' stu.id %}"> {{ stu.roll_number }}</a></h3>
+                <p><strong>Name:</strong> {{ stu.name }}</p>
+                <p><strong>Email:</strong> {{ stu.email }}</p>
+            </div>
+            {% endfor %} 
+            {% elif message %}
+            <p>{{ message }}</p>
+            {% endif %}  
             
-            <h3><strong>Roll Number:</strong> {{ stu.roll_number }}</h3>
-            <p><strong>Name:</strong> {{ stu.name }}</p>
-            <p><strong>Email:</strong> {{ stu.email }}</p>
-        </div>
-        {% endfor %} 
-        {% elif message %}
-        <p>{{ message }}</p>
-        {% endif %}  
-</div>
-{% endblock content %}
+    </div>
+    <script>
+        function searchStudent() {
+            const rollNumber = document.getElementById("searchInput").value;
+            fetch(`search_student?roll=${rollNumber}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        // Display search results with clickable roll number
+                        document.getElementById("results").innerHTML = `
+                            <p>Student Name: ${data.name}</p>
+                            <p>Roll Number: 
+                        `;
+                    } else {
+                        document.getElementById("results").innerHTML = "<p>No student found</p>";
+                    }
+                });
+        }
+    
+        document.querySelector('.menu-items a[href="/logout"]').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.location.href = "/search";
+        });
+    </script>
+    
+    {% endblock content %}
+   
