@@ -188,3 +188,9 @@ def message(request): #funtion for msg page render
          return render(request,"staff_pages/staff_chat.html")
     else:
         return render(request, "user_pages/user_chat.html")
+    
+from django.shortcuts import render, get_object_or_404  #used for showing profile
+
+def student_detail(request, roll_number):
+    student_info=Student.objects.get(roll_number=roll_number)
+    return render(request, 'staff_pages/student_detail.html',{'student_info':student_info})
