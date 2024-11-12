@@ -1,5 +1,5 @@
 {% extends "user_pages/base.html" %}
-{% block styleProfile %}
+{% block style %}
 {% load static %}
 body {
     display: flex;
@@ -521,7 +521,7 @@ border-radius: 50%;
     }
 
 
-{% endblock styleProfile %}
+{% endblock style %}
 
 {% block content %}
 <div class="right">
@@ -571,7 +571,4 @@ border-radius: 50%;
 {% endfor %}
 </center>
 </div>
-
-
-
 {% endblock content %}
