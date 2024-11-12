@@ -28,4 +28,12 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('profile-edit-pic-table').style.display='none';
        
     });
+    document.querySelectorAll('.post').forEach(img => {
+        img.addEventListener('click', function () {
+        document.getElementById('editProfileForm').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+        
+    });
+    });
+   
 });
