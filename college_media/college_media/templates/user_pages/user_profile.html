@@ -73,6 +73,10 @@
         .menu-items:hover .icon {
             fill: black;
             width: 28px;
+            
+        }
+        svg{
+            cursor: pointer;
         }
 
         .left a,
@@ -112,6 +116,7 @@
             display: flex;
             flex-direction: row;
             border-bottom: 1px solid rgb(160, 158, 158);
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .right-profile {
@@ -163,11 +168,11 @@
             border: none;
             border-radius: 10px;
             background-color: rgba(10, 10, 156, 0.718);
-            padding: 10px;
+            padding:10px 20px;
             color: rgb(251, 250, 252);
             font-size: medium;
             font-weight: bold;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .editBtn:hover, #editBtn:hover{
 cursor: pointer;
@@ -178,12 +183,12 @@ cursor: pointer;
             margin-top: 20px;
             border: none;
             border-radius: 10px;
-            background-color: rgba(8, 8, 107, 0.749);
+            background-color: rgba(10, 10, 156, 0.718);
             padding: 10px;
             color: rgb(251, 250, 252);
-            font-size: small;
+            font-size: medium;
             font-weight: bold;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .right-bottom {
@@ -272,7 +277,7 @@ cursor: pointer;
             z-index: 1001;
             max-width: 600px;
             height: 500px;
-
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             border: 1px solid #ddd;
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -290,17 +295,27 @@ cursor: pointer;
             background: none;
             cursor: pointer;
         }
+        #profile-in-edit{
+            cursor: pointer;
+            
+        }
 
         #subBtn {
             display: block;
             margin: 0px;
-            padding: 10px 30px;
-            background-color: rgb(218, 236, 236);
+            padding: 10px 20px;
+            background-color: rgba(113, 6, 149, 0.732);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 20px;
-            border: 1px solid rgb(174, 173, 173);
-            font-size: medium;
+            border-radius: 10px;
+            border: 1px solid rgb(78, 4, 95);
+            font-size: large;
             font-weight: bold;
+            cursor: pointer;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        #subBtn:hover{
+            background-color: rgba(88, 6, 113, 0.91);
+            color:white;
         }
 
         #profile-edit-pic-table {
@@ -556,7 +571,7 @@ cursor: pointer;
                 <div class="logo-image"></div>
                 <p class="logo-name">College-Media</p>
             </li>
-            <li class="menu-items">
+            <li class="menu-items" onclick="window.location='/user_dash/home/'">
                 <svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="24px"
                     fill="#5f6368">
                     <path class="icon"
@@ -564,7 +579,7 @@ cursor: pointer;
                 </svg>
                 <a href="/user_dash/home/">Home</a>
             </li>
-            <li class="menu-items">
+            <li class="menu-items" onclick="window.location='/user_dash/search'">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                     fill="#5f6368">
                     <path class="icon"
@@ -572,7 +587,7 @@ cursor: pointer;
                 </svg>
                 <a href="/user_dash/search">Search</a>
             </li>
-            <li class="menu-items">
+            <li class="menu-items" onclick="window.location='/user_dash/add_post'">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                     fill="#5f6368">
                     <path class="icon"
@@ -580,7 +595,7 @@ cursor: pointer;
                 </svg>
                 <a href="/user_dash/add_post">Post</a>
             </li>
-            <li class="menu-items">
+            <li class="menu-items" onclick="window.location=''">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                     fill="#5f6368">
                     <path class="icon"
@@ -588,7 +603,7 @@ cursor: pointer;
                 </svg>
                 <a href="#">Chat</a>
             </li>
-            <li class="menu-items">
+            <li class="menu-items" onclick="window.location=''">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                     fill="#5f6368">
                     <path class="icon"
@@ -596,7 +611,7 @@ cursor: pointer;
                 </svg>
                 <a href="#">Explore</a>
             </li>
-            <li class="menu-items">
+            <li class="menu-items" onclick="window.location=''">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                     fill="#5f6368">
                     <path class="icon"
@@ -604,7 +619,7 @@ cursor: pointer;
                 </svg>
                 <a href="#">Notifications</a>
             </li>
-            <li class="menu-items">
+            <li class="menu-items" onclick="window.location='/user_dash/user_profile'">
                 {% if user.is_authenticated and student_profile %}
                 {% if student_profile.profile_image %}
                 <div class="profile"><img src="{{ student_profile.profile_image.url }}" class="img1"></div>
@@ -621,7 +636,7 @@ cursor: pointer;
 
 
             </li>
-            <li class="menu-items">
+            <li class="menu-items" onclick="window.location='/logout'">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                     fill="#5f6368">
                     <path class="icon"
@@ -658,7 +673,7 @@ cursor: pointer;
 
             </div>
             <div class="edit">
-                <button class="editBtn">EDIT PROFILE</button>
+                <button class="editBtn">Edit Profile</button>
             </div>
         </div>
         <div class="right-bottom">
@@ -678,7 +693,7 @@ cursor: pointer;
     <div id="editProfileForm">
 
         <button id="closeButton" class="closeBtn">&times;</button>
-        <h2>Edit Profile</h2>
+        <h3>EDIT PROFILE</h3>
         <form>
             <div id="overlay2"></div>
             <div id="profile-in-edit">
@@ -710,7 +725,7 @@ cursor: pointer;
     </div>
     <div class="mobile-bottom">
         <ul>
-            <li onclick="window.location='/staff_dash/home/'"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+            <li onclick="window.location='/user_dash/home/'"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
                     viewBox="0 -960 960 960" width="24px" fill="#5f6368">
                     <path
                         d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
@@ -720,7 +735,7 @@ cursor: pointer;
                     <path
                         d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
                 </svg></li>
-            <li onclick="window.location='/staff_dash/option_student_add/'"><svg xmlns="http://www.w3.org/2000/svg"
+            <li onclick="window.location='/user_dash/add_post'"><svg xmlns="http://www.w3.org/2000/svg"
                     height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368">
                     <path
                         d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
