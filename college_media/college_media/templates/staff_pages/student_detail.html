@@ -504,6 +504,23 @@ border-radius: 50%;
     border-radius: 50%;
 }
 
+    {% comment %} css for image container {% endcomment %}
+    .image-container {
+        width: 300px; /* Set the width of the container */
+        height: 200px; /* Set the height of the container */
+        border: 2px solid #000; /* Optional: Add border around the div */
+        overflow: hidden; /* Hide anything that overflows the div */
+        display: flex;
+        justify-content: center; /* Center the image horizontally */
+        align-items: center; /* Center the image vertically */
+    }
+    .image-container img {
+        max-width: 100%; /* Make the image responsive */
+        max-height: 100%; /* Make sure the image fits within the div */
+        object-fit: cover; /* Optionally cover the div area if the aspect ratio is different */
+    }
+
+
 {% endblock styleProfile %}
 
 {% block content %}
@@ -519,29 +536,42 @@ border-radius: 50%;
                 {{ student_info.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
             </div>
 
-            {% endif %} 
-          
-            
-           
+            {% endif %}            
             <ul>
                
                 <li><label>{{ student_info.email}}</label></li>
                 <li><label>{{ student_info.name}}</label></li>
                 <li><label>{{ student_info.class}}</label></li>
                 <li><label>{{ student_info.roll_number}}</label></li>
-                <li> <button class="editBtn" id="editBtn1">EDIT PROFILE</button></li>
-            </ul>
+                
+            </ul> 
+            
         
         </div>
        
     </div>
+    <center>
+    {% for post in posts %}
+    {% if post %}
+    {% if post.is_approved %}
+        <div class="image-container">
+            <p>{{post.content}}</p><br>
+            <img src="{{ post.image.url }}" alt="Posts">
+            
+        </div>
+        {% endif %}
+        {% else %}
     <div class="right-bottom">
-          
-           <div>Cant Find Any Post</div>
+        <div>Cant Find Any Post</div>
     </div>
     
+    {% endif %}
+
+   
+{% endfor %}
+</center>
 </div>
-<div id="overlay"></div>
+
 
 
 {% endblock content %}

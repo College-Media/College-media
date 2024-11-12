@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from staff_app.models import *
+from user_app.models import *
 
 # Create your views here.
 def home(request):
@@ -192,5 +193,13 @@ def message(request): #funtion for msg page render
 from django.shortcuts import render, get_object_or_404  #used for showing profile
 
 def student_detail(request, roll_number):
-    student_info=Student.objects.get(roll_number=roll_number)
-    return render(request, 'staff_pages/student_detail.html',{'student_info':student_info})
+    user=request.user
+    users=CoustomUser.objects.get(username=user)
+    student_info=Student.objects.get(id=roll_number)
+    post=Post.objects.filter(student__roll_number=student_info.roll_number)  #here student__ will hel to extarct the table field name from the table use double under score
+    print(post)
+    if users.is_staff:
+         return render(request, 'staff_pages/student_detail.html',{'student_info':student_info,'posts':post})
+    else:
+        return render(request, 'user_pages/student_details.html',{'student_info':student_info,'posts':post})
+    

@@ -1,0 +1,577 @@
+{% extends "user_pages/base.html" %}
+{% block styleProfile %}
+{% load static %}
+body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 0;
+
+}
+
+.left {
+    position: fixed;  /* Make the left sidebar fixed */
+top: 0;
+left: 0;
+height: 100vh;
+min-width: 120px;
+border-right: 1px solid rgba(133, 130, 130, 0.474);
+background-color: #fff; /* Optional background color */
+z-index: 1; /* Ensure it stays on top */
+}
+
+.left .logo-image {
+    border-radius: 50%;
+    background-image: url('{% static "images/media-img.jfif" %}');
+    border: 1px solid rgba(144, 138, 138, 0.678);
+    min-width: 90px;
+    width: 90px;
+    height: 90px;
+    margin: 10px 2px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.left ul:first-child {
+    margin-bottom: 20px;
+}
+
+.left ul {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 20px;
+    flex-grow: 1;
+    justify-content: flex-start;
+    padding: 30px;
+}
+
+.menu-items {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+    padding: 8px;
+    width: 100%;
+    padding-left: 20px;
+}
+
+.menu-items:hover {
+    border-radius: 10px;
+    background-color: rgba(234, 232, 228, 0.807);
+}
+
+.menu-items:hover .icon {
+    fill: black;
+    width: 28px;
+}
+
+.left a,
+.logo-name {
+    text-decoration: none;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: black;
+    font-size: 18px;
+    flex: 1;
+}
+
+.profile,
+.mview-logo {
+    border-radius: 50%;
+    border: 3px solid rgba(85, 79, 79, 0.678);
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.right {
+    margin-left: 120px;  /* Offset by the width of the left sidebar */
+height: 100vh;
+display: flex;
+flex-direction: column;
+width: calc(100% - 120px); /* Fill remaining space */
+overflow-y: auto; 
+}
+
+.right-top {
+    background-color: rgb(238, 238, 238);
+    width: 100%;
+    height: 30%;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid rgb(160, 158, 158);
+}
+
+.right-profile {
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+}
+
+.right-profile ul {
+    padding: 0;
+
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    text-decoration: none;
+    list-style-type: none;
+
+}
+
+.right-profile li:first-child {
+    font-size: large;
+}
+
+.profile-image,
+#profile-image-edit {
+    cursor: pointer;
+    border-radius: 50%;
+
+    border: 1px solid rgba(144, 138, 138, 0.678);
+    min-width: 90px;
+    width: 90px;
+    height: 90px;
+    margin: 10px 2px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.edit {
+    padding: 10px;
+    align-items: center;
+    margin-left: auto;
+    position: relative;
+    display: inline-block;
+}
+
+.editBtn {
+
+    border-radius: 10px;
+    background-color: rgba(10, 10, 156, 0.718);
+    padding: 10px;
+    color: rgb(251, 250, 252);
+    font-size: medium;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#editBtn1{
+    display:none;
+    margin-top:20px;
+    border:none;
+    border-radius: 10px;
+    background-color: rgba(8, 8, 107, 0.749);
+    padding: 10px;
+    color: rgb(251, 250, 252);
+    font-size: small;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.right-bottom {
+    margin: auto;
+    background-color: rgb(215, 216, 217);
+    display: flex;
+    font-size: xx-large;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.post-in-profile {
+    cursor: pointer;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 10px;
+    position: fixed;
+    width: 100%;
+}
+
+form label {
+    margin-right: auto;
+    margin-left: 20%;
+    margin-top: 10px;
+}
+
+input[type="text"] {
+    /*margin:0 auto 10px 10px;*/
+    padding: 10px;
+    width: 60%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+/*#profile-pic-overlay {
+display: none;
+min-width: 90px;
+position: fixed;
+height: 90px;
+width:90px;
+background-color: rgba(0, 0, 0, 0.5);
+z-index: 1000;
+border-radius: 50%;
+}*/
+
+#overlay2 {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(211, 208, 208, 0.5);
+    z-index: 1002;
+}
+
+#editProfileForm {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    max-width: 600px;
+    height: 500px;
+
+    border: 1px solid #ddd;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 30px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+#subBtn {
+    display: block;
+    margin: 0px;
+    padding: 10px 30px;
+    background-color: rgb(218, 236, 236);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    border: 1px solid rgb(174, 173, 173);
+    font-size: medium;
+    font-weight: bold;
+}
+
+#profile-edit-pic-table {
+    display: none;
+    width: 100%;
+    cursor: pointer;
+    position: fixed;
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: white;
+    bottom: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    ;
+    z-index: 1003;
+    margin-left: 0;
+    transition: height 0.5s ease-out;
+
+}
+
+#profile-edit-pic-table ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+#profile-edit-pic-table li {
+    color: rgb(210, 20, 20);
+    padding: 15px;
+    text-align: center;
+    border-top: 1px solid rgb(147, 143, 143);
+}
+
+#profile-edit-pic-table li:first-child {
+    border-top: none;
+    color: black;
+}
+
+/*--------MOBILE VIEW--------*/
+.mobile-top,
+.mobile-bottom {
+    display: none;
+}
+
+@media (max-width:940px) {
+    .menu-items a {
+        display: none;
+    }
+
+    .logo-image {
+        width: 85px;
+    }
+}
+/* css changes for responsiveness */
+@media (max-width:900px) {
+    .right-profile li:first-child {
+        font-size: small;
+    }
+    .right-profile{
+        padding: 10px;
+    }
+
+    .right-profile img{
+        width:80px;
+        height: 80px;
+    }
+    .right-profile #profile-image-placeholder-large{
+        width:80px;
+        height:80px;
+    }
+}
+
+@media (max-width:600px) {
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .left {
+        display: none;
+    }
+
+    .mview-logo {
+        background-image: url('{% static "images/media-img.jfif" %}');
+    }
+
+    .mobile-top {
+        display: flex;
+        margin: 0;
+        width: 100%;
+    }
+
+    .mobile-top ul {
+        list-style-type: none;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: flex-end;
+        column-gap: 20px;
+        padding: 0;
+        width: 100%;
+    }
+
+    .mobile-top svg {
+        fill: black;
+        width: 24px;
+        height: 24px;
+    }
+    .mobile-bottom svg {
+        fill: black;
+        width: 35px;
+        height: 35px;
+    }
+
+    .mobile-top li:first-child {
+        margin-right: auto;
+        padding: 4px;
+    }
+    .editBtn{
+        display:none;
+    }
+    #editBtn1{
+        display:block;
+    }
+
+    .mobile-bottom {
+        margin: 100%;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        bottom: 0px;
+        z-index: 1;
+        background-color: white;
+        border-top: 1px solid rgb(176, 172, 172);
+    }
+
+    .mobile-bottom ul {
+        list-style-type: none;
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+        column-gap: 10%;
+        max-width: 100%;
+        padding: 5px;
+        flex-wrap: nowrap;
+        flex: 100%;
+        overflow: hidden;
+    }
+
+    .mobile-bottom li {
+        flex-grow: 1;
+    }
+
+    .right {
+        max-height: calc(100vh - 100px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-y: auto;
+        width: 100%;
+        height: auto;
+    }
+
+    .right::-webkit-scrollbar {
+        display: none;
+    }
+
+    .right {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .right,
+    .post,
+    .mobile-top,
+    .mobile-bottom {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+}
+/*CSS changes for main edit-profile in user page  */
+#profile-image-placeholder-large {
+    width: 100px;
+    height: 100px;
+    background-color: #ccc;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+#profile-image-placeholder {
+    width: 30px;
+    height: 30px;
+    background-color: #ccc;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border-radius: 50%;
+    border: 1px solid black;
+    font-weight: bold;
+    cursor: pointer;
+}
+.img1 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+    {% comment %} css for image container {% endcomment %}
+    .image-container {
+        width: 300px; /* Set the width of the container */
+        height: 200px; /* Set the height of the container */
+        border: 2px solid #000; /* Optional: Add border around the div */
+        overflow: hidden; /* Hide anything that overflows the div */
+        display: flex;
+        justify-content: center; /* Center the image horizontally */
+        align-items: center; /* Center the image vertically */
+    }
+    .image-container img {
+        max-width: 100%; /* Make the image responsive */
+        max-height: 100%; /* Make sure the image fits within the div */
+        object-fit: cover; /* Optionally cover the div area if the aspect ratio is different */
+    }
+
+
+{% endblock styleProfile %}
+
+{% block content %}
+<div class="right">
+    <div class="right-top">
+        <div class="right-profile">
+            
+            {% if student_info.profile_image %}
+            <img class="profile-image" src="{{ student_info.profile_image.url }}">
+        </img>
+            {% else %}
+            <div id="profile-image-placeholder-large">
+                {{ student_info.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
+            </div>
+
+            {% endif %}            
+            <ul>
+               
+                <li><label>{{ student_info.email}}</label></li>
+                <li><label>{{ student_info.name}}</label></li>
+                <li><label>{{ student_info.class}}</label></li>
+                <li><label>{{ student_info.roll_number}}</label></li>
+                
+            </ul> 
+            
+        
+        </div>
+       
+    </div>
+    <center>
+    {% for post in posts %}
+    {% if post %}
+    {% if post.is_approved %}
+        <div class="image-container">
+            <p>{{post.content}}</p><br>
+            <img src="{{ post.image.url }}" alt="Posts">
+            
+        </div>
+        {% endif %}
+        {% else %}
+    <div class="right-bottom">
+        <div>Cant Find Any Post</div>
+    </div>
+    
+    {% endif %}
+
+   
+{% endfor %}
+</center>
+</div>
+
+
+
+{% endblock content %}
