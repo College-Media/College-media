@@ -572,7 +572,7 @@
             border-radius: 50%;
         }
 
-        #approved-post {
+        .approved-post {
             width: 300px;
             background-color: #ccc;
             height: 300px;
@@ -599,7 +599,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         } */
 
-        #approved-post:hover {
+        .approved-post:hover {
             cursor:pointer;
             transform: scale(1.02);
             /* Slightly enlarge on hover */
@@ -742,7 +742,7 @@
                 {% for post in posts %}
                 {% if post %}
                 {% if post.is_approved %}
-                <div id="approved-post"><img src="{{ post.image.url }}" class="post" alt="Posts">
+                <div class="approved-post"><img src="{{ post.image.url }}" class="post" alt="Posts">
                 </div>
                 {% else %}
                 <img src="{{ post.image.url }}" alt="Posts">
@@ -801,9 +801,10 @@
             </ul>
         </div>
     </div>
+    <!-- Form for Post display in user profile  -->
     <div id="editPostForm">
 
-        <button id="closeButton" class="closeBtn">&times;</button>
+        <button id="closeButtonP" class="closeBtn">&times;</button>
        
         <form>
             <div id="overlay2"></div>
@@ -827,10 +828,11 @@
             <ul>
                 <li>What to do</li>
                 <li>Delete</li>
-                <li id="cancelBtn">Cancel</li>
+                <li id="cancelBtnP">Cancel</li>
             </ul>
         </div>
     </div>
+    <!-- Form for post display end -->
     <div class="mobile-bottom">
         <ul>
             <li onclick="window.location='/user_dash/home/'"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
