@@ -39,10 +39,11 @@ document.querySelectorAll('div.approved-post').forEach(div => {
     });
 });
 
-    document.getElementById('closeButtonP').addEventListener('click', function () {
-        document.getElementById('editPostForm').style.display = 'none';
-        document.getElementById('overlay').style.display = 'none';
-    });
+    // document.getElementById('closeButtonP').addEventListener('click', function () {
+    //     document.write("dhkj");
+    //     document.getElementById('editPostForm').style.display = 'none';
+    //     document.getElementById('overlay').style.display = 'none';
+    // });
     document.getElementById('overlay').addEventListener('click', function () {
         document.getElementById('editPostForm').style.display = 'none';
         document.getElementById('overlay').style.display = 'none';
@@ -55,6 +56,7 @@ document.querySelectorAll('div.approved-post').forEach(div => {
        
     });
     document.getElementById('cancelBtnP').addEventListener('click',function(){
+        document.getElementById('editPostForm').style.display = 'none';
         document.getElementById('overlay2').style.display = 'none';
         document.getElementById('post-edit-action-table').style.display='none';
         document.getElementById('editPostForm').style.dispaly="none";
