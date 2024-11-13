@@ -229,3 +229,56 @@ def like_post(request, post_id):
     like_count = post.likes.count()
 
     return JsonResponse({"liked": liked, "like_count": like_count})
+
+def save_comment(request, post_id):
+    if request.method == 'POST':
+        content = request.POST.get('content')
+        student_id = request.POST.get('student_id')
+        
+        try:
+            post = Post.objects.get(id=post_id)
+            student = Student.objects.get(id=student_id)
+            comment = Comment.objects.create(post=post, student=student, content=content)
+            
+            return JsonResponse({
+                'success': True,
+                'student_name': student.name,
+                'content': content,
+                'created_at': comment.created_at.strftime("%Y-%m-%d %H:%M:%S")
+            })
+        except Post.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Post not found'})
+        except Student.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Student not found'})
+    return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)
+
+# testinf
+
+def like_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    student = request.user.student
+
+    # Toggle like status
+    like, created = Like.objects.get_or_create(post=post, student=student)
+    if not created:
+        like.delete()
+        liked = False
+    else:
+        liked = True
+
+    return JsonResponse({'liked': liked, 'like_count': post.likes.count()})
+
+
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    content = request.POST.get('content')
+    student = request.user.student
+
+    # Save comment
+    comment = Comment.objects.create(post=post, student=student, content=content)
+
+    return JsonResponse({
+        'student_roll': student.roll_number,
+        'content': comment.content,
+        'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M')
+    })
