@@ -1,4 +1,3 @@
-
 {% extends "user_pages/base.html" %}
 {% block style %}
 #profile-image-placeholder {
@@ -15,58 +14,150 @@
     font-weight: bold;
     cursor:pointer;
 }
+.like-icon {
+    cursor: pointer;
+    transition: fill 0.3s ease;
+}
+.liked {
+    fill: red;
+}
+.unliked {
+    fill: black;
+}
+
 {% endblock style %}
+
 {% block content %}
 <div class="right">
-    <!--start of Post-->
-    {% for post in posts  %}
-    
-        <!-- Start of Post -->
-         
-        <div class="post">
-            <div class="post-head">
-                <div class="post-profile" onclick="window.location='/user_dash/user_profile'">
-                    {% if post.student.profile_image %}
-                    <img src="{{ post.student.profile_image.url }}"  class="post-profile-img" alt="Profile Picture">
-                    <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
-                    {% else %}
-                    <div id="profile-image-placeholder">
-                        {{ post.student.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
-                    </div>
-                    <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
-                    {% endif %}
-                    
+    <!-- Start of Posts -->
+    {% for post in posts %}
+    <div class="post">
+        <div class="post-head">
+            <div class="post-profile" onclick="window.location='/user_dash/user_profile'">
+                {% if post.student.profile_image %}
+                <img src="{{ post.student.profile_image.url }}" class="post-profile-img" alt="Profile Picture">
+                <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
+                {% else %}
+                <div id="profile-image-placeholder">
+                    {{ post.student.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
                 </div>
-                <div class="post-menu">
-                    <div class="post-menu-icon" onclick="fun1()">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368">
-                            <path d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z" />
-                        </svg>
-                        
-                        <div id="post-menu-table">
-                            <ul>
-                                <li><a href="# " style="text-decoration: none;color:black;">About</a></li> 
-                                <li><a href="#" style="text-decoration: none;color:red">Report</a></li>
-                                <li onclick="fun()">Cancel</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
+                {% endif %}
             </div>
-            <!-- Post Image -->
-            <div class="post-body"><img src="{{post.image.url}}"  alt="Post Image"></div>
-            {% comment %} <p>{{post.content}}</p> {% endcomment %}
-            <div class="post-foot">
-                <div class="post-like">
-                    <svg class="like" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24px" height="24px">
-                        <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
+            <div class="post-menu">
+                <div class="post-menu-icon" onclick="fun1()">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368">
+                        <path d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z" />
                     </svg>
-                    <div class="post-likes-num">120000 <span>Likes</span></div>
+                    <div id="post-menu-table">
+                        <ul>
+                            <li><a href="#" style="text-decoration: none;color:black;">About</a></li> 
+                            <li><a href="#" style="text-decoration: none;color:red">Report</a></li>
+                            <li onclick="fun()">Cancel</li>
+                        </ul>
+                    </div>
                 </div>
-
             </div>
         </div>
+        <!-- Post Image -->
+        <div class="post-body"><img src="{{post.image.url}}" alt="Post Image"></div>
+
+        <div class="post-foot">
+            <div class="post-like">
+                <!-- Like Icon SVG with dynamic class -->
+                <svg 
+                    class="like-icon {% if post.student in post.likes.all %}liked{% else %}unliked{% endif %}" 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 512 512" 
+                    width="24px" 
+                    height="24px" 
+                    onclick="likePost({{ post.id }})" 
+                    id="like-icon-{{ post.id }}">
+                    <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
+                </svg>
+                    
+                <span id="like-count-{{ post.id }}">{{ post.likes.count }}</span> Likes
+            </div>
+        </div>
+    </div>
     {% endfor %}
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Function to handle the like/unlike action
+        window.likePost = function(postId) {
+            const likeIconElement = document.getElementById(`like-icon-${postId}`);
+            const likeCountElement = document.getElementById(`like-count-${postId}`);
+            
+            // Optimistic UI toggle: update UI immediately on click
+            let isLiked = likeIconElement.classList.contains('liked');
+            if (isLiked) {
+                likeIconElement.classList.remove('liked');
+                likeIconElement.classList.add('unliked');
+                likeCountElement.innerText = parseInt(likeCountElement.innerText) - 1;
+            } else {
+                likeIconElement.classList.remove('unliked');
+                likeIconElement.classList.add('liked');
+                likeCountElement.innerText = parseInt(likeCountElement.innerText) + 1;
+            }
+
+            // Send like/unlike request to the server
+            fetch(`/like/${postId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the UI based on the server's response
+                likeCountElement.innerText = data.like_count;
+                if (data.liked) {
+                    likeIconElement.classList.add('liked');
+                    likeIconElement.classList.remove('unliked');
+                } else {
+                    likeIconElement.classList.add('unliked');
+                    likeIconElement.classList.remove('liked');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Revert UI if the request fails
+                if (isLiked) {
+                    likeIconElement.classList.add('liked');
+                    likeIconElement.classList.remove('unliked');
+                    likeCountElement.innerText = parseInt(likeCountElement.innerText) + 1;
+                } else {
+                    likeIconElement.classList.add('unliked');
+                    likeIconElement.classList.remove('liked');
+                    likeCountElement.innerText = parseInt(likeCountElement.innerText) - 1;
+                }
+            });
+        };
+
+        // Function to periodically update like counts for all posts
+        function updateLikeCounts() {
+            fetch('/like-counts/')
+                .then(response => response.json())
+                .then(data => {
+                    // Update like counts based on the response
+                    for (const [postId, likeCount] of Object.entries(data)) {
+                        const likeCountElement = document.getElementById(`like-count-${postId}`);
+                        if (likeCountElement) {
+                            likeCountElement.innerText = likeCount;
+                        }
+                    }
+                })
+                .catch(error => console.error('Error updating like counts:', error));
+        }
+
+        // Poll every 5 seconds to update like counts
+        setInterval(updateLikeCounts, 2000);
+    });
+</script>
+
+
 
 {% endblock content %}

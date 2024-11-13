@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from staff_app.models import *
 from user_app.models import *
+from django.http import JsonResponse #like 
 
 # Create your views here.
 def home(request):
@@ -203,3 +204,28 @@ def student_detail(request, roll_number):
     else:
         return render(request, 'user_pages/student_details.html',{'student_info':student_info,'posts':post})
     
+
+def like_counts(request): #like counts
+    posts = Post.objects.all()
+    like_counts = {post.id: post.likes.count() for post in posts}
+    return JsonResponse(like_counts)
+
+def like_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    student = request.user.student
+
+    # Check if the student has already liked this post
+    like, created = Like.objects.get_or_create(post=post, student=student)
+
+    if not created:
+        # If the like already exists, delete it (unlike)
+        like.delete()
+        liked = False
+    else:
+        # Otherwise, it's a new like
+        liked = True
+
+    # Count the total likes for the post
+    like_count = post.likes.count()
+
+    return JsonResponse({"liked": liked, "like_count": like_count})

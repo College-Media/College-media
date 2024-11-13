@@ -11,9 +11,11 @@ urlpatterns = [
     path('profile',views.profile,name="profile"), #Showing the profile 
     path('logout',views.logout_user,name="logout"), #logout url
     path('login',views.login_page,name="login"),
-    path("admin_dash/",include('admin_app.urls')),    
+    path("admin_dash/",include('admin_app.urls')), 
+    path('like/<int:post_id>/', views.like_post, name='like_post'), #like url 
+    path('like-counts/', views.like_counts, name='like_counts'), #like url   
     path("chat",views.message,name="message"),
-     path('student_details/<str:roll_number>/', views.student_detail, name='student_detail'),
+    path('student_details/<str:roll_number>/', views.student_detail, name='student_detail'),
     path("staff_dash/",include('staff_app.urls')),
     path("user_dash/",include('user_app.urls')),
     path('search_student/',views.search_student,name="search_student"),
