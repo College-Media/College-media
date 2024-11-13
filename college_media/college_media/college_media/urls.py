@@ -13,7 +13,13 @@ urlpatterns = [
     path('login',views.login_page,name="login"),
     path("admin_dash/",include('admin_app.urls')), 
     path('like/<int:post_id>/', views.like_post, name='like_post'), #like url 
-    path('like-counts/', views.like_counts, name='like_counts'), #like url   
+    path('like-counts/', views.like_counts, name='like_counts'), #like url 
+    path('save_comment/<int:post_id>/', views.save_comment, name='save_comment'),  #comment url 
+
+    # path('post/<int:post_id>/like/', views.like_post, name='like_post'),
+    path('post/<int:post_id>/comment/', views.add_comment, name='add_comment'),
+
+
     path("chat",views.message,name="message"),
     path('student_details/<str:roll_number>/', views.student_detail, name='student_detail'),
     path("staff_dash/",include('staff_app.urls')),
