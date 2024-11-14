@@ -66,6 +66,7 @@
 
 {% endblock style %}
 {% block content %}
+<div class="right">
 {% for post in posts  %}
         
             <!-- Start of Post -->
@@ -121,6 +122,7 @@
                 </div>
             </div>
             {% endfor %}
+</div>
             <script>
                 function changeColor(button) {
                     button.style.backgroundColor = 'yellow';

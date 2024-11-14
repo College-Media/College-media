@@ -16,14 +16,14 @@ def home(request):
 
 def add_post(request):
     if request.method=='POST':
-        title=request.POST['title']
+        # title=request.POST['title']
         body=request.POST['body']
         img=request.FILES['img']
         user=request.user
         student_instence=get_object_or_404(Student, user=user)
         posts=Post.objects.create(student=student_instence,content=body,image=img ,is_approved=False)
         posts.save()
-        print(title,body)
+        # print(title,body)
         print("hello there")
         messages.success(request,"post sent for verification")
         return redirect('/user_dash/add_post')
