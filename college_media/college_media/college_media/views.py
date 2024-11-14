@@ -6,37 +6,22 @@ from django.contrib.auth import authenticate,login,logout
 from staff_app.models import *
 from user_app.models import *
 from django.http import JsonResponse #like 
+from django.contrib.auth.decorators import login_required #comments
 
 # Create your views here.
 def home(request):
         return render(request,'login.html')
 
 def login_page(request):
-     # if not request.user.is_anonymous:
-        #     if request.session['remember']=='1':
-        #         user=request.user
-        #         if user.is_student:
-        #             login(request,user)
-        #             return redirect('user_dash/home')
-        #         elif user.is_staff:
-        #             login(request,user)
-        #             return redirect("staff_dash/add_student/")
-        print("login page")
-                
         if request.method=="POST":
             name=request.POST.get('roll')
             pass1=request.POST.get('password')
-            print(name ,pass1)
             # remember=request.POST['rem']/
             request.session['remember']='1'
             user=authenticate(username=name,password=pass1)
-            print(user)
           
             if user is not None:
                 p=CoustomUser.objects.get(username=user)
-                print(p)
-                print(p.is_staff)
-                print(p.is_student)
                 if p.is_staff:
                     login(request,user)
                     messages.success(request,'Login successfull')
@@ -48,22 +33,7 @@ def login_page(request):
                     return render(request,'login.html')
             else:
                 messages.error(request,'pleace enter valid email id or password',extra_tags='invalid')
-                return redirect("/")
-                # if user is not None:
-                #     if user.is_staff:
-            #         # request.session['messege']='admin'
-            #         login(request,user)                    
-            #         p=CoustomUser.objects.filter(username=user)
-            #         return render(request,"home.html")
-            #     elif user.is_student:
-            #         # request.session['messege']='s_p'
-            #         login(request,user)
-            #         redirect("staff_dash/add_student/")
-            #     else:
-            #         return render(request,"user.html")
-            # else:
-            #     messages.warning(request,"please enter correct email and password")
-            #     return render(request,'login.html')         
+                return redirect("/")      
         return render(request,'login.html')
 
 def maheshaa():
@@ -107,7 +77,6 @@ def search_student(request):
                         return render(request,"staff_pages/staff_search_page.html",{'message': "No student found with this roll number."})
                 else:
                         return render(request, "search.html", {'message': "No student found with this roll number."})     
-        
         except Student.DoesNotExist:
             if users.is_staff:
                 return render(request,"staff_pages/staff_search_page.html",{'message': "No student found with that roll number."})
@@ -143,17 +112,12 @@ def reset_password(request):
                    email_from = settings.DEFAULT_FROM_EMAIL
 
                    send_mail(subject, message, email_from, recipient_list)
-                    # message =f"hi your one time password is:"+request.session['a']
-                    # email_from =settings.EMAIL_HOST_USER
-                    # recipient_list=[mail]
-                    # send_mail(subject1,message,email_from,recipient_list) # type: ignore
                    return render(request,'reset_password.html',{'type':2})
                 else:
                     messages.success(request,"email not exists ")
                     return render(request,'reset_password.html',{'type':1}) 
         elif btn=='2':
                 otp=request.POST.get('otp')
-                print(otp)
                 a=request.session['a']
                 
                 if otp==a:
@@ -230,55 +194,28 @@ def like_post(request, post_id):
 
     return JsonResponse({"liked": liked, "like_count": like_count})
 
-def save_comment(request, post_id):
+#code for comments
+
+@login_required
+def submit_comment(request, post_id):
     if request.method == 'POST':
         content = request.POST.get('content')
-        student_id = request.POST.get('student_id')
+        post = get_object_or_404(Post, id=post_id)
         
-        try:
-            post = Post.objects.get(id=post_id)
-            student = Student.objects.get(id=student_id)
-            comment = Comment.objects.create(post=post, student=student, content=content)
-            
-            return JsonResponse({
-                'success': True,
-                'student_name': student.name,
-                'content': content,
-                'created_at': comment.created_at.strftime("%Y-%m-%d %H:%M:%S")
-            })
-        except Post.DoesNotExist:
-            return JsonResponse({'success': False, 'error': 'Post not found'})
-        except Student.DoesNotExist:
-            return JsonResponse({'success': False, 'error': 'Student not found'})
-    return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)
+        # Save the new comment
+        comment = Comment.objects.create(post=post, student=request.user, content=content)
+        
+        # Return the new comment data as JSON response
+        return JsonResponse({
+            'success': True,
+            'student_name': comment.student.name,
+            'content': comment.content,
+            'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M:%S')
+        })
 
-# testinf
-
-def like_post(request, post_id):
+@login_required
+def get_comments(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    student = request.user.student
-
-    # Toggle like status
-    like, created = Like.objects.get_or_create(post=post, student=student)
-    if not created:
-        like.delete()
-        liked = False
-    else:
-        liked = True
-
-    return JsonResponse({'liked': liked, 'like_count': post.likes.count()})
-
-
-def add_comment(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-    content = request.POST.get('content')
-    student = request.user.student
-
-    # Save comment
-    comment = Comment.objects.create(post=post, student=student, content=content)
-
-    return JsonResponse({
-        'student_roll': student.roll_number,
-        'content': comment.content,
-        'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M')
-    })
+    comments = post.comments.order_by('-created_at').values('student__name', 'content', 'created_at')
+    
+    return JsonResponse(list(comments), safe=False)

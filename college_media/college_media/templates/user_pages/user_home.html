@@ -63,12 +63,16 @@
             </div>
             <div class="comment">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"/></svg>
-                <div id="comments-container-{{ post.id }}">
-                    <!-- Comments will be added here dynamically -->
-                </div>
-                <textarea id="commentContent-{{ post.id }}" placeholder="Write a comment..."></textarea>
-                <button onclick="submitComment({{ post.id }}, {{ user.id }})">Post Comment</button>
             </div>
+            <div class="comment-section">
+                <div id="comments-container-{{ post.id }}">
+                    <!-- Display existing comments here using AJAX -->
+                </div>
+    
+                <!-- Comment submission form -->
+                <textarea id="commentContent-{{ post.id }}" placeholder="Write a comment..."></textarea>
+                <button onclick="submitComment({{ post.id }})">Post Comment</button>
+            </div>  
         </div>
     </div>
     {% endfor %}
@@ -76,6 +80,11 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+        // Load comments for each post on page load
+        {% for post in posts %}
+            loadComments({{ post.id }});
+        {% endfor %}
+
         // Function to handle the like/unlike action
         window.likePost = function(postId) {
             const likeIconElement = document.getElementById(`like-icon-${postId}`);
@@ -144,9 +153,62 @@
                 .catch(error => console.error('Error updating like counts:', error));
         }
 
-        // Poll every 5 seconds to update like counts
+        // Poll every 2 seconds to update like counts
         setInterval(updateLikeCounts, 2000);
     });
+
+    // JavaScript for comment handling
+    document.addEventListener("DOMContentLoaded", function() {
+        function loadComments(postId) {
+            // Fetch comments for the post
+            fetch(`/post/${postId}/get_comments/`)
+                .then(response => response.json())
+                .then(data => {
+                    const commentsContainer = document.getElementById(`comments-container-${postId}`);
+                    commentsContainer.innerHTML = '';  // Clear existing comments
+                    data.forEach(comment => {
+                        commentsContainer.innerHTML += `<p><strong>${comment.student__name}</strong>: ${comment.content}</p>`;
+                    });
+                });
+        }
+    
+        window.submitComment = function(postId) {
+            const commentContent = document.getElementById(`commentContent-${postId}`).value.trim();
+            if (!commentContent) {
+                alert("Comment cannot be empty.");
+                return;
+            }
+    
+            // AJAX request to submit comment
+            fetch(`/post/${postId}/submit_comment/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({ content: commentContent })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const commentsContainer = document.getElementById(`comments-container-${postId}`);
+                    commentsContainer.innerHTML += `<p><strong>${data.student_name}</strong>: ${data.content}</p>`;
+                    document.getElementById(`commentContent-${postId}`).value = '';  // Clear the textarea
+                } else {
+                    alert("Failed to post comment.");
+                }
+            })
+            .catch(error => console.error("Error submitting comment:", error));
+        };
+    
+        // Load comments for each post on page load
+        {% for post in posts %}
+            loadComments({{ post.id }});
+        {% endfor %}
+    });
 </script>
+
+</script>
+
 
 {% endblock content %}
