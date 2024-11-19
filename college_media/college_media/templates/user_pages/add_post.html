@@ -148,7 +148,7 @@ height:100%;
                 <form id="post-form" action='add_post' method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="file" id="imageInput" name="img" accept="image/*"
-                        onchange="displayImage(event)">
+                        onchange="displayImage(event)" required>
                     <button type="button" class="upload-button" 
                         onclick="document.getElementById('imageInput').click()">Drag and Drop image here</button>
 

@@ -381,6 +381,19 @@
             border-top: none;
             color: black;
         }
+        #post-img{
+            cursor: pointer;
+            border-radius: 20%;
+
+            border: 1px solid rgba(144, 138, 138, 0.678);
+            min-width: 90px;
+            width: 200px;
+            height: 200px;
+            margin: 10px 2px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
 
         /*--------MOBILE VIEW--------*/
         .mobile-top,
@@ -605,7 +618,9 @@
             /* Slightly enlarge on hover */
             box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
             /* Enhance shadow on hover */
+            
         }
+       
     </style>
     <script src='{% static "js\profile.js" %}'></script>
 </head>
@@ -742,11 +757,11 @@
                 {% for post in posts %}
                 {% if post %}
                 {% if post.is_approved %}
-                <div class="approved-post"><img src="{{ post.image.url }}" class="post" alt="Posts">
+                <div class="approved-post"><img id="post" src="{{ post.image.url }}" onclick="showpost('{{ post.image.url }}',)" class="post" alt="Posts">
                 </div>
                 {% else %}
-                <img src="{{ post.image.url }}" alt="Posts">
-                <h3>Post Not Approved</h3>
+                <div class="approved-post"><img src="{{ post.image.url }}" alt="Posts">
+                <h3>Post Not Approved</h3></div>
             </div>
             {% endif %}
             {% else %}
@@ -802,20 +817,12 @@
         </div>
     </div>
     <!-- Form for Post display in user profile  -->
-    <div id="editPostForm">
-
-        
+    <div id="editPostForm">      
        
         <form>
             <div id="overlay2"></div>
             <div id="post-in-edit-actions">
-                {% if student_info.profile_image %}
-                <img id="profile-image-edit" src="{{ student_info.profile_image.url }}" alt="Profile Picture">
-                {% else %}
-                <div id="profile-image-placeholder-large">
-                    {{ student_info.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
-                </div>
-                {% endif %}
+                <img id="post-img" src="" alt="Profile Picture">                
             </div>
          
         </form>
@@ -877,6 +884,15 @@
             </li>
         </ul>
     </div>
+    <script>
+        function showpost(imgurl){
+        const postElement=document.getElementById('post-img')
+        postElement.src = imgurl;
+        document.getElementById('editPostForm').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+        console.log(imgurl)
+        }
+    </script>
 </body>
 
 </html>

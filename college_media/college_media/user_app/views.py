@@ -33,5 +33,7 @@ def add_post(request):
 def user_profile(request):
     user=request.user
     student_info=Student.objects.get(user=user) 
-    post=Post.objects.filter(student__roll_number=student_info.user)      
+    post=Post.objects.filter(student__roll_number=student_info.user)
+    comments=Comment.objects.filter(student__roll_number=student_info.user)     
+    print(comments)
     return render(request,"user_pages/user_profile.html",{'student_info':student_info,'posts':post})

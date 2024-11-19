@@ -28,16 +28,14 @@ document.addEventListener('DOMContentLoaded', function () {
        
     });
 
-    //for post
-   // Select all div elements with the class 'approved-post'
-document.querySelectorAll('div.approved-post').forEach(div => {
-    // Attach a click event listener to each div
-    div.addEventListener('click', function () {
-        // When clicked, show the edit post form and the overlay
-        document.getElementById('editPostForm').style.display = 'block';
-        document.getElementById('overlay').style.display = 'block';
-    });
-});
+//     //for post
+//    // Select all div elements with the class 'approved-post'
+// document.querySelectorAll('div.approved-post').forEach(div => {
+//     div.addEventListener('click', function () {   
+//         document.getElementById('editPostForm').style.display = 'block';
+//         document.getElementById('overlay').style.display = 'block';
+//     });
+// });
 
     // document.getElementById('closeButtonP').addEventListener('click', function () {
     //     document.write("dhkj");
