@@ -61,8 +61,8 @@
                 </svg>
                 <span id="like-count-{{ post.id }}">{{ post.likes.count }}</span> Likes
             </div>
-            <div class="comment">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"/></svg>
+            <div class="comment" onclick="showcomment()">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px"  viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"/></svg>
             </div>
             <div class="comment-section">
                 <div id="comments-container-{{ post.id }}">
@@ -80,10 +80,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Load comments for each post on page load
-        {% for post in posts %}
-            loadComments({{ post.id }});
-        {% endfor %}
+      
 
         // Function to handle the like/unlike action
         window.likePost = function(postId) {
@@ -206,9 +203,13 @@
             loadComments({{ post.id }});
         {% endfor %}
     });
+
+    function showcomment(){
+        consloe.log("coments");
+    }
 </script>
 
-</script>
+
 
 
 {% endblock content %}
