@@ -219,3 +219,12 @@ def get_comments(request, post_id):
     comments = post.comments.order_by('-created_at').values('student__name', 'content', 'created_at')
     
     return JsonResponse(list(comments), safe=False)
+
+def deletepost(request,post_id):
+    posts=Post.objects.get(id=post_id)
+    posts.delete()
+    user=request.user
+    if user.is_staff:
+        return redirect('staff_profile')
+    else:
+        return redirect('user_profile')

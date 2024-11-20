@@ -1,5 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from staff_app.models import *
+from user_app.models import *
 
 # Create your views here.
-def welcome(request):
-    return render(request,"welcome.html")

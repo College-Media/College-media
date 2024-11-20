@@ -6,8 +6,7 @@ from staff_app.models import *
 
 
 class Post(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)    
     content = models.TextField()
     image = models.ImageField(upload_to='posts/', blank=True, null=True)
     is_approved = models.BooleanField(default=False)

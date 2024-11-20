@@ -6,7 +6,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home,name="home"),
     path('forgot-password',views.reset_password,name="forgot password"),
     path('profile',views.profile,name="profile"), #Showing the profile 
     path('logout',views.logout_user,name="logout"), #logout url
@@ -21,6 +20,7 @@ urlpatterns = [
     path("staff_dash/",include('staff_app.urls')),
     path("user_dash/",include('user_app.urls')),
     path('search_student/',views.search_student,name="search_student"),
+    path('delete/<int:post_id>', views.deletepost,name='deletepost'),
     path('add_post/',views.add_post,name="Add post")
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

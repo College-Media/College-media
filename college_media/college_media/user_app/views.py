@@ -35,5 +35,6 @@ def user_profile(request):
     student_info=Student.objects.get(user=user) 
     post=Post.objects.filter(student__roll_number=student_info.user)
     comments=Comment.objects.filter(student__roll_number=student_info.user)     
-    print(comments)
+    for i in post:
+        print(i.id)
     return render(request,"user_pages/user_profile.html",{'student_info':student_info,'posts':post})

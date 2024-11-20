@@ -28,20 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
        
     });
 
-//     //for post
-//    // Select all div elements with the class 'approved-post'
-// document.querySelectorAll('div.approved-post').forEach(div => {
-//     div.addEventListener('click', function () {   
-//         document.getElementById('editPostForm').style.display = 'block';
-//         document.getElementById('overlay').style.display = 'block';
-//     });
-// });
 
-    // document.getElementById('closeButtonP').addEventListener('click', function () {
-    //     document.write("dhkj");
-    //     document.getElementById('editPostForm').style.display = 'none';
-    //     document.getElementById('overlay').style.display = 'none';
-    // });
     document.getElementById('overlay').addEventListener('click', function () {
         document.getElementById('editPostForm').style.display = 'none';
         document.getElementById('overlay').style.display = 'none';
