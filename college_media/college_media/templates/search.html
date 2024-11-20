@@ -1,87 +1,178 @@
 {% extends "user_pages/base.html" %}
 {% block style %}
 /* Student Details Card */
-.student-card {
-    width: 100%;
-    max-width: 500px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-    color: #333;
+.searchIconContainer{
+position:absolute;
+
+padding:10px;
+right:0;
+background-color:rgb(42, 174, 188);
+border-top-right-radius:10px;
+border-bottom-right-radius:10px;
+height:27px;
+display:none;
+cursor:pointer;
+}
+.searchContainer{
+display:flex;
+flex-direction:row;
+
+position:relative;
+}
+#searchInput{
+border-radius:10px;
+box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 8px rgba(0, 0, 0, 0.08);
+padding:15px;
+position:relative;
 }
 
+.search-btn{
+cursor:pointer;
+border:none;
+border-radius:10px;
+padding:10px;
+background-color:rgba(17, 104, 113, 0.955);
+margin:10px;
+color:white;
+font-weight:bold;
+font-size:medium;
+
+}
+.student-card {
+width: 100%;
+max-width: 500px;
+margin: 20px auto;
+padding: 20px;
+background-color: #f9f9f9;
+border: 1px solid rgba(17, 104, 113, 0.955);
+border-radius: 8px;
+
+
+font-family: Arial, sans-serif;
+color: #333;
+cursor:pointer;
+}
+.student-card:hover{
+transform: scale(1.10);
+box-shadow: 0px 4px 6px rgb(148, 226, 235), 0px 1px 8px rgb(148, 226, 235);
+}
 .student-card h3 {
-    text-align: center;
-    font-size: 22px;
-    color: #007BFF;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
+text-align: center;
+font-size: 22px;
+color:rgba(17, 104, 113, 0.955);
+margin-bottom: 20px;
+border-bottom: 1px solid #ddd;
+padding-bottom: 10px;
 }
 
 .student-card p {
-    font-size: 16px;
-    margin: 10px 0;
+font-size: 16px;
+margin: 10px 0;
+width:100%;
 }
 
 .student-card p strong {
-    color: #555;
+color: #555;
+}
+@media (max-width:700px) {
+.student-card{
+width:70%;
+margin:10px;
+}
+.student-card p{
+font-size:14px;
+width:100%;
+}
+}
+@media (max-width:600px){
+    .searchIconContainer{
+    display:block;
+    }
+    .search-btn{
+        display:none;
+    }
+    .searchContainer{
+        margin:0px 10px;
+    }
+}
+@media (max-width:450px) {
+.student-card{
+
+margin:10px;
+}
+.student-card p{
+font-size:12px;
+width:100%;
+}
+#searchInput{
+width:100%;
+}
+.searchContainer{
+    margin:0px 10px;
+}
 }
 {% endblock style %}
 {% block content %}
-    <div class="right">
-        
-        <div class="search-container">
-        
-  
-            <form action="/search_student/" method="POST">
-                {% csrf_token %}
-                <h2>Search for Student / Staff by Roll Number or Name</h2>
-                <input type="text" id="searchInput" name="roll_number" placeholder="Enter Roll Number">
-                <button onclick="searchStudent()">Search</button>
-                <div class="results" id="results"></div>
-            </form></div>
-            {% if student %}
-            <h3>Student Details</h3>
-            {% for stu in student  %}
-            <div class="student-card">
-                <h3><strong>Roll Number:</strong><a href="{% url 'student_detail' stu.id %}"> {{ stu.roll_number }}</a></h3>
-                <p><strong>Name:</strong> {{ stu.name }}</p>
-                <p><strong>Email:</strong> {{ stu.email }}</p>
+<div class="right">
+
+    <div class="search-container">
+
+
+        <form action="/search_student/" method="POST">
+            {% csrf_token %}
+            <h2 style="color:rgba(17, 104, 113, 0.955);">Search for Student by Roll Number or Name</h2>
+            <div class="searchContainer">
+                <input type="text" id="searchInput" name="roll_number"
+                    placeholder="Enter Roll Number">
+              <div class="searchIconContainer" onclick="searchStudent()"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                        viewBox="0 -960 960 960" width="24px" fill="#5f6368" id="searchIcon">
+                        <path
+                            d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+                    </svg>
+                </div> 
             </div>
-            {% endfor %} 
-            {% elif message %}
-            <p>{{ message }}</p>
-            {% endif %}  
-            
+            <button onclick="searchStudent()" class="search-btn">Search</button>
+            <div class="results" id="results"></div>
+        </form>
     </div>
-    <script>
-        function searchStudent() {
-            const rollNumber = document.getElementById("searchInput").value;
-            fetch(`search_student?roll=${rollNumber}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data) {
-                        // Display search results with clickable roll number
-                        document.getElementById("results").innerHTML = `
+    {% if student %}
+    <h3>Student Details</h3>
+    {% for stu in student %}
+    <div class="student-card" onclick=window.location.href="{% url 'student_detail' stu.id %}">
+        <h3><strong>Roll Number:</strong> {{ stu.roll_number }}</h3>
+        <p><strong>Name:</strong> {{ stu.name }}</p>
+        <p><strong>Email:</strong> {{ stu.email }}</p>
+    </div>
+    {% endfor %}
+    {% elif message %}
+    <p>{{ message }}</p>
+    {% endif %}
+
+</div>
+<script>
+    // document.querySelector('.searchIconContainer').addEventListener('click',searchStudent());
+    function searchStudent() {
+        const rollNumber = document.getElementById("searchInput").value;
+        fetch(`search_student?roll=${rollNumber}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    // Display search results with clickable roll number
+                    document.getElementById("results").innerHTML = `
                             <p>Student Name: ${data.name}</p>
                             <p>Roll Number: 
                         `;
-                    } else {
-                        document.getElementById("results").innerHTML = "<p>No student found</p>";
-                    }
-                });
-        }
-    
-        document.querySelector('.menu-items a[href="/logout"]').addEventListener('click', function(event) {
-            event.preventDefault();
-            window.location.href = "/search";
-        });
-    </script>
-    
-    {% endblock content %}
+                } else {
+                    document.getElementById("results").innerHTML = "<p>No student found</p>";
+                }
+            });
+    }
+
+    document.querySelector('.menu-items a[href="/logout"]').addEventListener('click', function (event) {
+        event.preventDefault();
+        window.location.href = "/search";
+    });
    
+</script>
+
+{% endblock content %}

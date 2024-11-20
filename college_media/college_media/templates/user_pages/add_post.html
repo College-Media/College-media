@@ -149,7 +149,7 @@ height:100%;
                     {% csrf_token %}
                     <input type="file" id="imageInput" name="img" accept="image/*"
                         onchange="displayImage(event)">
-                    <button type="button" class="upload-button" 
+                    <button type="button" class="upload-button"  name="img"
                         onclick="document.getElementById('imageInput').click()">Drag and Drop image here</button>
 
             </div>
