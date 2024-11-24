@@ -121,6 +121,7 @@
             background-color: rgb(238, 238, 238);
             width: 100%;
             height: 30%;
+           min-height: 20%;
             align-items: center;
             display: flex;
             flex-direction: row;
@@ -203,14 +204,10 @@
         }
 
         .right-bottom {
-
             margin: auto;
-
             display: flex;
             font-size: xx-large;
-
             padding: 10px;
-
             justify-content: center;
             align-items: center;
             width: 100%;
@@ -218,7 +215,7 @@
         }
 
         .post-inside-profile {
-            overflow-y: auto;
+            overflow-x: auto;
             display: flex;
             flex-direction: row;
             gap: 8px;
@@ -293,7 +290,8 @@
             z-index: 1002;
         }
 
-        #editPostForm,#editProfileForm {
+        #editPostForm,
+        #editProfileForm {
             display: none;
             position: fixed;
             top: 50%;
@@ -312,7 +310,7 @@
             border-radius: 8px;
         }
 
-       .closeBtn {
+        .closeBtn {
             position: absolute;
             top: 5px;
             right: 10px;
@@ -321,8 +319,9 @@
             background: none;
             cursor: pointer;
         }
-        
-       #post-in-edit-actions, #profile-in-edit {
+
+        #post-in-edit-actions,
+        #profile-in-edit {
             cursor: pointer;
 
         }
@@ -346,8 +345,9 @@
             color: white;
         }
 
-        #post-edit-action-table, #profile-edit-pic-table {
-            display: none;
+        #post-edit-action-table,
+        #profile-edit-pic-table {
+           
             width: 100%;
             cursor: pointer;
             position: fixed;
@@ -364,24 +364,28 @@
 
         }
 
-        #profile-edit-pic-table ul,#post-edit-action-table ul {
+        #profile-edit-pic-table ul,
+        #post-edit-action-table ul {
             padding: 0;
             margin: 0;
             list-style-type: none;
         }
 
-        #profile-edit-pic-table li,#post-edit-action-table li {
+        #profile-edit-pic-table li,
+        #post-edit-action-table li {
             color: rgb(210, 20, 20);
             padding: 15px;
             text-align: center;
             border-top: 1px solid rgb(147, 143, 143);
         }
 
-        #profile-edit-pic-table li:first-child , #post-edit-action-table li:first-child{
+        #profile-edit-pic-table li:first-child,
+        #post-edit-action-table li:first-child {
             border-top: none;
             color: black;
         }
-        #post-img{
+
+        #post-img {
             cursor: pointer;
             border-radius: 20%;
 
@@ -492,14 +496,20 @@
             .right-top ul:first-child {
                 width: 20px;
             }
-
+            .right-top{
+                height:30%;
+                min-height:150px;
+            }
+            .right-profile{
+    
+            }
             .mobile-bottom {
                 margin: 100%;
                 display: flex;
                 justify-content: center;
                 position: absolute;
                 bottom: 0px;
-                z-index: 1;
+                z-index: 1000;
                 background-color: white;
                 border-top: 1px solid rgb(176, 172, 172);
             }
@@ -548,6 +558,13 @@
                 margin: 0;
                 padding: 0;
             }
+
+            .not-approved-post,
+            .approved-post {
+                max-width: 100px;
+                max-height: 100px;
+            }
+
         }
 
         /*CSS changes for main edit-profile in user page  */
@@ -585,9 +602,11 @@
             border-radius: 50%;
         }
 
+        .not-approved-post,
         .approved-post {
+            position: relative;
             width: 300px;
-            background-color: #ccc;
+            background-color: #cccacae6;
             height: 300px;
             border-radius: 10px;
             border: 1px solid black;
@@ -595,7 +614,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .post {
+        #post {
             width: 100%;
             height: 100%;
             border-radius: 10px;
@@ -612,17 +631,65 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         } */
 
-        .approved-post:hover {
-            cursor:pointer;
+        #post:hover{
+            cursor: pointer;
             transform: scale(1.02);
-            /* Slightly enlarge on hover */
             box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
-            /* Enhance shadow on hover */
-            
         }
-       
+
+        .div-svg-approve, .div-svg-not-approve {
+            width: 24px;
+            height: 24px;
+            border-radius: 50px;
+            background-color: rgb(250, 249, 249);
+            color: white;
+            position: absolute;
+            right: 1px;
+            top: 1px;
+            z-index: 1000;
+            transition: width 2s linear;
+        }
+
+        .div-svg-approve:hover ,  .div-svg-not-approve:hover {
+            width: 120px;
+            color: black;
+
+        }
+
+       .span-svg-approve, .span-svg-not-approve {
+        display:none;
+            font-size: 14px;
+            position: absolute;
+            top: 1px;
+            left: 10px;
+            margin: auto;
+            overflow: hidden;
+            width: 70%;
+            height: 90%;
+            padding:2px 10px;
+          
+            transform: none;
+        }
+        .span-svg-not-approve {
+            width: 90%;
+            height: 90%;
+            padding:2px 5px;
+        }
+        .svg-for-approve,
+        .svg-for-not-approve {
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 1000;
+            fill: green;
+
+        }
+
+        .svg-for-not-approve {
+            fill: rgb(229, 16, 16);
+        }
     </style>
-    <script src='{% static "js\profile.js" %}'></script>
+
 </head>
 
 <body>
@@ -751,19 +818,35 @@
             </div>
         </div>
         <div class="right-bottom">
-
+            {% if posts %}
             <div class="post-inside-profile">
-
                 {% for post in posts %}
-                {% if post %}
                 {% if post.is_approved %}
-                <div class="approved-post"><img id="post" src="{{ post.image.url }}" onclick="showpost('{{ post.image.url }}',)" class="post" alt="Posts">
+                <div class="approved-post"><img id="post" src="{{ post.image.url }}"
+                        onclick="showpost('{{ post.image.url }}',)" class="post" alt="Posts">
+                    <div class="div-svg-approve"><span class="span-svg-approve">Approved</span>
+                        <svg class="svg-for-approve" xmlns="http://www.w3.org/2000/svg" height="24px"
+                            viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                            <path
+                                d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+                        </svg>
+                    </div>
                 </div>
                 {% else %}
-                <div class="approved-post"><img src="{{ post.image.url }}" alt="Posts">
-                <h3>Post Not Approved</h3></div>
+                <div class="not-approved-post"><img id="post"  onclick="showpost('{{ post.image.url }}',)"  class="post" src="{{ post.image.url }}" alt="Posts">
+                    <div class="div-svg-not-approve"><span class="span-svg-not-approve">Not approved</span><svg
+                            class="svg-for-not-approve" xmlns="http://www.w3.org/2000/svg" height="24px"
+                            viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                            <path
+                                d="m338-290 142-142 142 142 48-48-142-142 142-142-48-48-142 142-142-142-48 48 142 142-142 142 48 48ZM479.68-59q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+                        </svg>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor%}
             </div>
-            {% endif %}
+
+
             {% else %}
 
             <div class="post-in-profile" onclick="window.location='/user_dash/add_post'"><svg
@@ -776,7 +859,7 @@
             <div>Start posting</div>
         </div>
         {% endif %}
-        {% endfor %}
+
 
 
 
@@ -817,14 +900,14 @@
         </div>
     </div>
     <!-- Form for Post display in user profile  -->
-    <div id="editPostForm">      
-       
+    <div id="editPostForm">
+
         <form>
             <div id="overlay2"></div>
             <div id="post-in-edit-actions">
-                <img id="post-img" src="" alt="Profile Picture">                
+                <img id="post-img" src="" alt="Profile Picture">
             </div>
-         
+
         </form>
 
         <div id="post-edit-action-table">
@@ -885,14 +968,17 @@
         </ul>
     </div>
     <script>
-        function showpost(imgurl){
-        const postElement=document.getElementById('post-img')
-        postElement.src = imgurl;
-        document.getElementById('editPostForm').style.display = 'block';
-        document.getElementById('overlay').style.display = 'block';
-        console.log(imgurl)
+
+        function showpost(imgurl) {
+            const postElement = document.getElementById('post-img')
+            postElement.src = imgurl;
+            document.getElementById('editPostForm').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+            console.log(imgurl)
         }
+
     </script>
+    <script src='{% static "js\profile.js" %}'></script>
 </body>
 
 </html>

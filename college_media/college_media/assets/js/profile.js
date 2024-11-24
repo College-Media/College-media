@@ -33,18 +33,48 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('editPostForm').style.display = 'none';
         document.getElementById('overlay').style.display = 'none';
         document.getElementById('overlay2').style.display = 'none';
-        document.getElementById('post-edit-action-table').style.display='none';
+       
     });
     document.getElementById('post-in-edit-actions').addEventListener('click',function(){
         document.getElementById('overlay2').style.display = 'block';
-        document.getElementById('post-edit-action-table').style.display='block';
        
     });
     document.getElementById('cancelBtnP').addEventListener('click',function(){
         document.getElementById('editPostForm').style.display = 'none';
         document.getElementById('overlay2').style.display = 'none';
-        document.getElementById('post-edit-action-table').style.display='none';
+      
         document.getElementById('editPostForm').style.dispaly="none";
         document.getElementById('overlay').style.display = 'none';
     });
+    let timeoutId;
+    document.querySelectorAll(".div-svg-not-approve").forEach(div => {
+        div.addEventListener('mouseover', function() {
+            timeoutId=setTimeout(function(){
+            div.querySelector(".span-svg-not-approve").style.display = "block";
+         },900);
+         
+        });
+        div.addEventListener('mouseout', function() {
+            clearTimeout(timeoutId);
+          div.querySelector(".span-svg-not-approve").style.display = "none";
+        });
+    });
+    
+    document.querySelectorAll('.div-svg-approve').forEach(div => {
+      
+      
+        div.addEventListener('mouseover', function() {
+          
+          timeoutId = setTimeout(function() {
+            div.querySelector(".span-svg-approve").style.display = "block";
+          }, 890);
+        });
+      
+        div.addEventListener('mouseout', function() {
+          clearTimeout(timeoutId);
+          div.querySelector(".span-svg-approve").style.display = "none";
+        });
+      });
+      
+    
 });
