@@ -24,10 +24,8 @@ def add_post(request):
         posts=Post.objects.create(student=student_instence,content=body,image=img ,is_approved=False)
         posts.save()
         # print(title,body)
-        print("hello there")
         messages.success(request,"post sent for verification")
-        return redirect('/user_dash/add_post')
-    
+        return redirect('/user_dash/add_post')    
     return render(request,"user_pages/add_post.html")
 
 def user_profile(request):

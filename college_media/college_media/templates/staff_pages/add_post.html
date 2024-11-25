@@ -149,7 +149,7 @@ height:100%;
                 </svg>
             </div>
             <div class="form-container">
-                <form id="post-form" action='add_post' method="POST" enctype="multipart/form-data">
+                <form id="post-form" action='' method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="file" id="imageInput" name="img" accept="image/*"
                         onchange="displayImage(event)">

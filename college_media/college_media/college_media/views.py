@@ -142,8 +142,17 @@ def reset_password(request):
 def add_post(request):
     user=request.user
     users=CoustomUser.objects.get(username=user)
+    if request.method=='POST':
+        if users.is_staff:       
+            body=request.POST['body']
+            img=request.FILES['img']
+            user=request.user
+            student_instence=get_object_or_404(Student, user=user)
+            posts=Post.objects.create(student=student_instence,content=body,image=img ,is_approved=True)
+            posts.save()
+            return render(request,"staff_pages/add_post.html")
     if users.is_staff:
-         return render(request,"staff_pages/add_post.html")
+        return render(request,"staff_pages/add_post.html")
     else:
         return render(request, "user_pages/add_post.html")
     
