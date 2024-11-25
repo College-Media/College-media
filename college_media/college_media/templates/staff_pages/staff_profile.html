@@ -7,18 +7,25 @@ body {
     justify-content: flex-start;
     margin: 0;
 
+
 }
 
 .left {
-    position: fixed;  /* Make the left sidebar fixed */
-top: 0;
-left: 0;
-height: 100vh;
-min-width: 120px;
-border-right: 1px solid rgba(133, 130, 130, 0.474);
-background-color: #fff; /* Optional background color */
-z-index: 1; /* Ensure it stays on top */
+
+    position: fixed;
+    /* Make the left sidebar fixed */
+    top: 0;
+    left: 0;
+    height: 100vh;
+    min-width: 120px;
+    border-right: 1px solid rgba(133, 130, 130, 0.474);
+    background-color: #fff;
+    /* Optional background color */
+    z-index: 1;
+    /* Ensure it stays on top */
+
 }
+
 
 .left .logo-image {
     border-radius: 50%;
@@ -65,9 +72,10 @@ z-index: 1; /* Ensure it stays on top */
 .menu-items:hover .icon {
     fill: black;
     width: 28px;
-    
+
 }
-svg{
+
+svg {
     cursor: pointer;
 }
 
@@ -90,27 +98,28 @@ svg{
     background-position: center;
     background-repeat: no-repeat;
 }
-.profile:hover{
-    cursor:pointer;
-}
+
 .right {
-    margin-left: 120px;  /* Offset by the width of the left sidebar */
-height: 100vh;
-display: flex;
-flex-direction: column;
-width: calc(100% - 120px); /* Fill remaining space */
-overflow-y: auto; 
+    margin-left: 120px;
+    /* Offset by the width of the left sidebar */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 120px);
+    /* Fill remaining space */
+    overflow: hidden;
 }
 
 .right-top {
     background-color: rgb(238, 238, 238);
-            width: 100%;
-            height: 30%;
-            align-items: center;
-            display: flex;
-            flex-direction: row;
-            border-bottom: 1px solid rgb(160, 158, 158);
-            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100%;
+    height: 30%;
+   min-height: 20%;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid rgb(160, 158, 158);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .right-profile {
@@ -159,42 +168,54 @@ overflow-y: auto;
 }
 
 .editBtn {
-
     border: none;
-            border-radius: 10px;
-            background-color: rgba(10, 10, 156, 0.718);
-            padding:10px 20px;
-            color: rgb(251, 250, 252);
-            font-size: medium;
-            font-weight: bold;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-radius: 10px;
+    background-color: rgba(10, 10, 156, 0.718);
+    padding: 10px 20px;
+    color: rgb(251, 250, 252);
+    font-size: medium;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-.editBtn:hover, #editBtn:hover{
+
+.editBtn:hover,
+#editBtn:hover {
     cursor: pointer;
-            }
-#editBtn1{
+}
+
+#editBtn1 {
     display: none;
-            margin-top: 20px;
-            border: none;
-            border-radius: 10px;
-            background-color: rgba(10, 10, 156, 0.718);
-            padding: 10px;
-            color: rgb(251, 250, 252);
-            font-size: medium;
-            font-weight: bold;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgba(10, 10, 156, 0.718);
+    padding: 10px;
+    color: rgb(251, 250, 252);
+    font-size: medium;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .right-bottom {
     margin: auto;
-    background-color: rgb(215, 216, 217);
     display: flex;
     font-size: xx-large;
-    flex-direction: column;
+    padding: 10px;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100vh;
+}
+
+.post-inside-profile {
+    overflow-x: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-left: 120px;
+    height: 100%;
+    margin-top: 0;
 }
 
 .post-in-profile {
@@ -262,22 +283,24 @@ border-radius: 50%;
     z-index: 1002;
 }
 
+#editPostForm,
 #editProfileForm {
     display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1001;
-            max-width: 600px;
-            height: 500px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            border: 1px solid #ddd;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 350px;
-            text-align: center;
-            border-radius: 8px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    max-width: 600px;
+    height: 500px;
+    font-size: medium;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+    border-radius: 8px;
 }
 
 .closeBtn {
@@ -289,10 +312,13 @@ border-radius: 50%;
     background: none;
     cursor: pointer;
 }
-#profile-in-edit{
+
+#post-in-edit-actions,
+#profile-in-edit {
     cursor: pointer;
-    
+
 }
+
 #subBtn {
     display: block;
     margin: 0px;
@@ -306,13 +332,15 @@ border-radius: 50%;
     cursor: pointer;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-#subBtn:hover{
+
+#subBtn:hover {
     background-color: rgba(88, 6, 113, 0.91);
-    color:white;
+    color: white;
 }
 
+#post-edit-action-table,
 #profile-edit-pic-table {
-    display: none;
+   
     width: 100%;
     cursor: pointer;
     position: fixed;
@@ -329,22 +357,39 @@ border-radius: 50%;
 
 }
 
-#profile-edit-pic-table ul {
+#profile-edit-pic-table ul,
+#post-edit-action-table ul {
     padding: 0;
     margin: 0;
     list-style-type: none;
 }
 
-#profile-edit-pic-table li {
+#profile-edit-pic-table li,
+#post-edit-action-table li {
     color: rgb(210, 20, 20);
     padding: 15px;
     text-align: center;
     border-top: 1px solid rgb(147, 143, 143);
 }
 
-#profile-edit-pic-table li:first-child {
+#profile-edit-pic-table li:first-child,
+#post-edit-action-table li:first-child {
     border-top: none;
     color: black;
+}
+
+#post-img {
+    cursor: pointer;
+    border-radius: 20%;
+
+    border: 1px solid rgba(144, 138, 138, 0.678);
+    min-width: 90px;
+    width: 200px;
+    height: 200px;
+    margin: 10px 2px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /*--------MOBILE VIEW--------*/
@@ -362,22 +407,25 @@ border-radius: 50%;
         width: 85px;
     }
 }
+
 /* css changes for responsiveness */
 @media (max-width:900px) {
     .right-profile li:first-child {
         font-size: small;
     }
-    .right-profile{
+
+    .right-profile {
         padding: 10px;
     }
 
-    .right-profile img{
-        width:80px;
+    .right-profile img {
+        width: 80px;
         height: 80px;
     }
-    .right-profile #profile-image-placeholder-large{
-        width:80px;
-        height:80px;
+
+    .right-profile #profile-image-placeholder-large {
+        width: 80px;
+        height: 80px;
     }
 }
 
@@ -399,6 +447,7 @@ border-radius: 50%;
         display: flex;
         margin: 0;
         width: 100%;
+
     }
 
     .mobile-top ul {
@@ -417,6 +466,7 @@ border-radius: 50%;
         width: 24px;
         height: 24px;
     }
+
     .mobile-bottom svg {
         fill: black;
         width: 35px;
@@ -427,20 +477,42 @@ border-radius: 50%;
         margin-right: auto;
         padding: 4px;
     }
-    .editBtn{
-        display:none;
-    }
-    #editBtn1{
-        display:block;
+
+    .editBtn {
+        display: none;
     }
 
+    #editBtn1 {
+        display: block;
+    }
+
+    .right-top ul:first-child {
+        width: 20px;
+    }
+    .right-top{
+        height:30%;
+        min-height:150px;
+    }
+    .post-inside-profile{
+        height:100%;
+        margin-left: 0;
+    }
+   
+    .span-svg-approve, .span-svg-not-approve {
+        font-size: 8px;
+    }
+    /* .svg-for-approve,
+    .svg-for-not-approve {
+         width: 20px;
+         height:20px;
+    } */
     .mobile-bottom {
         margin: 100%;
         display: flex;
         justify-content: center;
         position: absolute;
         bottom: 0px;
-        z-index: 1;
+        z-index: 1000;
         background-color: white;
         border-top: 1px solid rgb(176, 172, 172);
     }
@@ -489,7 +561,16 @@ border-radius: 50%;
         margin: 0;
         padding: 0;
     }
+
+    .not-approved-post,
+    .approved-post {
+        max-width: 100px;
+        max-height: 100px;
+    }
+  
+
 }
+
 /*CSS changes for main edit-profile in user page  */
 #profile-image-placeholder-large {
     width: 100px;
@@ -518,12 +599,99 @@ border-radius: 50%;
     font-weight: bold;
     cursor: pointer;
 }
+
 .img1 {
     width: 100%;
     height: 100%;
     border-radius: 50%;
 }
 
+.not-approved-post,
+.approved-post {
+    position: relative;
+    width: 300px;
+    background-color: #cccacae6;
+    height: 300px;
+    border-radius: 10px;
+    border: 1px solid black;
+    box-shadow: 0 4px 8px rgba(61, 59, 59, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#post {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+/* CSS for images inside the for loop
+.post {
+    align-items: center;
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+} */
+
+#post:hover{
+    cursor: pointer;
+    transform: scale(1.02);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+}
+
+.div-svg-approve, .div-svg-not-approve {
+    width: 24px;
+    height: 24px;
+    border-radius: 50px;
+    background-color: rgb(250, 249, 249);
+    color: white;
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    z-index: 1000;
+    transition: width 2s linear;
+}
+
+.div-svg-approve:hover ,  .div-svg-not-approve:hover {
+    width: 120px;
+    color: black;
+
+}
+
+.span-svg-approve, .span-svg-not-approve {
+display:none;
+    font-size: 14px;
+    position: absolute;
+    top: 1px;
+    left: 10px;
+    margin: auto;
+    overflow: hidden;
+    width: 70%;
+    height: 90%;
+    padding:2px 10px;
+  
+    transform: none;
+}
+.span-svg-not-approve {
+    width: 90%;
+    height: 90%;
+    padding:2px 5px;
+}
+.svg-for-approve,
+.svg-for-not-approve {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+    fill: green;
+
+}
+
+.svg-for-not-approve {
+    fill: rgb(229, 16, 16);
+}
 {% endblock styleProfile %}
 {% block content %}
 <div class="right">
@@ -557,13 +725,47 @@ border-radius: 50%;
         </div>
     </div>
     <div class="right-bottom">
-           <div class="post-in-profile" onclick="window.location='/add_post/'"><svg xmlns="http://www.w3.org/2000/svg" height="100px" viewBox="0 -960 960 960" width="100px"
-            fill="#5f6368">
-            <path class="icon"
-                d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
-            </svg></div>
-           <div>Start posting</div>
+        {% if posts %}
+        <div class="post-inside-profile">
+            {% for post in posts %}
+            {% if post.is_approved %}
+            <div class="approved-post"><img id="post" src="{{ post.image.url }}"
+                    onclick="showpost('{{ post.image.url }}',)" class="post" alt="Posts">
+                <div class="div-svg-approve"><span class="span-svg-approve">Approved</span>
+                    <svg class="svg-for-approve" xmlns="http://www.w3.org/2000/svg" height="24px"
+                        viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                        <path
+                            d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+                    </svg>
+                </div>
+            </div>
+            {% else %}
+            <div class="not-approved-post"><img id="post"  onclick="showpost('{{ post.image.url }}',)"  class="post" src="{{ post.image.url }}" alt="Posts">
+                <div class="div-svg-not-approve"><span class="span-svg-not-approve">Not approved</span><svg
+                        class="svg-for-not-approve" xmlns="http://www.w3.org/2000/svg" height="24px"
+                        viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                        <path
+                            d="m338-290 142-142 142 142 48-48-142-142 142-142-48-48-142 142-142-142-48 48 142 142-142 142 48 48ZM479.68-59q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+                    </svg>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor%}
+        </div>
+
+
+        {% else %}
+
+        <div class="post-in-profile" onclick="window.location='/user_dash/add_post'"><svg
+                xmlns="http://www.w3.org/2000/svg" height="100px" viewBox="0 -960 960 960" width="100px"
+                fill="#5f6368">
+                <path class="icon"
+                    d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+            </svg>
+        </div>
+        <div>Start posting</div>
     </div>
+    {% endif %}
     
 </div>
 <div id="overlay"></div>

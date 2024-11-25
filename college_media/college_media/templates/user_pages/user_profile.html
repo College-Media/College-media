@@ -815,7 +815,7 @@
                 {% for post in posts %}
                 {% if post.is_approved %}
                 <div class="approved-post"><img id="post" src="{{ post.image.url }}"
-                        onclick="showpost('{{ post.image.url }}',)" class="post" alt="Posts">
+                        onclick="showpost('{{ post.image.url }},{{post.id}}',)" class="post" alt="Posts">
                     <div class="div-svg-approve"><span class="span-svg-approve">Approved</span>
                         <svg class="svg-for-approve" xmlns="http://www.w3.org/2000/svg" height="24px"
                             viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
@@ -825,7 +825,8 @@
                     </div>
                 </div>
                 {% else %}
-                <div class="not-approved-post"><img id="post"  onclick="showpost('{{ post.image.url }}',)"  class="post" src="{{ post.image.url }}" alt="Posts">
+                <div class="not-approved-post"><img id="post"  onclick="showpost('{{ post.image.url}}','{{post.id}}',)"  
+                    class="post" src="{{ post.image.url }}" alt="Posts">
                     <div class="div-svg-not-approve"><span class="span-svg-not-approve">Not approved</span><svg
                             class="svg-for-not-approve" xmlns="http://www.w3.org/2000/svg" height="24px"
                             viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
@@ -851,15 +852,10 @@
             <div>Start posting</div>
         </div>
         {% endif %}
-
-
-
-
-    </div>
+        </div>
+        
     <div id="overlay"></div>
-
     <div id="editProfileForm">
-
         <button id="closeButton" class="closeBtn">&times;</button>
         <h3>EDIT PROFILE</h3>
         <form>
@@ -909,7 +905,7 @@
                 </svg></div>
             <ul>
                 <li>What to do</li>
-                <li onclick="delete/post.id">Delete</li>
+                <li id="deletePostBtn" >Delete</li>
                 <li id="cancelBtnP">Cancel</li>
             </ul>
         </div>
@@ -961,14 +957,79 @@
     </div>
     <script>
 
-        function showpost(imgurl) {
-            const postElement = document.getElementById('post-img')
-            postElement.src = imgurl;
-            document.getElementById('editPostForm').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-            console.log(imgurl)
+        // Function to show the post details and allow the user to delete it
+function showpost(imgurl, postId) {
+    const deleteButton = document.querySelector('#post-edit-action-table #deletePostBtn'); // Delete button
+    const postElement = document.getElementById('post-img'); // Image element to display the selected image
+    postElement.src = imgurl; // Set the image in the popup
+
+    // Set the postId as a data attribute for the delete button
+    deleteButton.setAttribute('data-post-id', postId);
+
+    // Show the popup and overlay
+    document.getElementById('editPostForm').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+}
+
+// Event listener for the delete button
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteButton = document.querySelector('#post-edit-action-table #deletePostBtn');
+
+    deleteButton.addEventListener('click', function () {
+        // Get the post ID from the data attribute
+        const postId = this.getAttribute('data-post-id');
+
+        if (!postId) {
+            alert('Post ID not found!');
+            return;
         }
 
+        // Construct the delete URL
+        const deleteUrl = `/delete/${postId}`;
+
+        // Confirm before proceeding
+        if (confirm(`Are you sure you want to delete post ID ${postId}?`)) {
+            fetch(deleteUrl, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'), // Add CSRF token if required
+                },
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Post deleted successfully!');
+                        window.location.reload();
+                        document.getElementById('editPostForm').style.display = 'none'; // Hide the popup
+                        document.getElementById('overlay').style.display = 'none';
+                        // Optionally, remove the post from the DOM
+                        document.querySelector(`img[onclick="showpost('${imgurl}', '${postId}')"]`)
+                            .closest('.approved-post, .not-approved-post').remove();
+                    } else {
+                        alert('Failed to delete post.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    });
+});
+
+// Helper function to get the CSRF token (if using Django or another framework with CSRF protection)
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+        
     </script>
     <script src='{% static "js\profile.js" %}'></script>
 </body>
