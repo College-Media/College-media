@@ -162,7 +162,7 @@ margin:0px 10px;
 
         <form action="/search_student/" method="POST">
             {% csrf_token %}
-            <h2 style="color:rgba(17, 104, 113, 0.955);">Search for Student / Staff by Roll Number or Name</h2>
+            <h2 style="color:rgba(17, 104, 113, 0.955);">Search Student by Roll Number</h2>
             <div class="searchContainer">
                 <input type="text" id="searchInput" name="roll_number" placeholder="Enter Roll Number">
                 <div class="searchIconContainer" onclick="searchStudent()"><svg xmlns="http://www.w3.org/2000/svg"
@@ -178,8 +178,9 @@ margin:0px 10px;
         </form>
     </div>
     {% if student %}
-    <div class="div-for-stu-details">
     <h3>Student Details</h3>
+    <div class="div-for-stu-details">
+    
     {% for stu in student %}
     <div class="student-card" onclick=window.location.href="{% url 'student_detail' stu.id %}">
         <h3><strong>Roll Number:</strong> {{ stu.roll_number }}</h3>
