@@ -17,8 +17,10 @@ class Post(models.Model):
 
 class Like(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="likes")
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="liked_posts")
     created_at = models.DateTimeField(auto_now_add=True)
+    liked_by = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="likes_given",null="True")
+
 
     def __str__(self):
         return self.student.roll_number

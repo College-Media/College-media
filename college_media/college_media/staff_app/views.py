@@ -46,8 +46,7 @@ def add_student(request):
 
 
 def home(request):
-    posts = Post.objects.select_related('student').filter(is_approved=True)  # Use select_related to fetch related student data efficiently
-    print(posts)
+    posts = Post.objects.select_related('student').filter(is_approved=True).order_by('-created_at') # Use select_related to fetch related student data efficiently
     return render(request,"staff_pages/staf_home.html",{'posts':posts})
 
 def option_student_add(request):
@@ -64,7 +63,6 @@ def approve_or_reject_post(request):
         accept= request.POST.get('accept')
         reject=request.POST.get('reject')
         
-        print(accept,reject)
         if accept:  
             post=get_object_or_404(Post,id=accept)
             post.is_approved=True
