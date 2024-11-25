@@ -115,6 +115,7 @@
             width: calc(100% - 120px);
             /* Fill remaining space */
             overflow: hidden;
+            position: fixed;
         }
 
         .right-top {
@@ -436,147 +437,127 @@
             }
         }
 
-        @media (max-width:600px) {
-            body {
-                display: flex;
-                flex-direction: column;
-            }
+       @media (max-width:600px) {
+    body {
+        display: flex;
+        flex-direction: column;
+    }
 
-            .left {
-                display: none;
-            }
+    .left {
+        display: none;
+    }
 
-            .mview-logo {
-                background-image: url('{% static "images/media-img.jfif" %}');
-            }
+    .mview-logo {
+        background-image: url('{% static "images/media-img.jfif" %}');
+    }
 
-            .mobile-top {
-                display: flex;
-                margin: 0;
-                width: 100%;
+    .mobile-top {
+        display: flex;
+        margin: 0;
+        width: 100%;
+    }
 
-            }
+    .mobile-top ul {
+        list-style-type: none;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: flex-end;
+        column-gap: 20px;
+        padding: 0;
+        width: 100%;
+    }
 
-            .mobile-top ul {
-                list-style-type: none;
-                display: flex;
-                flex-direction: row;
-                align-items: flex-end;
-                justify-content: flex-end;
-                column-gap: 20px;
-                padding: 0;
-                width: 100%;
-            }
+    .mobile-top svg {
+        fill: black;
+        width: 24px;
+        height: 24px;
+    }
+    .mobile-bottom svg {
+        fill: black;
+        width: 35px;
+        height: 35px;
+    }
 
-            .mobile-top svg {
-                fill: black;
-                width: 24px;
-                height: 24px;
-            }
+    .mobile-top li:first-child {
+        margin-right: auto;
+        padding: 4px;
+    }
+    .editBtn{
+        display:none;
+    }
+    #editBtn1{
+        display:block;
+    }
 
-            .mobile-bottom svg {
-                fill: black;
-                width: 35px;
-                height: 35px;
-            }
+    .mobile-bottom {
+        margin: 100%;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        bottom: 0px;
+        z-index: 1;
+        background-color: white;
+        border-top: 1px solid rgb(176, 172, 172);
+    }
 
-            .mobile-top li:first-child {
-                margin-right: auto;
-                padding: 4px;
-            }
+    .mobile-bottom ul {
+        list-style-type: none;
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+        column-gap: 10%;
+        max-width: 100%;
+        padding: 5px;
+        flex-wrap: nowrap;
+        flex: 100%;
+        overflow: hidden;
+    }
 
-            .editBtn {
-                display: none;
-            }
+    .mobile-bottom li {
+        flex-grow: 1;
+    }
 
-            #editBtn1 {
-                display: block;
-            }
+    .right {
+        max-height: calc(100vh - 100px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-y: auto;
+        width: 100%;
+        height: auto;
+    }
+    .right-top{
+        margin-top:10%;
+    }
+     .right-bottom{
+        margin:30% auto;
+     }
 
-            .right-top ul:first-child {
-                width: 20px;
-            }
-            .right-top{
-                height:30%;
-                min-height:150px;
-            }
-            .post-inside-profile{
-                height:100%;
-                margin-left: 0;
-            }
-           
-            .span-svg-approve, .span-svg-not-approve {
-                font-size: 8px;
-            }
-            /* .svg-for-approve,
-            .svg-for-not-approve {
-                 width: 20px;
-                 height:20px;
-            } */
-            .mobile-bottom {
-                margin: 100%;
-                display: flex;
-                justify-content: center;
-                position: absolute;
-                bottom: 0px;
-                z-index: 1000;
-                background-color: white;
-                border-top: 1px solid rgb(176, 172, 172);
-            }
+    .right::-webkit-scrollbar {
+        display: none;
+    }
 
-            .mobile-bottom ul {
-                list-style-type: none;
-                display: flex;
-                flex-direction: row;
-                margin: 0;
-                column-gap: 10%;
-                max-width: 100%;
-                padding: 5px;
-                flex-wrap: nowrap;
-                flex: 100%;
-                overflow: hidden;
-            }
+    .right {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
 
-            .mobile-bottom li {
-                flex-grow: 1;
-            }
-
-            .right {
-                max-height: calc(100vh - 100px);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                overflow-y: auto;
-                width: 100%;
-                height: auto;
-            }
-
-            .right::-webkit-scrollbar {
-                display: none;
-            }
-
-            .right {
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-            }
-
-            .right,
-            .post,
-            .mobile-top,
-            .mobile-bottom {
-                width: 100%;
-                margin: 0;
-                padding: 0;
-            }
-
-            .not-approved-post,
-            .approved-post {
-                max-width: 100px;
-                max-height: 100px;
-            }
-          
-
-        }
+    .right,
+    .post,
+    .mobile-top,
+    .mobile-bottom {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+}
+        @media(max-height:660px){
+    .left ul {
+        padding-top:10px;
+        row-gap:10px;
+    }
+}
 
         /*CSS changes for main edit-profile in user page  */
         #profile-image-placeholder-large {

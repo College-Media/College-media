@@ -1,6 +1,17 @@
 {% extends "user_pages/base.html" %}
 {% block style %}
 /* Student Details Card */
+.right
+{
+  overflow:hidden;
+  height:100vh;
+  position: fixed;
+margin-left:10%;
+  align-items:center;
+
+}
+
+
 .searchIconContainer{
 position:absolute;
 
@@ -38,8 +49,14 @@ font-weight:bold;
 font-size:medium;
 
 }
+
+.div-for-stu-details {
+    height: calc(100vh - 200px);  /* Adjust height as per your content */
+    overflow-y: auto;             /* Enable vertical scrolling */
+    padding: 10px;  
+    width:100%;           
+}
 .student-card {
-width: 100%;
 max-width: 500px;
 margin: 20px auto;
 padding: 20px;
@@ -74,10 +91,23 @@ width:100%;
 .student-card p strong {
 color: #555;
 }
+@media(min-width:900px){
+    .right{
+        width:100%;
+    }
+}
+@media (max-width:900px) {
+    .right{
+        margin-left:35%;
+    }
+}
 @media (max-width:700px) {
+    .right{
+       margin-left:30%;
+    }
 .student-card{
-width:70%;
-margin:10px;
+width:80%;
+margin:10px auto;
 }
 .student-card p{
 font-size:14px;
@@ -85,15 +115,21 @@ width:100%;
 }
 }
 @media (max-width:600px){
-    .searchIconContainer{
-    display:block;
+    .search-container{
+        margin-top:50px;
     }
-    .search-btn{
-        display:none;
+    .right{
+        margin-left:0px;
     }
-    .searchContainer{
-        margin:0px 10px;
-    }
+.searchIconContainer{
+display:block;
+}
+.search-btn{
+display:none;
+}
+.searchContainer{
+margin:0px 10px;
+}
 }
 @media (max-width:450px) {
 .student-card{
@@ -108,8 +144,14 @@ width:100%;
 width:100%;
 }
 .searchContainer{
-    margin:0px 10px;
+margin:0px 10px;
 }
+}
+@media(max-width:300px){
+    .student-card p{
+        font-size:9px;
+        width:100%;
+        }
 }
 {% endblock style %}
 {% block content %}
@@ -120,16 +162,15 @@ width:100%;
 
         <form action="/search_student/" method="POST">
             {% csrf_token %}
-            <h2 style="color:rgba(17, 104, 113, 0.955);">Search for Student by Roll Number or Name</h2>
+            <h2 style="color:rgba(17, 104, 113, 0.955);">Search Student by Roll Number</h2>
             <div class="searchContainer">
-                <input type="text" id="searchInput" name="roll_number"
-                    placeholder="Enter Roll Number">
-              <div class="searchIconContainer" onclick="searchStudent()"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                <input type="text" id="searchInput" name="roll_number" placeholder="Enter Roll Number">
+                <div class="searchIconContainer"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
                         viewBox="0 -960 960 960" width="24px" fill="#5f6368" id="searchIcon">
                         <path
                             d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
                     </svg>
-                </div> 
+                </div>
             </div>
             <button onclick="searchStudent()" class="search-btn">Search</button>
             <div class="results" id="results"></div>
@@ -137,34 +178,60 @@ width:100%;
     </div>
     {% if student %}
     <h3>Student Details</h3>
-    {% for stu in student %}
-    <div class="student-card" onclick=window.location.href="{% url 'student_detail' stu.id %}">
-        <h3><strong>Roll Number:</strong> {{ stu.roll_number }}</h3>
-        <p><strong>Name:</strong> {{ stu.name }}</p>
-        <p><strong>Email:</strong> {{ stu.email }}</p>
-    </div>
-    {% endfor %}
-    {% elif message %}
-    <p>{{ message }}</p>
-    {% endif %}
+    <div class="div-for-stu-details">
+      
+        {% for stu in student %}
+        <div class="student-card" onclick=window.location.href="{% url 'student_detail' stu.id %}">
+            <h3><strong>Roll Number:</strong> {{ stu.roll_number }}</h3>
+            <p><strong>Name:</strong> {{ stu.name }}</p>
+            <p><strong>Email:</strong> {{ stu.email }}</p>
+        </div>
+        {% endfor %}
+        {% elif message %}
+        <p>{{ message }}</p>
+        {% endif %}
 
+    </div>
 </div>
 <script>
-    // document.querySelector('.searchIconContainer').addEventListener('click',searchStudent());
+    document.querySelector('.searchIconContainer').addEventListener('click', function (event) {
+        searchStudent();
+        document.querySelector('form').submit();  // Submit the form
+    });
     function searchStudent() {
         const rollNumber = document.getElementById("searchInput").value;
-        fetch(`search_student?roll=${rollNumber}`)
-            .then(response => response.json())
+        if (rollNumber == " ") {
+            document.getElementById("results").innerHTML = "<p>Please enter a Rollnumber</p>";
+            return;
+        }
+        document.getElementById("results").innerHTML = "Searching..."; // Optional: show loading message
+
+        // Make the fetch request to the correct URL
+        fetch(`/search_student?roll=${rollNumber}`)
+            .then(response => {
+                if (!response.ok) {  // Check if the response is successful (status 200-299)
+                    if (response.status === 404) {
+                        throw new Error('Student not found');
+                    }
+                    throw new Error('Server error');
+                }
+                return response.json();  // Parse the response as JSON
+            })
             .then(data => {
                 if (data) {
                     // Display search results with clickable roll number
                     document.getElementById("results").innerHTML = `
-                            <p>Student Name: ${data.name}</p>
-                            <p>Roll Number: 
-                        `;
+                    <p>Student Name: ${data.name}</p>
+                    <p>Roll Number: ${data.roll}</p>
+                `;
                 } else {
                     document.getElementById("results").innerHTML = "<p>No student found</p>";
                 }
+            })
+            .catch(error => {
+                // Handle errors like network issues or 404 not found
+                document.getElementById("results").innerHTML = "<p>Error: " + error.message + "</p>";
+                console.error('Fetch error:', error);
             });
     }
 
@@ -172,7 +239,8 @@ width:100%;
         event.preventDefault();
         window.location.href = "/search";
     });
-   
+
+
 </script>
 
 {% endblock content %}
