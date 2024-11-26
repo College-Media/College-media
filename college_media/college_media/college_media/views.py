@@ -186,21 +186,26 @@ def like_counts(request): #like counts
 def like_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     student = request.user.student
+
     # Check if the student has already liked this post
     like, created = Like.objects.get_or_create(post=post, student=student)
     if not created:
-        # If the like already exists, delete it (unlike)
-        like.delete()
+        like.delete()  # Unlike
         liked = False
     else:
-        like.liked_by = student  # Set the `liked_by` field to the current user
-        like.save() 
+        like.liked_by = student
+        like.save()
         liked = True
-    liked_by=Like.objects.filter(liked_by=student)
+
     # Count the total likes for the post
     like_count = post.likes.count()
 
-    return JsonResponse({"liked": liked, "like_count": like_count,"liked_by":liked_by})
+    # Return the response
+    return JsonResponse({
+        "liked": liked,
+        "like_count": like_count,
+        "liked_by": list(Like.objects.filter(liked_by=student).values_list('post_id', flat=True))
+    })
 
 #code for comments
 

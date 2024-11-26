@@ -79,14 +79,21 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() { 
-        // Function to handle the like/unlike action
+    document.addEventListener("DOMContentLoaded", function() {
         window.likePost = function(postId) {
             const likeIconElement = document.getElementById(`like-icon-${postId}`);
             const likeCountElement = document.getElementById(`like-count-${postId}`);
             
-            // Optimistic UI toggle: update UI immediately on click
+            // Check if the element exists
+            if (!likeIconElement || !likeCountElement) {
+                console.error(`Elements for post ${postId} not found.`);
+                return;
+            }
+            
+            // Optimistic UI toggle
             let isLiked = likeIconElement.classList.contains('liked');
+            console.log(`Initial state: ${isLiked ? 'liked' : 'unliked'}`);
+            
             if (isLiked) {
                 likeIconElement.classList.remove('liked');
                 likeIconElement.classList.add('unliked');
@@ -96,7 +103,7 @@
                 likeIconElement.classList.add('liked');
                 likeCountElement.innerText = parseInt(likeCountElement.innerText) + 1;
             }
-
+    
             // Send like/unlike request to the server
             fetch(`/like/${postId}/`, {
                 method: 'POST',
@@ -108,6 +115,7 @@
             .then(response => response.json())
             .then(data => {
                 // Update the UI based on the server's response
+                console.log('Server response:', data);
                 likeCountElement.innerText = data.like_count;
                 if (data.liked) {
                     likeIconElement.classList.add('liked');
@@ -131,6 +139,8 @@
                 }
             });
         };
+    });
+    
 
         // Function to periodically update like counts for all posts
         function updateLikeCounts() {
@@ -150,61 +160,9 @@
 
         // Poll every 2 seconds to update like counts
         setInterval(updateLikeCounts, 2000);
-    });
 
-    // JavaScript for comment handling
-    document.addEventListener("DOMContentLoaded", function() {
-        function loadComments(postId) {
-            // Fetch comments for the post
-            fetch(`/post/${postId}/get_comments/`)
-                .then(response => response.json())
-                .then(data => {
-                    const commentsContainer = document.getElementById(`comments-container-${postId}`);
-                    commentsContainer.innerHTML = '';  // Clear existing comments
-                    data.forEach(comment => {
-                        commentsContainer.innerHTML += `<p><strong>${comment.student__name}</strong>: ${comment.content}</p>`;
-                    });
-                });
-        }
-    
-        window.submitComment = function(postId) {
-            const commentContent = document.getElementById(`commentContent-${postId}`).value.trim();
-            if (!commentContent) {
-                alert("Comment cannot be empty.");
-                return;
-            }
-    
-            // AJAX request to submit comment
-            fetch(`/post/${postId}/submit_comment/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({ content: commentContent })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const commentsContainer = document.getElementById(`comments-container-${postId}`);
-                    commentsContainer.innerHTML += `<p><strong>${data.student_name}</strong>: ${data.content}</p>`;
-                    document.getElementById(`commentContent-${postId}`).value = '';  // Clear the textarea
-                } else {
-                    alert("Failed to post comment.");
-                }
-            })
-            .catch(error => console.error("Error submitting comment:", error));
-        };
-    
-        // Load comments for each post on page load
-        {% for post in posts %}
-            loadComments({{ post.id }});
-        {% endfor %}
-    });
 
-    function showcomment(){
-        consloe.log("coments");
-    }
+   
 </script>
 
 
