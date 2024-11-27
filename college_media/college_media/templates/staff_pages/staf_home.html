@@ -59,7 +59,24 @@
             padding: 30px;
 
         }
-
+        .chat-icon{
+    display:none;
+}
+.chat-dot-svg{
+    position:relative;
+}
+.chat-dot-svg::after{
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -3px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: #db1919;
+    border: 2px solid #fffbfb;
+    display: flex;
+}
         .menu-items {
             display: flex;
             align-items: center;
@@ -534,14 +551,23 @@
                 </svg>
                 <a href="/user_dash/add_post">Post</a>
             </li>
-            <li class="menu-items" onclick="window.location=''">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                    fill="#5f6368">
-                    <path class="icon"
-                        d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
-                </svg>
-                <a href="#">Chat</a>
-            </li>
+            <li class="menu-items">
+                <div class="chat-icon"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                     fill="#5f6368">
+                     <path class="icon"
+                         d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
+                 </svg>
+                 </div>
+                 <div class="chat-dot">
+                     <div class="chat-dot-svg"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                     fill="#5f6368">
+                     <path class="icon"
+                         d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
+                     </svg></div>
+                 
+                 </div>
+                 <a href="#">Chat</a>
+             </li>
 
             <li class="menu-items" onclick="window.location='/staff_dash/staff_post_request'">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
