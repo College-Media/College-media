@@ -7,15 +7,19 @@ from .models import Student
 from django.contrib import messages # type: ignore
 from django.utils.timezone import now
 from datetime import timedelta
+import random
 # Create your views here.
 def welcome(request):
     return render(request,"home.html")
 
-def home(request):
-    last_24_hours = now() - timedelta(hours=24)
-    # posts= Post.objects.filter(created_at__gte=last_24_hours, is_approved=True)
-    posts = Post.objects.select_related('student').filter(is_approved=True).order_by('-created_at')  # Use select_related to fetch related student data efficiently
-    return render(request,"user_pages/user_home.html",{'posts':posts})
+def home(request):    
+    posts = Post.objects.select_related('student').order_by('?') 
+    liked_by=Student.objects.get(roll_number=request.user)
+    liked_posts=Like.objects.filter(liked_by=liked_by)
+    liked_post_ids = Like.objects.filter(liked_by=liked_by).values_list('post_id', flat=True)
+    likes=Like.objects.all()
+    print(set(liked_post_ids))
+    return render(request,"user_pages/user_home.html",{'posts':posts,'liked_post_ids': set(liked_post_ids),'likes':likes})
 
 def add_post(request):
     if request.method=='POST':
