@@ -14,23 +14,19 @@ def welcome(request):
 
 def home(request):    
     posts = Post.objects.select_related('student').order_by('?') 
-    liked_by=Student.objects.get(roll_number=request.user)
-    liked_posts=Like.objects.filter(liked_by=liked_by)
+    liked_by=Student.objects.get(roll_number=request.user)    
     liked_post_ids = Like.objects.filter(liked_by=liked_by).values_list('post_id', flat=True)
     likes=Like.objects.all()
-    print(set(liked_post_ids))
     return render(request,"user_pages/user_home.html",{'posts':posts,'liked_post_ids': set(liked_post_ids),'likes':likes})
 
 def add_post(request):
     if request.method=='POST':
-        # title=request.POST['title']
         body=request.POST['body']
         img=request.FILES['img']
         user=request.user
         student_instence=get_object_or_404(Student, user=user)
         posts=Post.objects.create(student=student_instence,content=body,image=img ,is_approved=False)
         posts.save()
-        # print(title,body)
         messages.success(request,"post sent for verification")
         return redirect('/user_dash/add_post')    
     return render(request,"user_pages/add_post.html")
@@ -40,6 +36,4 @@ def user_profile(request):
     student_info=Student.objects.get(user=user) 
     post=Post.objects.filter(student__roll_number=student_info.user)
     comments=Comment.objects.filter(student__roll_number=student_info.user)     
-    for i in post:
-        print(i.id)
     return render(request,"user_pages/user_profile.html",{'student_info':student_info,'posts':post})

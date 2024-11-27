@@ -27,9 +27,7 @@ def add_student(request):
         roll_num=request.POST.get('roll')
         section=request.POST.get('section')
         school_name=request.POST.get('class')
-        print(name,email)
         s=CoustomUser.objects.filter(username=roll_num)
-        print(s)
         if s:
             messages.error(request,"student already exists")
             redirect("staff_dash/add_student/")
