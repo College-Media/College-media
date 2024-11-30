@@ -97,11 +97,9 @@ def reset_password(request):
         btn=request.POST.get('btn')
         if btn=='1':
             request.session["a"]=str(random.randrange(1000,9999))
-            print(request.session["a"])
             
         if btn=='1':
                 mail=request.POST.get('mail')
-                print(mail)
                 is_exists=CoustomUser.objects.filter(email=mail)
                 request.session['email']=mail
                 if is_exists:
@@ -171,7 +169,6 @@ def student_detail(request, roll_number):
     users=CoustomUser.objects.get(username=user)
     student_info=Student.objects.get(id=roll_number)
     post=Post.objects.filter(student__roll_number=student_info.roll_number)  #here student__ will hel to extarct the table field name from the table use double under score
-    print(post)
     if users.is_staff:
          return render(request, 'staff_pages/student_detail.html',{'student_info':student_info,'posts':post})
     else:
