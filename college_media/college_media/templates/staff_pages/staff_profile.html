@@ -172,7 +172,7 @@ svg {
 .editBtn {
     border: none;
     border-radius: 10px;
-    background-color: rgba(10, 10, 156, 0.718);
+    background-color: rgba(10, 136, 150, 0.997);
     padding: 10px 20px;
     color: rgb(251, 250, 252);
     font-size: medium;
@@ -190,7 +190,7 @@ svg {
     margin-top: 20px;
     border: none;
     border-radius: 10px;
-    background-color: rgba(10, 10, 156, 0.718);
+    background-color: rgba(10, 136, 150, 0.997);
     padding: 10px;
     color: rgb(251, 250, 252);
     font-size: medium;
@@ -432,7 +432,28 @@ border-radius: 50%;
         height: 80px;
     }
 }
-
+@media (max-width:800px){
+    .right-profile{
+    margin-left:40px;
+}
+    .editBtn{
+        display:none;
+    }
+    #editBtn1{
+        display:block;
+    }
+    .right-top ul{
+        margin:0;
+    }
+    .right-top ul:first-child {
+        width: 20px;
+        font-size:12px;
+    }
+    .right-top{
+        height:30%;
+        min-height:150px;
+    }
+} 
 @media (max-width:600px) {
     body {
         display: flex;
@@ -482,13 +503,6 @@ border-radius: 50%;
         padding: 4px;
     }
 
-    .editBtn {
-        display: none;
-    }
-
-    #editBtn1 {
-        display: block;
-    }
 
     .right-top ul:first-child {
         width: 20px;
@@ -498,7 +512,7 @@ border-radius: 50%;
         min-height:150px;
     }
     .right-bottom{
-        height:350px;
+        height:3250px;
         overflow-y: auto;
     }
     .post-inside-profile{
