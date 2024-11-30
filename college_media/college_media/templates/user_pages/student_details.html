@@ -642,7 +642,7 @@ margin:auto;
                 <li><label>{{ student_info.roll_number}}</label></li>
 
             </ul>
-            <div class="chat-icon" onclick="window.location=''">
+            <div class="chat-icon" onclick="window.location='{% url 'chat' student_info.roll_number %}'">
           
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368">
                     <path

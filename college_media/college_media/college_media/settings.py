@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'admin_app',
     'staff_app',
     'user_app',
+    'chat_app',
 ]
 
 MIDDLEWARE = [
@@ -71,9 +73,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'college_media.wsgi.application'
-
-
+# WSGI_APPLICATION = 'college_media.wsgi.application'
+ASGI_APPLICATION = 'college_media.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -144,3 +145,14 @@ EMAIL_USE_TLS = True  # Use TLS for security
 EMAIL_HOST_USER = 'collegemedia.presidency@gmail.com'  # Replace with your Gmail address
 EMAIL_HOST_PASSWORD = 'lsni rmjv bwrs xbxd'  # Replace with your email account's password
 DEFAULT_FROM_EMAIL = 'your_email@gmail.com'
+
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [("127.0.0.1", 6379)],  # Connects to the local Redis instance
+        },
+    },
+}

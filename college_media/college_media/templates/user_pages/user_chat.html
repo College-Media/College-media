@@ -1,56 +1,435 @@
-{% extends "staff_pages/staff_base.html" %}
+{% extends "user_pages/base.html" %}
+
 {% block style %}
-.message {
+.right {
+    background-color: #f5f5f5;
     display: flex;
-    margin: 10px 0;
+    justify-content: center;
     align-items: center;
+    height: 100vh;
 }
-.message.received {
-    justify-content: flex-start;
+
+.chat-container {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    max-width: 1200px;
+    height: 80vh;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
 }
-.message.sent {
-    justify-content: flex-end;
+
+/* Chat List Section */
+.chat-list {
+    width: 30%;
+    border-right: 1px solid #e0e0e0;
+    background-color: #ffffff;
 }
-.message-text {
-    padding: 10px 15px;
-    border-radius: 20px;
-    font-size: 14px;
-    max-width: 70%;
-    line-height: 1.5;
-}
-.message.received .message-text {
-    background-color: #333;
-    color: #fff;
-}
-.message.sent .message-text {
-    background-color: #007bff;
-    color: #fff;
-}
-.timestamp {
-    font-size: 10px;
-    color: #666;
+
+.chat-list .chat-header {
+    padding: 15px;
+    font-size: 1.5em;
+    font-weight: bold;
     text-align: center;
-    margin: 5px 0;
+    background-color: #f7f7f7;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
 }
+
+.chat-list ul {
+    list-style: none;
+    overflow-y: auto;
+    height: calc(100% - 60px);
+    padding: 0;
+    margin: 0;
+}
+
+.chat-list ul::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-list ul::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+}
+
+.chat-list li {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.chat-list li:hover {
+    background-color: #f1f1f1;
+}
+
+.chat-list img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info .username {
+    font-weight: bold;
+    color: #333;
+}
+
+.user-info .last-message {
+    color: #888;
+    font-size: 0.9em;
+}
+
+/* Chat Window Section */
+.chat-window {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+}
+
+.chat-window .chat-header {
+    padding: 15px;
+    font-size: 1.5em;
+    font-weight: bold;
+    background-color: #ffffff;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+    color: #333;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+}
+
+.message {
+    max-width: 70%;
+    padding: 12px 18px;
+    border-radius: 18px;
+    font-size: 1em;
+    margin-bottom: 12px;
+    position: relative;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    line-height: 1.4;
+}
+
+/* Styles for sender messages (align right) */
+.message-sender {
+    background-color: #d1f7c4;
+    color: #2c3e50;
+    align-self: flex-end;
+    border-radius:25px;
+    margin:10px;
+    
+    padding-top:3px;
+    border-radius:27px;
+    padding-bottom:3px;
+    padding-left:20px;
+    padding-right:10px;
+    text-align: right;
+    margin-left: auto;
+    animation: fadeInRight 0.3s ease-in-out;
+}
+
+/* Styles for receiver messages (align left) */
+.message-receiver {
+    background-color: #e4e6eb;
+    color: #333;
+    align-self: flex-start;
+    margin:10px;
+    border-radius:21px;
+    padding-top:3px;
+    padding-bottom:3px;
+    padding-left:20px;
+    padding-right:10px;
+    text-align: right;
+    text-align: left;
+    margin-right: auto;
+    animation: fadeInLeft 0.3s ease-in-out;
+}
+
+/* Timestamp style */
+.timestamp {
+    font-size: 0.75em;
+    color: #888;
+    margin-top: 1px;
+    text-align: right;
+}
+.messege-text{
+    margin:0px;
+}
+
+/* Animations for smoother message entry */
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Chat Input Section */
+.chat-input {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-top: 1px solid #e0e0e0;
+    background-color: #ffffff;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background-color: #f1f1f1;
+    margin-right: 10px;
+    outline: none;
+}
+
+.chat-input button {
+    padding: 10px;
+    border: none;
+    border-radius: 50%;
+    background-color: #0095f6;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.chat-input button:hover {
+    background-color: #007bb5;
+}
+.chat-invite {
+            background-color: #3f51b5;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px 30px;
+            border-radius: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .chat-invite:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .chat-icon {
+            fill: #ffeb3b; /* Yellow color for the chat icon */
+            width: 40px;
+            height: 40px;
+        }
+        #profile-image-placeholder {
+            width: 30px;
+            height: 30px;
+            background-color: #ccc;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            border-radius: 50%;
+            border: 1px solid black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .notification-menu {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .badge {
+            position: absolute;
+            top: 0;
+            right: -10px;
+            padding: 5px 10px;
+            border-radius: 50%;
+            background: red;
+            color: white;
+            font-size: 12px;
+            display: none; /* Initially hidden */
+        }
+        
+        
 {% endblock style %}
 
 {% block content %}
-    <div class="right">
-        <div class="timestamp">Sat 19:05</div>
-        <div class="message received">
-            <div class="message-text">Maryadi teguka</div>
+<div class="right">
+    <div class="notification-menu">
+        <a href="/notifications/" id="notification-icon">
+            Notifications
+            <span id="notification-badge" class="badge"></span>
+        </a>
+    </div>
+    
+    <div class="chat-container">
+        <!-- Chat List Section -->
+        <div class="chat-list">
+            <div class="chat-header">Chats</div>
+            <ul>
+                {% for chat in last_chats %}
+                    {% comment %} <p>Reciver:{{chat.message.receiver}}</p>
+                    <p>Sender:{{chat.message.sender}}</p>
+                    <p>s_user:{{request.user.roll_number}}</p> {% endcomment %}
+                   
+                    <li onclick="window.location.href='{% url 'chat' chat.message.receiver.roll_number %}'">
+                        {% if chat.message.receiver.student.profile_image %}
+                        <img src="{{ chat.message.receiver.student.profile_image.url }}" alt="User 1">
+                        {% else %}
+                        <div id="profile-image-placeholder" onclick="window.location='/user_dash/user_profile'">
+                            {{ chat.message.receiver.student.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
+                        </div>
+                        {% endif %}
+                        <div class="user-info">
+                            <span class="username">{{chat.message.receiver}}</span>
+                            <span class="last-message">{{chat.message.content}}</span>
+                        </div>
+                    </li>
+                   
+                
+                {% endfor %}
+            </ul>
         </div>
-        <div class="timestamp">Sat 22:06</div>
-        <div class="message sent">
-            <div class="message-text">After that small clip video heg eth</div>
-        </div>
-        <div class="timestamp">09:26</div>
-        <div class="message received">
-            <div class="message-text">Ad likit</div>
-        </div>
-        <div class="timestamp">10:18</div>
-        <div class="message sent">
-            <div class="message-text">Mtee</div>
+       
+        
+        <!-- Chat Window Section -->
+        <div class="chat-window">
+            <div class="chat-header">{{ receiver.username }}</div>
+            <div class="chat-messages" id="chat-messages">
+                {% for chat in chats %}
+                    <div class="{% if chat.sender == request.user %}message-sender{% else %}message-receiver{% endif %}">
+                        <p class="messege-text">{{ chat.content }}</p>
+                        <div class="timestamp">{{ chat.timestamp }}</div>
+                    </div>
+                {% empty %}
+                <div class="chat-invite">
+                    <!-- Updated SVG Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#ffeb3b">
+                        <path d="M240-400h480v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM880-80 720-240H160q-33 0-56.5-23.5T80-320v-480q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v720ZM160-320h594l46 45v-525H160v480Zm0 0v-480 480Z"/>
+                    </svg>
+                    <div class="chat-text">Let's Chat!</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Chat Input Section -->
+            <div class="chat-input">
+                <input type="text" id="chat-input" placeholder="Type a message..." required >
+                <button id="send-btn">&#9658;</button>
+            </div>
         </div>
     </div>
-{% endblock content %}
+
+    <script>
+        const conversationId = "{{ receiver.id }}";
+        const receiver_roll="{{ receiver.roll_number }}"
+        const userId = "{{ request.user.id }}";
+        const chatSocket = new WebSocket(
+            'ws://' +window.location.host+'/ws/chat/' + conversationId + '/');
+
+        <!-- const chatSocket_notification=new WebSocket('ws://'+ window.location.host + '/ws/notification/') -->
+         
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            const messageContainer = document.createElement('div');
+            messageContainer.classList.add(data.sender == userId ? 'message-sender' : 'message-receiver');
+            messageContainer.innerHTML = `<p class="messege-text">${data.message}</p><div class="timestamp">${data.timestamp}</div>`;
+            document.getElementById('chat-messages').appendChild(messageContainer);
+
+            // Scroll to the bottom after a new message is added
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        };
+
+        document.getElementById('send-btn').onclick = function() {
+            const messageInput = document.getElementById('chat-input');
+            const message = messageInput.value;
+            if (messageInput.value==""){
+               console.log("enter the chat first");
+            }
+            else
+            {
+                    const timestamp = new Date().toISOString();
+                    chatSocket.send(JSON.stringify({
+                   'message': message,
+                   'sender_id': userId,
+                  'timestamp':timestamp
+                 }));
+            }
+            
+            messageInput.value = ''; // Clear the input field after sending the message
+        };
+        window.onload = function() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        };
+  function updateNotification(count){
+    const badge=document.getElementById('notification-badge');
+
+    if (count>0){
+        badge.textContent=count;
+        badge.style.display='block';
+    }
+    else
+    {
+        badge.style.display='block';
+    }
+  }
+  {% comment %} <!-- chatSocket_notification.onmessage=function(e)
+    {
+        const data=JSON.parse(e.data);
+        if (data.new_notifications)
+        {
+            const newcount=data.unread;
+            updateNotification(newcount)
+            console.log(newcount)
+        }
+    };  --> {% endcomment %}
+    </script>
+{% endblock %}

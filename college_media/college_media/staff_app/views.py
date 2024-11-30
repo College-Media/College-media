@@ -35,6 +35,7 @@ def add_student(request):
             redirect("staff_dash/add_student/")
         else:
             user=CoustomUser.objects.create_user(roll_num,email,dob)
+            user.roll_number=roll_num
             user.is_student=True
             user.save()
             custom_user_instance = get_object_or_404(CoustomUser, username=roll_num)

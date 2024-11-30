@@ -594,14 +594,14 @@
                 </svg>
                 <a href="/user_dash/add_post">Post</a>
             </li>
-            <li class="menu-items">
-                <div class="chat-icon"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+            <li class="menu-items" onclick="window.location='/chat_app/chat'">
+                <div  id="chat-read" class="chat-icon"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                      fill="#5f6368">
                      <path class="icon"
                          d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
                  </svg>
                  </div>
-                 <div class="chat-dot">
+                 <div id="chat-unread" class="chat-dot">
                      <div class="chat-dot-svg"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                      fill="#5f6368">
                      <path class="icon"
@@ -609,7 +609,7 @@
                      </svg></div>
                  
                  </div>
-                 <a href="#">Chat</a>
+                 <a href="/chat_app/chat">Chat</a>
              </li>
             <li class="menu-items" onclick="window.location=''">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
@@ -809,6 +809,59 @@
             </li>
         </ul>
     </div>
+    <script>
+        <!-- const chatSocket_notification=new WebSocket('ws://'+ window.location.host + '/ws/notification/')
+        chatSocket_notification.onmessage=function(e)
+        {
+            const data=JSON.parse(e.data);
+            if (data.new_notifications)
+            {
+                const newcount=data.unread;
+                console.log(newcount)
+                const chatread = document.getElementById('chat-read');
+                const chatunread = document.getElementById('chat-unread');
+        
+                if (newcount >= 1) {
+                    console.log("default")
+                    // Show the unread notifications SVG icon
+                    chatunread.style.display = 'inline';
+                    chatread.style.display = 'none';
+                } else {
+                    // Show the default (0 unread) SVG icon
+                    chatunread.style.display = 'none';
+                    chatread.style.display = 'inline';
+                }
+        
+            }
+        };
+
+        // When the notification menu is opened
+document.getElementById('notification-icon-default').addEventListener('click', function () {
+    const badge = document.getElementById('notification-badge');
+    badge.style.display = 'none'; // Clear the badge
+
+    // Optional: Send a request to mark notifications as read
+    fetch('/mark_notifications_read/', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'), // Include CSRF token
+        },
+    });
+});
+document.getElementById('notification-icon-unread').addEventListener('click', function () {
+    const badge = document.getElementById('notification-badge');
+    badge.style.display = 'none'; // Clear the badge
+
+    // Optional: Send a request to mark notifications as read
+    fetch('/mark_notifications_read/', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'), // Include CSRF token
+        },
+    });
+}); -->
+
+    </script>
 </body>
 
 
