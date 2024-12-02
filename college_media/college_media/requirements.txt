@@ -1,0 +1,4 @@
+ django
+ pillow
+ channels_redis
+ daphne
