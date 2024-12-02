@@ -75,6 +75,24 @@ body {
     font-size: 18px;
     flex: 1;
     }
+    .chat-icon{
+        display:none;
+    }
+    .chat-dot-svg{
+        position:relative;
+    }
+    .chat-dot-svg::after{
+        content: '';
+        position: absolute;
+        top: -2px;
+        right: -3px;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background-color: #db1919;
+        border: 2px solid #fffbfb;
+        display: flex;
+    }
     
     .profile,
     .mview-logo {
@@ -608,7 +626,12 @@ body {
         font-size:10px;
     }
     }
-
+    @media(max-height:660px){
+        .left ul {
+            padding-top:10px;
+            row-gap:10px;
+        }
+    }
 {% endblock styleProfile %}
 
 {% block content %}
@@ -645,7 +668,7 @@ body {
         </div>
        
     </div>
-    <center>
+    <div class="right-bottom">
     {% for post in posts %}
     {% if post %}
     {% if post.is_approved %}
@@ -668,7 +691,7 @@ body {
 
    
 {% endfor %}
-</center>
+</div>
 </div>
 
 

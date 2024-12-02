@@ -87,7 +87,24 @@ svg {
     font-size: 18px;
     flex: 1;
 }
-
+.chat-icon{
+    display:none;
+}
+.chat-dot-svg{
+    position:relative;
+}
+.chat-dot-svg::after{
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -3px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: #db1919;
+    border: 2px solid #fffbfb;
+    display: flex;
+}
 .profile,
 .mview-logo {
     border-radius: 50%;
@@ -713,6 +730,12 @@ display:none;
 
 .svg-for-not-approve {
     fill: rgb(229, 16, 16);
+}
+@media(max-height:660px){
+    .left ul {
+        padding-top:10px;
+        row-gap:10px;
+    }
 }
 {% endblock styleProfile %}
 {% block content %}
