@@ -512,20 +512,20 @@ border-radius: 50%;
 {% comment %} css for image container {% endcomment %}
 
 .chat-icon1{
-    color:white;
-   display:flex;
-   flex-direction:row;
-   column-gap:10px;
-   border-radius:10px;
-   margin:auto;
-   margin-left:100px;
-   padding:10px;
-   cursor:pointer;
-   font-size:16px;
-   background-color:rgba(10, 136, 150, 0.997);
+color:white;
+display:flex;
+flex-direction:row;
+column-gap:10px;
+border-radius:10px;
+margin:auto;
+margin-left:100px;
+padding:10px;
+cursor:pointer;
+font-size:16px;
+background-color:rgba(10, 136, 150, 0.997);
 }
 .chat-icon1 svg{
-    fill: white;
+fill: white;
 }
 .right-bottom {
 margin-left:300px;
@@ -572,14 +572,26 @@ margin-top: 0;
 box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.081), 0 1px 4px 0 rgba(0, 0, 0, 0.053);
 }
 .disc{
-padding:10px;
+padding:0px 10px;
 width:100%;
 font-size:12px;
 margin-top:10px;
 }
-@media(max-width:850px)
+@media(max-width:1057px){
+.right-profile{
+padding-left:10%;
+}
+}
+@media(max-width:990px)
 {
-    
+.chat-icon1{
+margin-left:0px;
+}
+}
+@media(max-width:700px){
+.right-profile{
+padding-left:30px;
+}
 }
 @media(max-width:600px){
 .right-bottom{
@@ -592,32 +604,49 @@ flex-grow:1;
 margin:10px;
 }
 .chat-icon1{
-    margin-left:0px;
-    position: absolute;
-    right: 10px;
-    top: 37px;
+margin-left:0px;
+position: absolute;
+right: 10px;
+top: 37px;
 }
 .right-profile{
-    position:relative;
+position:relative;
+}
+.profile-image, .right-profile #profile-image-placeholder-large {
+margin-top:-5px;
 }
 }
-@media(max-width:400px){
+@media(max-width:450px){
+.post-in-stu{
+margin:auto;
+}
+}
+@media(max-width:420px){
 .right-profile{
-    width:100%;
+width:100%;
+padding:2px;
+column-gap:5px;
 }
-#profile-image-placeholder-large{
-    width:60px;
-    height:60px;
+.profile-image, #profile-image-placeholder-large{
+max-width:60px;
+max-height:60px;
 }
 .right-profile ul{
-    font-size:10px;
+font-size:14px;
 }
+.chat-icon1{
+right:52px;
+top:20px;
+padding:6px;
 }
+
+}
+
 @media(max-height:660px){
-    .left ul {
-        padding-top:10px;
-        row-gap:10px;
-    }
+.left ul {
+padding-top:10px;
+row-gap:10px;
+}
 }
 {% endblock style %}
 
@@ -639,13 +668,14 @@ margin:10px;
 
                 <li><label>{{ student_info.email}}</label></li>
                 <li><label>{{ student_info.name}}</label></li>
-                <li><label>{{ student_info.class}}</label></li>
+                <!-- <li><label>{{ student_info.class}}</label></li> -->
                 <li><label>{{ student_info.roll_number}}</label></li>
 
             </ul>
             <div class="chat-icon1" onclick="window.location='{% url 'chat' student_info.roll_number %}'">
-          
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368">
+
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#5f6368">
                     <path
                         d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
                 </svg>
@@ -653,7 +683,7 @@ margin:10px;
             </div>
 
         </div>
-        
+
     </div>
     <div class="right-bottom">
         {% for post in posts %}
