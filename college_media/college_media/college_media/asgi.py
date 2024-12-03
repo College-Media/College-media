@@ -18,4 +18,4 @@ application = ProtocolTypeRouter({
             chat_app.routing.websocket_urlpatterns
         )
     ),
-})
+})  

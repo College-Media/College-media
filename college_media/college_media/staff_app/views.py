@@ -7,6 +7,9 @@ from django.contrib import messages # type: ignore
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail # type: ignore
 from django.conf import settings
+from openpyxl import load_workbook #toload excl file
+import os
+
 # code for sending main
 def mail_send(subject,message,mail):
     recipient_list = [mail]  # The recipient’s email
@@ -85,5 +88,62 @@ def staff_profile(request):
     user=request.user
     student_info=Student.objects.get(user=user)  
     post=Post.objects.filter(student__roll_number=student_info.user)   
-    return render(request,"staff_pages/staff_profile.html",{'student_info':student_info,'posts':post})
+    return render(request,"/staff_pages/staff_profile.html",{'student_info':student_info,'posts':post})
 
+
+def add_students(request):
+    if request.method == "POST":
+        # Check if a file is uploaded
+        if 'file' not in request.FILES or not request.FILES['file']:
+            messages.error(request, "No file uploaded.")
+            return redirect("/staff_dash/add_students")
+
+        # Get the uploaded file
+        uploaded_file = request.FILES['file']
+
+        # Save the file temporarily
+        file_path = f"/tmp/{uploaded_file.name}"
+        with open(file_path, "wb+") as dest:
+            for chunk in uploaded_file.chunks():
+                dest.write(chunk)
+
+        # Process the file (read Excel and save data to the database)
+        try:
+            workbook = load_workbook(filename=file_path)
+            sheet = workbook.active  # Assuming data is in the first sheet
+
+            # Loop through rows in the Excel file
+            for row in sheet.iter_rows(min_row=2, values_only=True):  # Skip the header row
+                roll_number, email, name, section, school_name, dob, profile_image = row
+
+                # Create CoustomUser
+                user = CoustomUser.objects.create_user(
+                    username=roll_number,  # Assuming username is roll_number
+                    email=email,
+                    password=dob  # Using DOB as a temporary password; update as needed
+                )
+                user.roll_number = roll_number
+                user.is_student = True
+                user.save()
+
+                # Create Student
+                Student.objects.create(
+                    user=user,
+                    roll_number=roll_number,
+                    name=name,
+                    email=email,
+                    section=section,
+                    school=school_name,
+                    dob=dob
+                    # profile_image=profile_image  # Ensure this is handled appropriately
+                )
+
+            messages.success(request, "Students added successfully.")
+        except Exception as e:
+            messages.error(request, f"Error processing file: {e}")
+
+        # Clean up: Remove the temporary file
+        os.remove(file_path)
+        return redirect("/staff_dash/add_students")
+
+    return render(request,"staff_pages/add_multiple_student.html")
