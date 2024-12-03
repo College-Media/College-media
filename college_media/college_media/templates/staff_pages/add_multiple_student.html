@@ -1,0 +1,22 @@
+{% extends "staff_pages/staff_base.html" %}
+
+
+{% block content %}
+<div class="right">
+    <h1>Upload Excel File</h1>
+    <form method="POST" enctype="multipart/form-data" action="">
+        {% csrf_token %}
+        <label for="file">Choose an Excel File:</label>
+        <input type="file" name="file" id="file" accept=".xlsx, .xls">
+        <button type="submit">Upload</button>
+    </form>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+</div>
+{% endblock content %}

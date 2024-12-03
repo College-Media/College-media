@@ -2,3 +2,4 @@
  pillow
  channels_redis
  daphne
+ openpyxl
