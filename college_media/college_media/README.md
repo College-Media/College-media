@@ -17,7 +17,7 @@ star the docker
 check for running 
 -> docker ps 
 accessing resis
-->docker exec -it project_name-redis-1 redis-cli
+->docker exec -it college_media-redis-1 redis-cli
 ->PING
 
 

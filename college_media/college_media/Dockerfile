@@ -8,8 +8,7 @@ WORKDIR /app
 COPY requirements.txt .  
 RUN pip install --no-cache-dir -r requirements.txt  
  # Activate virtual environment
-RUN python -m venv /app/myenv
-ENV PATH="/app/myenv/bin:$PATH"
+
 # Copy the entire project into the container
 COPY . .  
 

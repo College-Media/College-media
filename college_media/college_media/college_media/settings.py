@@ -32,16 +32,17 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'channels',
+    'admin_app',
+    'staff_app',
+    'user_app',
+    'chat_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'admin_app',
-    'staff_app',
-    'user_app',
-    'chat_app',
+    
 ]
 
 MIDDLEWARE = [
