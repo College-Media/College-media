@@ -721,12 +721,83 @@
         .svg-for-not-approve {
             fill: rgb(229, 16, 16);
         }
+
+        /* General styles for messages container */
+.messages {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+/* Individual message styles */
+.message {
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Success Message */
+.message.success {
+    background-color: #e6f9f0;
+    color: #256f49;
+    border-left: 5px solid #1dbf73;
+}
+
+/* Error Message */
+.message.error {
+    background-color: #fdecea;
+    color: #b71c1c;
+    border-left: 5px solid #d32f2f;
+}
+
+/* Info Message (Optional) */
+.message.info {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    border-left: 5px solid #1976d2;
+}
+
+/* Warning Message (Optional) */
+.message.warning {
+    background-color: #fff8e1;
+    color: #ff6f00;
+    border-left: 5px solid #ffa000;
+}
+
+/* Add icons (optional) */
+.message::before {
+    content: "⚠️"; /* Default icon */
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.message.success::before {
+    content: "✅";
+}
+
+.message.error::before {
+    content: "❌";
+}
+
+.message.info::before {
+    content: "ℹ️";
+}
+
+.message.warning::before {
+    content: "⚠️";
+}
+
         {% endblock styleProfile %}  
 
 
         {% block content %}  
     <div class="right">
         <div class="right-top">
+            
             <div class="right-profile">
                 {% if student_info.profile_image %}
                 <img class="profile-image" src="{{ student_info.profile_image.url }}">
@@ -751,6 +822,14 @@
                 <button class="editBtn">Edit Profile</button>
             </div>
         </div>
+        {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="message {{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
         <div class="right-bottom">
             {% if posts %}
             <div class="post-inside-profile">
@@ -795,7 +874,8 @@
         </div>
         {% endif %}
         </div>
-        
+       
+       
     <div id="overlay"></div>
     <div id="editProfileForm">
         <button id="closeButton" class="closeBtn">&times;</button>
@@ -824,7 +904,7 @@
                 </svg></div>
             <ul>
                 <li><input type="file" id="img" name="img" accept="image/*" required></li>
-                <li>Remove profile</li>
+                <li onclick="window.location='/delete_profile_pic/'">Remove profile</li>
                 <li id="cancelBtn">Cancel</li>
             </ul>
         </div>
