@@ -243,3 +243,23 @@ def get_liked_posts(request):
     student = request.user.student
     liked_post_ids = Like.objects.filter(student=student).values_list('post_id', flat=True)
     return JsonResponse({"liked_post_ids": list(liked_post_ids)})
+
+def delete_profile_pic(request):
+    user = request.user
+    student = Student.objects.get(user=user)
+
+    # Check if the profile picture exists
+    if not student.profile_image or not student.profile_image.name:  # Correct condition
+        messages.error(request, 'Profile Picture Not Found')
+    else:
+        # Delete the profile picture
+        student.profile_image.delete(save=False)  # Deletes the file but doesn't save the model
+        student.profile_image = None
+        student.save()  # Save changes to the database
+        messages.success(request, 'Profile Picture Removed Successfully')
+
+    # Redirect based on user type
+    if CoustomUser.objects.get(username=user).is_student:
+        return redirect("/user_dash/user_profile")
+    else:
+        return redirect("/staff_dash/staff_profile")
