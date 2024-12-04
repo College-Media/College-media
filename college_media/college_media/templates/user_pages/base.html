@@ -8,7 +8,7 @@
     <title>home</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    <script defer src="{% static 'js/home.js' %}"></script>
+    <!-- <script defer src="{% static 'js/home.js' %}"></script> -->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
@@ -389,7 +389,7 @@
                 padding: 5px;
                 flex-wrap: nowrap;
                 flex: 100%;
-                overflow: hidden;
+                overflow: auto;
             }
 
             .mobile-bottom li {
@@ -429,8 +429,9 @@
             }
 
             #post-menu-table {
-                width: 90%;
+                width: 50%;
                 padding: 15px;
+                left: 265px;
             }
 
         }
@@ -499,7 +500,7 @@
         }
 
         .success {
-            background-color: black;
+            background-color: rgba(21, 121, 132, 0.997);
             /* For success */
             color: white;
             /* Change text color for better visibility */
