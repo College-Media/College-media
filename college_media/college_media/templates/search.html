@@ -153,6 +153,41 @@ margin:0px 10px;
         width:100%;
         }
 }
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content button {
+    background-color: #116871;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modal-content button:hover {
+    background-color: #0d4f56;
+}
 {% endblock style %}
 {% block content %}
 <div class="right">
@@ -174,6 +209,14 @@ margin:0px 10px;
             <button type="button" class="search-btn" id="searchButton" onclick="searchStudent()"> Search </button>
             <div class="results" id="results"></div>
         </form>
+        
+        <!-- Modal for modern alert -->
+        <div id="alertModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <p id="modalMessage">Please enter a roll number before searching.</p>
+                <button onclick="closeModal()">OK</button>
+            </div>
+        </div>
     </div>
     {% if student %}
     <h3>Student Details</h3>
@@ -239,19 +282,23 @@ margin:0px 10px;
         window.location.href = "/search";
     });
 
-        function searchStudent() {
-            // Get the input value
-            const rollNumber = document.getElementById('searchInput').value.trim();
-    
-            // Check if input is empty
-            if (!rollNumber) {
-                alert('Please enter a roll number before searching.');
-                return;
-            }
-    
-            // Proceed with the search logic
-            document.querySelector('form').submit(); // Simulate form submission
+    function searchStudent() {
+        const rollNumber = document.getElementById('searchInput').value.trim();
+
+        if (!rollNumber) {
+            // Show the modal if input is empty
+            document.getElementById('alertModal').style.display = 'flex';
+            return;
         }
+
+        // Proceed with the form submission
+        document.querySelector('form').submit();
+    }
+
+    function closeModal() {
+        // Close the modal
+        document.getElementById('alertModal').style.display = 'none';
+    }
 </script>
 
 {% endblock content %}
