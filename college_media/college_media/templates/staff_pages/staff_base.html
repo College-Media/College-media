@@ -18,6 +18,16 @@
             margin: 0;
 
         }
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(86, 81, 81, 0.5);
+            z-index: 1000;
+        }
 
         .left {
             flex-basis: 200px;
@@ -184,15 +194,21 @@
         }
 
         #post-menu-table {
-            max-width: 125px;
-            position: absolute;
-            right: 0;
             display: none;
-            width: 125px;
-            border: 1px solid rgb(131, 126, 126);
-            border-radius: 10px;
-            z-index: 1;
-            background-color: rgba(255, 255, 255, 0.908);
+            margin: auto;
+            position: fixed;
+            top: 50%;
+            left: 58%;
+            transform: translate(-50%, -50%);
+            z-index: 1001;
+            max-width: 600px;
+            height: 160px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+            border-radius: 8px;
         }
 
         #post-menu-table ul {
@@ -208,7 +224,7 @@
             color: rgb(72, 70, 70);
             font-size: medium;
             font-weight: bold;
-            padding: 10px;
+            padding: 20px;
         }
 
         #post-menu-table li:hover {
@@ -218,6 +234,7 @@
         #post-menu-table li:first-child {
             border: none;
             color: rgb(171, 17, 17);
+            border: 2px solid rgb(42, 174, 188);
         }
 
         .post-body {
@@ -350,11 +367,30 @@
                 padding: 5px;
                 flex-wrap: nowrap;
                 flex: 100%;
-                overflow: hidden;
+                overflow: auto;
             }
 
             .mobile-bottom li {
                 flex-grow: 1;
+            }
+
+            .right {
+                max-height: calc(100vh - 100px);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                overflow-y: auto;
+                width: 100%;
+                height: auto;
+            }
+
+            .right::-webkit-scrollbar {
+                display: none;
+            }
+
+            .right {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
             }
 
             .right,
@@ -364,6 +400,10 @@
                 width: 100%;
                 margin: 0;
                 padding: 0;
+            }
+            #post-menu-table {
+                width: 90%;
+                padding: 15px;
             }
 
 
@@ -476,6 +516,7 @@
 </head>
 
 <body>
+    <div id="overlay"></div>
     <div class="mobile-top">
         <ul>
             <li class="mobile-top-logo">
@@ -600,7 +641,7 @@
                     <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
                 </div>
                 <div class="post-menu">
-                    <div class="post-menu-icon" onclick="fun1()">
+                    <div class="post-menu-icon" onclick="display()" >
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                             fill="#5f6368">
                             <path
@@ -609,7 +650,7 @@
                         <div id="post-menu-table">
                             <ul>
                                 <li><a href="#" style="text-decoration: none;color:red">Report</a></li>
-                                <li onclick="fun()">Cancel</li>
+                                <li  class="cancelBtnHome" onclick="cancel()">Cancel</li>
                             </ul>
                         </div>
                     </div>
@@ -655,7 +696,13 @@
                     <path
                         d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
                 </svg></li>
-          
+                <li onclick="window.location='/user_dash/add_post'">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#5f6368">
+                        <path class="icon"
+                            d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                    </svg>
+                </li>
                 <li onclick="window.location='/staff_dash/option_student_add/'"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                     fill="#5f6368">
                     <path
