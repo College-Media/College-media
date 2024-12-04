@@ -33,7 +33,13 @@
     {% if post.is_approved %}
     <div class="post" id="post-{{ post.id }}">
         <div class="post-head">
-            <div class="post-profile" onclick="window.location='/student_details/{{post.student.id}}'">
+        {% if user.roll_number == post.student.roll_number %}
+        
+            <div class="post-profile" onclick="window.location='/user_dash/user_profile'">
+                 {% else %}
+                 <div class="post-profile" onclick="window.location='/student_details/{{post.student.id}}'">
+            {% endif %}
+            
                 {% if post.student.profile_image %}
                 <img src="{{ post.student.profile_image.url }}" class="post-profile-img" alt="Profile Picture">
                 <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>

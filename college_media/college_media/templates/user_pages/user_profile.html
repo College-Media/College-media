@@ -800,7 +800,8 @@
     <div id="editProfileForm">
         <button id="closeButton" class="closeBtn">&times;</button>
         <h3>EDIT PROFILE</h3>
-        <form>
+        <form  method="POST">
+            {% csrf_token %}
             <div id="overlay2"></div>
             <div id="profile-in-edit">
                 {% if student_info.profile_image %}
@@ -812,7 +813,7 @@
                 {% endif %}
             </div>
             <label for="name">Username:</label>
-            <input type="text" id="name" name="name" placeholder="Edit Username"><br><br>
+            <input type="text" id="name" name="name" placeholder="{{ student_info.name}}">
 
             <button type="submit" id="subBtn">Save</button>
         </form>
