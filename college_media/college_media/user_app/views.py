@@ -35,5 +35,10 @@ def user_profile(request):
     user=request.user
     student_info=Student.objects.get(user=user) 
     post=Post.objects.filter(student__roll_number=student_info.user)
-    comments=Comment.objects.filter(student__roll_number=student_info.user)     
+    comments=Comment.objects.filter(student__roll_number=student_info.user) 
+    if request.method =='POST':
+        username=request.POST['name']
+        student_info.name=username
+        student_info.save()
     return render(request,"user_pages/user_profile.html",{'student_info':student_info,'posts':post})
+    
