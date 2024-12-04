@@ -301,13 +301,6 @@
 
 {% block content %}
 <div class="right">
-    <div class="notification-menu">
-        {% comment %} <a href="/notifications/" id="notification-icon">
-            Notifications
-            <span id="notification-badge" class="badge"></span>
-        </a> {% endcomment %}
-    </div>
-    
     <div class="chat-container">
         <!-- Chat List Section -->
         <div class="chat-list">
@@ -348,7 +341,7 @@
                         <div class="timestamp">{{ chat.timestamp }}</div>
                     </div>
                 {% empty %}
-                <div class="chat-invite">
+                <div id="lets-chart-window" class="chat-invite" onclick="window.location='/search_student/'">
                     <!-- Updated SVG Icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#ffeb3b">
                         <path d="M240-400h480v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM880-80 720-240H160q-33 0-56.5-23.5T80-320v-480q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v720ZM160-320h594l46 45v-525H160v480Zm0 0v-480 480Z"/>
@@ -381,7 +374,7 @@
             messageContainer.classList.add(data.sender == userId ? 'message-sender' : 'message-receiver');
             messageContainer.innerHTML = `<p class="messege-text">${data.message}</p><div class="timestamp">${data.timestamp}</div>`;
             document.getElementById('chat-messages').appendChild(messageContainer);
-
+            document.getElementById('lets-chart-window').style.display='none';
             // Scroll to the bottom after a new message is added
             const chatMessages = document.getElementById('chat-messages');
             chatMessages.scrollTop = chatMessages.scrollHeight;

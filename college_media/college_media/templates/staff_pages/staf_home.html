@@ -557,7 +557,7 @@
                 </svg>
                 <a href="/user_dash/add_post">Post</a>
             </li>
-            <li class="menu-items" onclick="wndow.location='/chat_app/chat'">
+            <li class="menu-items" onclick="window.location='/chat_app/chat'">
                 <div  id="chat-read" class="chat-icon"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                      fill="#5f6368">
                      <path class="icon"
@@ -788,6 +788,31 @@
         // Poll every 5 seconds to update like counts
         setInterval(updateLikeCounts, 2000);
     });
+    const chatSocket_notification=new WebSocket('ws://'+ window.location.host + '/ws/notification/')
+    chatSocket_notification.onmessage=function(e)
+    {
+        const data=JSON.parse(e.data);
+        if (data.new_notifications)
+        {
+            const newcount=data.unread;
+            console.log(newcount)
+            const chatread = document.getElementById('chat-read');
+            const chatunread = document.getElementById('chat-unread');
+    
+            if (newcount >= 1) {
+                console.log("default")
+                // Show the unread notifications SVG icon
+                chatunread.style.display = 'inline';
+                chatread.style.display = 'none';
+            } else {
+                // Show the default (0 unread) SVG icon
+                chatunread.style.display = 'none';
+                chatread.style.display = 'inline';
+            }
+    
+        }
+    };
+
 </script>
 
 </html>

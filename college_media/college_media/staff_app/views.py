@@ -114,7 +114,7 @@ def add_students(request):
 
             # Loop through rows in the Excel file
             for row in sheet.iter_rows(min_row=2, values_only=True):  # Skip the header row
-                roll_number, email, name, section, school_name, dob = row
+                roll_number, email, name, section, school_name, dob, profile_image = row
 
                 # Create CoustomUser
                 user = CoustomUser.objects.create_user(
@@ -135,6 +135,7 @@ def add_students(request):
                     section=section,
                     school=school_name,
                     dob=dob
+                    # profile_image=profile_image  # Ensure this is handled appropriately
                 )
 
             messages.success(request, "Students added successfully.")
@@ -146,6 +147,3 @@ def add_students(request):
         return redirect("/staff_dash/add_students")
 
     return render(request,"staff_pages/add_multiple_student.html")
-
-def show_option(request):
-    return render(request,"staff_pages/add_student_option.html")

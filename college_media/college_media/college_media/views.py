@@ -167,10 +167,6 @@ from django.shortcuts import render, get_object_or_404  #used for showing profil
 def student_detail(request, roll_number):
     user=request.user
     users=CoustomUser.objects.get(username=user)
-    print(user.id)
-    if user.id==roll_number:
-        return redirect("/user_dash/user_profile")
-        
     student_info=Student.objects.get(id=roll_number)
     post=Post.objects.filter(student__roll_number=student_info.roll_number)  #here student__ will hel to extarct the table field name from the table use double under score
     if users.is_staff:
