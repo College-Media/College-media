@@ -19,7 +19,8 @@ check for running
 accessing resis
 ->docker exec -it college_media-redis-1 redis-cli
 ->PING
-
-torun the project
+to run docker
+-> docker compose up -d
+to run the project
 -> daphne -b 127.0.0.1 -p 8000 college_media.asgi:application
 

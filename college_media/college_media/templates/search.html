@@ -164,15 +164,14 @@ margin:0px 10px;
             {% csrf_token %}
             <h2 style="color:rgba(17, 104, 113, 0.955);">Search Student by Roll Number</h2>
             <div class="searchContainer">
-                <input type="text" id="searchInput" name="roll_number" placeholder="Enter Roll Number">
-                <div class="searchIconContainer"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                        viewBox="0 -960 960 960" width="24px" fill="#5f6368" id="searchIcon">
-                        <path
-                            d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+                <input type="text" id="searchInput" name="roll_number" placeholder="Enter Roll Number" required>
+                <div class="searchIconContainer">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368" id="searchIcon">
+                        <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/>
                     </svg>
                 </div>
             </div>
-            <button onclick="searchStudent()" class="search-btn">Search</button>
+            <button type="button" class="search-btn" id="searchButton" onclick="searchStudent()"> Search </button>
             <div class="results" id="results"></div>
         </form>
     </div>
@@ -208,31 +207,31 @@ margin:0px 10px;
 
         // Make the fetch request to the correct URL
         fetch(`/search_student?roll=${rollNumber}`)
-            .then(response => {
-                if (!response.ok) {  // Check if the response is successful (status 200-299)
-                    if (response.status === 404) {
-                        throw new Error('Student not found');
-                    }
-                    throw new Error('Server error');
-                }
-                return response.json();  // Parse the response as JSON
-            })
-            .then(data => {
-                if (data) {
-                    // Display search results with clickable roll number
-                    document.getElementById("results").innerHTML = `
-                    <p>Student Name: ${data.name}</p>
-                    <p>Roll Number: ${data.roll}</p>
-                `;
-                } else {
-                    document.getElementById("results").innerHTML = "<p>No student found</p>";
-                }
-            })
-            .catch(error => {
-                // Handle errors like network issues or 404 not found
-                document.getElementById("results").innerHTML = "<p>Error: " + error.message + "</p>";
-                console.error('Fetch error:', error);
-            });
+    .then(response => {
+        console.log(response); // Log the response object
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error('Student not found');
+            }
+            throw new Error('Server error');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data) {
+            document.getElementById("results").innerHTML = `
+            <p>Student Name: ${data.name}</p>
+            <p>Roll Number: ${data.roll}</p>
+        `;
+        } else {
+            document.getElementById("results").innerHTML = "<p>No student found</p>";
+        }
+    })
+    .catch(error => {
+        document.getElementById("results").innerHTML = "<p>Error: " + error.message + "</p>";
+        console.error('Fetch error:', error);
+    });
+
     }
 
     document.querySelector('.menu-items a[href="/logout"]').addEventListener('click', function (event) {
@@ -240,7 +239,19 @@ margin:0px 10px;
         window.location.href = "/search";
     });
 
-
+        function searchStudent() {
+            // Get the input value
+            const rollNumber = document.getElementById('searchInput').value.trim();
+    
+            // Check if input is empty
+            if (!rollNumber) {
+                alert('Please enter a roll number before searching.');
+                return;
+            }
+    
+            // Proceed with the search logic
+            document.querySelector('form').submit(); // Simulate form submission
+        }
 </script>
 
 {% endblock content %}
