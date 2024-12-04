@@ -22,4 +22,3 @@ accessing resis
 
 torun the project
 -> daphne -b 127.0.0.1 -p 8000 college_media.asgi:application
-

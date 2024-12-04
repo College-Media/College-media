@@ -1,0 +1,6 @@
+write all the testing or bugs that you find on daily basic pleace enter the date also
+4-12-2024(adithya)
+-chat profile pic size should be properly aligned mainly those who are not having profile pic
+- sending button in chat not properly aligned 
+- recent messeges are not showing
+- our profile name should be shown as you in the chat
