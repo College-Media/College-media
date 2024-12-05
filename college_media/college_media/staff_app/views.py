@@ -48,8 +48,12 @@ def add_student(request):
 
 
 def home(request):
-    posts = Post.objects.select_related('student').filter(is_approved=True).order_by('-created_at') # Use select_related to fetch related student data efficiently
-    return render(request,"staff_pages/staf_home.html",{'posts':posts})
+    posts = Post.objects.select_related('student').order_by('?') 
+    liked_by=Student.objects.get(roll_number=request.user)    
+    liked_post_ids = Like.objects.filter(liked_by=liked_by).values_list('post_id', flat=True)
+    likes=Like.objects.all()
+    # return render(request,"user_pages/user_home.html",{'posts':posts)
+    return render(request,"staff_pages/staf_home.html",{'posts':posts,'liked_post_ids': set(liked_post_ids),'likes':likes})
 
 def option_student_add(request):
     return render(request,"staff_pages/add_student_option.html")
@@ -87,8 +91,18 @@ def approve_or_reject_post(request):
 def staff_profile(request):
     user=request.user
     student_info=Student.objects.get(user=user)  
-    post=Post.objects.filter(student__roll_number=student_info.user)   
-    return render(request,"/staff_pages/staff_search_page.html",{'student_info':student_info,'posts':post})
+    post=Post.objects.filter(student__roll_number=student_info.user)
+    if request.method =='POST':
+        form_type = request.POST.get('form_type')
+        if form_type == 'username':
+            username=request.POST['name']
+            student_info.name=username
+            student_info.save()
+        elif form_type == 'profile_pic':
+            image_file = request.FILES['img']
+            student_info.profile_image=image_file  # Create a new model instance
+            student_info.save()  
+    return render(request,"staff_pages/staff_profile.html",{'student_info':student_info,'posts':post})
 
 
 def add_students(request):

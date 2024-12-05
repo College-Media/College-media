@@ -879,6 +879,7 @@
         <h3>EDIT PROFILE</h3>
         <form  method="POST">
             {% csrf_token %}
+            <input type="hidden" name="form_type" value="username">
             <div id="overlay2"></div>
             <div id="profile-in-edit">
                 {% if student_info.profile_image %}
@@ -901,7 +902,13 @@
                     <path d="M160-450v-60h640v60H160Z" />
                 </svg></div>
             <ul>
-                <li><input type="file" id="img" name="img" accept="image/*" required></li>
+                <li><form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="profile_pic">
+                    <label for="img">Choose a profile image:</label>
+                    <input type="file" id="img" name="img" accept="image/*" required>
+                    <button type="submit">Upload</button>
+                </form></li>
                 <li onclick="window.location='/delete_profile_pic/'">Remove profile</li>
                 <li id="cancelBtn">Cancel</li>
             </ul>
@@ -911,6 +918,7 @@
     <div id="editPostForm">
 
         <form>
+            
             <div id="overlay2"></div>
             <div id="post-in-edit-actions">
                 <img id="post-img" src="" alt="Profile Picture">

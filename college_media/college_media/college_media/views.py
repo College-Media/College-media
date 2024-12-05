@@ -65,16 +65,17 @@ def search_student(request):
     if request.method == "POST":
         roll_number = request.POST.get("roll_number")  # Retrieve the roll 
         student = Student.objects.filter(roll_number__icontains=roll_number)
-        if student:
+        if not student:
+            message="Student not found"
             if users.is_staff:
-                return render(request,"staff_pages/staff_search_page.html",{'student':student})
+                return render(request,"staff_pages/staff_search_page.html",{'student':student,'message':message})
             else:
                 return render(request, "search.html", {'student': student})  
-                 
-                 
-
-    # If the request is GET, simply render the form without any student data
-    
+        else:              
+             if users.is_staff:
+                return render(request,"staff_pages/staff_search_page.html",{'student':student})
+             else:
+                return render(request, "search.html", {'student': student})  
     if users.is_staff:
          return render(request,"staff_pages/staff_search_page.html")
     else:

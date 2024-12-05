@@ -37,8 +37,14 @@ def user_profile(request):
     post=Post.objects.filter(student__roll_number=student_info.user)
     comments=Comment.objects.filter(student__roll_number=student_info.user) 
     if request.method =='POST':
-        username=request.POST['name']
-        student_info.name=username
-        student_info.save()
+        form_type = request.POST.get('form_type')
+        if form_type == 'username':
+            username=request.POST['name']
+            student_info.name=username
+            student_info.save()
+        elif form_type == 'profile_pic':
+            image_file = request.FILES['img']
+            student_info.profile_image=image_file  # Create a new model instance
+            student_info.save()
     return render(request,"user_pages/user_profile.html",{'student_info':student_info,'posts':post})
     

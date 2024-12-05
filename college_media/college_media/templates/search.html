@@ -187,10 +187,28 @@ margin:0px 10px;
 .modal-content button:hover {
     background-color: #0d4f56;
 }
+
+.message-container {
+    display: none; /* Initially hidden */
+    color: white;
+    background-color: red;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    text-align: center;
+}
 {% endblock style %}
 {% block content %}
 <div class="right">
-
+    {% comment %} <div id="message-container">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="message {{ message.tags }}" style="display: block;">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div> {% endcomment %}
     <div class="search-container">
 
 
@@ -221,16 +239,16 @@ margin:0px 10px;
     <h3>Student Details</h3>
     <div class="div-for-stu-details">
       
-        {% for stu in student %}
+    {% for stu in student %}
         <div class="student-card" onclick=window.location.href="{% url 'student_detail' stu.id %}">
             <h3><strong>Roll Number:</strong> {{ stu.roll_number }}</h3>
             <p><strong>Name:</strong> {{ stu.name }}</p>
             <p><strong>Email:</strong> {{ stu.email }}</p>
         </div>
         {% endfor %}
-        {% elif message %}
+    {% elif message %}
         <p>{{ message }}</p>
-        {% endif %}
+    {% endif %}
 
     </div>
 </div>
@@ -298,6 +316,24 @@ margin:0px 10px;
         // Close the modal
         document.getElementById('alertModal').style.display = 'none';
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the error message element
+        const errorMessage = document.getElementById('error-message');
+
+        // Check if the error message exists
+        if (errorMessage) {
+            // Set a timeout to hide the error message after 3 seconds
+            setTimeout(() => {
+                errorMessage.style.display = 'none'; // Hide the error
+            }, 3000); // Adjust the time as needed
+
+            // Clear the error message from the session or context storage
+            if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href); // Clear the query parameters or session context
+            }
+        }
+    });
 </script>
 
 {% endblock content %}

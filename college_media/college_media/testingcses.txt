@@ -4,3 +4,9 @@ write all the testing or bugs that you find on daily basic pleace enter the date
 - sending button in chat not properly aligned 
 - recent messeges are not showing
 - our profile name should be shown as you in the chat
+5-12-2024(adithya)
+-last chat is not updating in the chat list
+-menu bar is not working properly in edg-menu bar is changeing for profile and othere
+-in profile last photo is cutted into half
+-add student page is not yet done
+-notification for error msg is not showing in some pages
