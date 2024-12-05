@@ -138,7 +138,7 @@ def add_students(request):
                     # profile_image=profile_image  # Ensure this is handled appropriately
                 )
 
-            messages.success(request, "Students added successfully.")
+            messages.success(request, "Students added successfully.",extra_tags='student_add')
         except Exception as e:
             messages.error(request, f"Error processing file: {e}")
 
