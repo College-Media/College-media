@@ -551,7 +551,7 @@ q
         padding: 5px;
         flex-wrap: nowrap;
         flex: 100%;
-        overflow: auto;
+        overflow: hidden;
     }
 
     .mobile-bottom li {
@@ -589,11 +589,8 @@ q
     }
     .not-approved-post,
     .approved-post {
-        max-width: 162px;
-        max-height: 162px;
-    }
-    .chat-dot-svg{
-        width:35px;
+        max-width: 100px;
+        max-height: 100px;
     }
 }
         @media(max-height:660px){
@@ -724,7 +721,6 @@ q
         .svg-for-not-approve {
             fill: rgb(229, 16, 16);
         }
-
         /* General styles for messages container */
 .messages {
     list-style: none;
@@ -800,7 +796,6 @@ q
         {% block content %}  
     <div class="right">
         <div class="right-top">
-            
             <div class="right-profile">
                 {% if student_info.profile_image %}
                 <img class="profile-image" src="{{ student_info.profile_image.url }}">
@@ -815,7 +810,7 @@ q
 
                     <li><label>{{ student_info.email}}</label></li>
                     <li><label>{{ student_info.name}}</label></li>
-                    <!-- <li><label>{{ student_info.class}}</label></li> -->
+                    <li><label>{{ student_info.class}}</label></li>
                     <li><label>{{ student_info.roll_number}}</label></li>
                     <li> <button class="editBtn" id="editBtn1">EDIT PROFILE</button></li>
                 </ul>
@@ -877,13 +872,13 @@ q
         </div>
         {% endif %}
         </div>
-       
-       
+        
     <div id="overlay"></div>
     <div id="editProfileForm">
         <button id="closeButton" class="closeBtn">&times;</button>
         <h3>EDIT PROFILE</h3>
-        <form>
+        <form  method="POST">
+            {% csrf_token %}
             <div id="overlay2"></div>
             <div id="profile-in-edit">
                 {% if student_info.profile_image %}
@@ -895,7 +890,7 @@ q
                 {% endif %}
             </div>
             <label for="name">Username:</label>
-            <input type="text" id="name" name="name" placeholder="Edit Username"><br><br>
+            <input type="text" id="name" name="name" placeholder="{{ student_info.name}}">
 
             <button type="submit" id="subBtn">Save</button>
         </form>

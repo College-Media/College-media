@@ -28,7 +28,7 @@ fill: black;
 display: none;
 position: fixed;
 top: 50%;
-left: 50%;
+left: 57%;
 transform: translate(-50%, -50%);
 z-index: 1001;
 max-width: 600px;
@@ -58,6 +58,9 @@ margin:auto;
     margin:10px;
     box-shadow: 0 4px 8px rgba(61, 59, 59, 0.2);
 }
+.comments-show-area::-webkit-scrollbar{
+    width:10px;
+}
 .comments-show-area span{
   margin:5px 5%;
   font-size:12px;
@@ -78,9 +81,7 @@ display:flex;
 flex-direction:row;
 column-gap:10px;
 }
-.form-in-comment input{
 
-}
 .form-in-comment button{
     border:none;
     padding:auto;
@@ -154,10 +155,9 @@ column-gap:10px;
 
 
             </div>
-        
-            <div class="comment" onclick="showcomment('{{ post.image.url}}','{{post.id}}',)"  >
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                    fill="#FFFFFF">
+
+            <div class="comment" onclick="showcomment('{{ post.image.url }}')">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
                     <path
                         d="M80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
                 </svg>
@@ -176,7 +176,7 @@ column-gap:10px;
                         {% endif %}
                     </div>
                 </div>
-                <div  class="post-body"><id="comment-img" img src="{{post.image.url}}" alt="Post Image"></div>
+                <div class="post-body"><img id="post-img" src="" alt="Post Image"></div>
                 <div class="comments-show-area">
                     <div class="user-comment-area">
                         <label class="label-in-comment">20232mca0191</label>
@@ -210,14 +210,17 @@ column-gap:10px;
                     </form>
                 </div>
             </div>
-
+           
         </div>
+        <div class="disc-in-home">{{post.content}}</div>
     </div>
     {% endif %}
     {% endfor %}
 </div>
 
 <script>
+    
+
     history.scrollRestoration = "manual"; // Prevents automatic scroll restoration
     window.onload = function () {
         window.scrollTo(0, 0); // Ensures scroll starts at the top
@@ -327,7 +330,10 @@ column-gap:10px;
         rightContainer.style.overflow = "auto";
     }
 
-    function showcomment(imgurl,postId) {
+    function showcomment(imgurl) {
+        const postElement = document.getElementById('post-img'); // Image element to display the selected image
+        postElement.src = imgurl; 
+        console.log('Image URL received:', imgurl);
         const commentDisplay = document.getElementById('comments-display');
         commentDisplay.style.display = 'block';
         document.getElementById('overlay').style.display = 'block';
@@ -335,9 +341,6 @@ column-gap:10px;
                commentDisplay.style.display='none';
                document.getElementById('overlay').style='none';
         });
-        const commentImg=document.getElementById('comment-img');
-        console.log(imgurl);
-        const commentImg.src=imgurl;
     }
 </script>
 

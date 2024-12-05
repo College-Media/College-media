@@ -189,7 +189,7 @@ svg {
 .editBtn {
     border: none;
     border-radius: 10px;
-    background-color: rgba(10, 136, 150, 0.997);
+    background-color:rgba(10, 136, 150, 0.997); 
     padding: 10px 20px;
     color: rgb(251, 250, 252);
     font-size: medium;
@@ -371,7 +371,7 @@ border-radius: 50%;
     background-color: white;
     bottom: 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    
+    display:none;
     z-index: 1003;
     margin-left: 0;
     transition: height 0.5s ease-out;
@@ -430,15 +430,28 @@ border-radius: 50%;
 }
 
 /* css changes for responsiveness */
+@media(max-width:1160px){
+    .not-approved-post,
+.approved-post {
+max-width: 215px;
+max-height: 215px;
+}
+}
+@media(max-width:1108px){
+    .right-profile{
+    padding-left:20%;
+    }
+}
 @media (max-width:900px) {
     .right-profile li:first-child {
         font-size: small;
     }
-
     .right-profile {
-        padding: 10px;
-    }
-
+        padding-left: 15%;
+        }
+        .right-profile ul{
+            margin-top:5px;
+        }
     .right-profile img {
         width: 80px;
         height: 80px;
@@ -448,6 +461,11 @@ border-radius: 50%;
         width: 80px;
         height: 80px;
     }
+    .not-approved-post,
+.approved-post {
+max-width: 162px;
+max-height: 162px;
+}
 }
 @media (max-width:800px){
     .right-profile{
@@ -520,13 +538,25 @@ border-radius: 50%;
         padding: 4px;
     }
 
-
+    .editBtn{
+        display:none;
+        }
+        #editBtn1{
+        display:block;
+        }
+        .right-top ul{
+        margin:0;
+        }
     .right-top ul:first-child {
         width: 20px;
     }
     .right-top{
         height:30%;
         min-height:150px;
+    }
+    .right-profile{
+        margin-left:1px;
+        padding-left:10px;
     }
     .right-bottom{
         height:3250px;
@@ -535,6 +565,7 @@ border-radius: 50%;
     .post-inside-profile{
         height:100%;
         margin-left: 0;
+        justify-content: space-evenly;
     }
    
     .span-svg-approve, .span-svg-not-approve {
@@ -603,10 +634,12 @@ border-radius: 50%;
 
     .not-approved-post,
     .approved-post {
-        max-width: 100px;
-        max-height: 100px;
+        max-width: 162px;
+        max-height: 162px;
     }
-  
+    .chat-dot-svg{
+        width:35px;
+        }
 
 }
 
@@ -839,12 +872,32 @@ display:none;
     <div id="profile-edit-pic-table">
        <div><svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="grey"><path d="M160-450v-60h640v60H160Z"/></svg></div> 
         <ul>
-            <li>Upload New profile</li>
+            <li><input type="file" id="img" name="img" accept="image/*" required></li>
             <li>Remove profile</li>
             <li id="cancelBtn">Cancel</li>
         </ul>
     </div>
 </div>
+<div id="editPostForm">
 
+    <form>
+        <div id="overlay2"></div>
+        <div id="post-in-edit-actions">
+            <img id="post-img" src="" alt="Profile Picture">
+        </div>
+
+    </form>
+
+    <div id="post-edit-action-table">
+        <div><svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="grey">
+                <path d="M160-450v-60h640v60H160Z" />
+            </svg></div>
+        <ul>
+            <li>What to do</li>
+            <li id="deletePostBtn">Delete</li>
+            <li id="cancelBtnP">Cancel</li>
+        </ul>
+    </div>
+</div>
 
 {% endblock content %}

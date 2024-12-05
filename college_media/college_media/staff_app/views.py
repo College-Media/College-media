@@ -88,7 +88,7 @@ def staff_profile(request):
     user=request.user
     student_info=Student.objects.get(user=user)  
     post=Post.objects.filter(student__roll_number=student_info.user)   
-    return render(request,"/staff_pages/staff_profile.html",{'student_info':student_info,'posts':post})
+    return render(request,"/staff_pages/staff_search_page.html",{'student_info':student_info,'posts':post})
 
 
 def add_students(request):

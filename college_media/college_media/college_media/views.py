@@ -63,25 +63,15 @@ def search_student(request):
     user=request.user
     users=CoustomUser.objects.get(username=user)
     if request.method == "POST":
-        roll_number = request.POST.get("roll_number")  # Retrieve the roll number from the form        
-        try:          
-            # Attempt to find a student with the provided roll number
-            student = Student.objects.filter(roll_number__icontains=roll_number)
-            if student:
-                if users.is_staff:
-                    return render(request,"staff_pages/staff_search_page.html",{'student':student})
-                else:
-                    return render(request, "search.html", {'student': student})  
-            else:
-                if users.is_staff:
-                        return render(request,"staff_pages/staff_search_page.html",{'message': "No student found with this roll number."})
-                else:
-                        return render(request, "search.html", {'message': "No student found with this roll number."})     
-        except Student.DoesNotExist:
+        roll_number = request.POST.get("roll_number")  # Retrieve the roll 
+        student = Student.objects.filter(roll_number__icontains=roll_number)
+        if student:
             if users.is_staff:
-                return render(request,"staff_pages/staff_search_page.html",{'message': "No student found with that roll number."})
+                return render(request,"staff_pages/staff_search_page.html",{'student':student})
             else:
-                return render(request, "search.html", {'message': "No student found with that roll number."})             
+                return render(request, "search.html", {'student': student})  
+                 
+                 
 
     # If the request is GET, simply render the form without any student data
     
@@ -263,3 +253,4 @@ def delete_profile_pic(request):
         return redirect("/user_dash/user_profile")
     else:
         return redirect("/staff_dash/staff_profile")
+
