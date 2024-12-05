@@ -28,7 +28,7 @@ fill: black;
 display: none;
 position: fixed;
 top: 50%;
-left: 50%;
+left: 57%;
 transform: translate(-50%, -50%);
 z-index: 1001;
 max-width: 600px;
@@ -58,6 +58,9 @@ margin:auto;
     margin:10px;
     box-shadow: 0 4px 8px rgba(61, 59, 59, 0.2);
 }
+.comments-show-area::-webkit-scrollbar{
+    width:10px;
+}
 .comments-show-area span{
   margin:5px 5%;
   font-size:12px;
@@ -78,9 +81,7 @@ display:flex;
 flex-direction:row;
 column-gap:10px;
 }
-.form-in-comment input{
 
-}
 .form-in-comment button{
     border:none;
     padding:auto;
@@ -209,8 +210,9 @@ column-gap:10px;
                     </form>
                 </div>
             </div>
-
+           
         </div>
+        <div class="disc-in-home">{{post.content}}</div>
     </div>
     {% endif %}
     {% endfor %}

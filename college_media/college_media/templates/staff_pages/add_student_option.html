@@ -1,12 +1,40 @@
 {% extends "staff_pages/staff_base.html" %}
 
 {% block style %}
+.add-student-options{
+    margin:auto;
+    display:flex;
+    flex-direction:row;
+    gap:10px;
+}
+.single-stu a,.multi-stu a{
+    text-decoration:none;
+    color:white;
+    font-size:20px;
+    font-weight:bold;
+}
+.single-stu, .multi-stu{
+    padding:20px;
+    background-color:rgba(10, 136, 150, 0.997);
+    border-radius:10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.single-stu:hover, .multi-stu:hover{
+    background-color:rgba(10, 150, 150, 0.997);
 
+}
+@media(max-width:600px){
+    .add-student-options{
+    flex-direction:column;
+    }
+}
 {% endblock style %}
 
 {% block content %}
 <div class="right">
-    <a href="/staff_dash/add_student/">Add single student</a><br><br>
-    <a href="/staff_dash/add_students">Add multiple student</a>
-</center></div>
+    <h1>ADD STUDENTS</h1>
+    <div class="add-student-options">
+   <div class="single-stu"><a href="/staff_dash/add_student/">Add single student</a></div> 
+    <div class="multi-stu"><a href="/staff_dash/add_students">Add multiple student</a></div>
+    </div>
 {% endblock content %}

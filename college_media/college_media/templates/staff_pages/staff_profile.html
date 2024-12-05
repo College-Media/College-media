@@ -1,60 +1,93 @@
 {% extends "staff_pages/staff_base.html" %}
+{% block styleProfile %}
 {% load static %}
-{% block styleProfile %}  
-        body {
-            display: flex;
-            align-items: flex-start;
-            justify-content: flex-start;
-            margin: 0;
+body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 0;
 
 
-        }
+}
 
-        .left {
+.left {
 
-            position: fixed;
-            /* Make the left sidebar fixed */
-            top: 0;
-            left: 0;
-            height: 100vh;
-            min-width: 120px;
-            border-right: 1px solid rgba(133, 130, 130, 0.474);
-            background-color: #fff;
-            /* Optional background color */
-            z-index: 1;
-            /* Ensure it stays on top */
+    position: fixed;
+    /* Make the left sidebar fixed */
+    top: 0;
+    left: 0;
+    height: 100vh;
+    min-width: 120px;
+    border-right: 1px solid rgba(133, 130, 130, 0.474);
+    background-color: #fff;
+    /* Optional background color */
+    z-index: 1;
+    /* Ensure it stays on top */
 
-        }
+}
 
 
-        .left .logo-image {
-            border-radius: 50%;
-            background-image: url('{% static "images/media-img.jfif" %}');
-            border: 1px solid rgba(144, 138, 138, 0.678);
-            min-width: 90px;
-            width: 90px;
-            height: 90px;
-            margin: 10px 2px;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
+.left .logo-image {
+    border-radius: 50%;
+    background-image: url('{% static "images/media-img.jfif" %}');
+    border: 1px solid rgba(144, 138, 138, 0.678);
+    min-width: 90px;
+    width: 90px;
+    height: 90px;
+    margin: 10px 2px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
-        .left ul:first-child {
-            margin-bottom: 20px;
-        }
+.left ul:first-child {
+    margin-bottom: 20px;
+}
 
-        .left ul {
-            list-style-type: none;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            row-gap: 20px;
-            flex-grow: 1;
-            justify-content: flex-start;
-            padding: 30px;
-        }
-        .chat-icon{
+.left ul {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 20px;
+    flex-grow: 1;
+    justify-content: flex-start;
+    padding: 30px;
+}
+
+.menu-items {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+    padding: 8px;
+    width: 100%;
+    padding-left: 20px;
+}
+
+.menu-items:hover {
+    border-radius: 10px;
+    background-color: rgba(234, 232, 228, 0.807);
+}
+
+.menu-items:hover .icon {
+    fill: black;
+    width: 28px;
+
+}
+
+svg {
+    cursor: pointer;
+}
+
+.left a,
+.logo-name {
+    text-decoration: none;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: black;
+    font-size: 18px;
+    flex: 1;
+}
+.chat-icon{
     display:none;
 }
 .chat-dot-svg{
@@ -72,390 +105,391 @@
     border: 2px solid #fffbfb;
     display: flex;
 }
+.profile,
+.mview-logo {
+    border-radius: 50%;
+    border: 3px solid rgba(85, 79, 79, 0.678);
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
-        .menu-items {
-            display: flex;
-            align-items: center;
-            column-gap: 8px;
-            padding: 8px;
-            width: 100%;
-            padding-left: 20px;
-        }
+.right {
+    margin-left: 120px;
+    /* Offset by the width of the left sidebar */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 120px);
+    /* Fill remaining space */
+    overflow: hidden;
+    margin-top:0px;
+    margin-bottom:0px;
+}
 
-        .menu-items:hover {
-            border-radius: 10px;
-            background-color: rgba(234, 232, 228, 0.807);
-        }
+.right-top {
+    background-color: rgb(238, 238, 238);
+    width: 100%;
+    height: 30%;
+   min-height: 20%;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid rgb(160, 158, 158);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        .menu-items:hover .icon {
-            fill: black;
-            width: 28px;
+.right-profile {
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+}
 
-        }
+.right-profile ul {
+    padding: 0;
 
-        svg {
-            cursor: pointer;
-        }
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    text-decoration: none;
+    list-style-type: none;
 
-        .left a,
-        .logo-name {
-            text-decoration: none;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            color: black;
-            font-size: 18px;
-            flex: 1;
-        }
+}
 
-        .profile,
-        .mview-logo {
-            border-radius: 50%;
-            border: 3px solid rgba(85, 79, 79, 0.678);
-            width: 30px;
-            height: 30px;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
+.right-profile li:first-child {
+    font-size: large;
+}
 
-        .right {
-            margin-left: 120px;
-            /* Offset by the width of the left sidebar */
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            width: calc(100% - 120px);
-            /* Fill remaining space */
-            overflow: hidden;
-          margin-top: 0px;
-          margin-bottom:0px;
-        }
+.profile-image,
+#profile-image-edit {
+    cursor: pointer;
+    border-radius: 50%;
 
-        .right-top {
-            background-color: rgb(238, 238, 238);
-            width: 100%;
-            height: 30%;
-           min-height: 20%;
-            align-items: center;
-            display: flex;
-            flex-direction: row;
-            border-bottom: 1px solid rgb(160, 158, 158);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .right-profile {
-            margin: auto;
-            display: flex;
-            flex-direction: row;
-            column-gap: 10px;
-        }
-
-        .right-profile ul {
-            padding: 0;
-            
-            display: flex;
-            align-items: start;
-            flex-direction: column;
-            text-decoration: none;
-            list-style-type: none;
-
-        }
-
-        .right-profile li:first-child {
-            font-size: large;
-        }
-
-        .profile-image,
-        #profile-image-edit {
-            cursor: pointer;
-            border-radius: 50%;
-
-            border: 1px solid rgba(144, 138, 138, 0.678);
-            min-width: 90px;
-            width: 90px;
-            height: 90px;
-            margin: 10px 2px;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        .edit {
-            padding: 10px;
-            align-items: center;
-            margin-left: auto;
-            position: relative;
-            display: inline-block;
-        }
-
-        .editBtn {
-            border: none;
-            border-radius: 10px;
-            background-color: rgba(10, 10, 156, 0.718);
-            padding: 10px 20px;
-            color: rgb(251, 250, 252);
-            font-size: medium;
-            font-weight: bold;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .editBtn:hover,
-        #editBtn:hover {
-            cursor: pointer;
-        }
-
-        #editBtn1 {
-            display: none;
-            margin-top: 20px;
-            border: none;
-            border-radius: 10px;
-            background-color: rgba(10, 10, 156, 0.718);
-            padding: 10px;
-            color: rgb(251, 250, 252);
-            font-size: medium;
-            font-weight: bold;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .right-bottom {
-            margin: auto;
-            display: flex;
-            font-size: xx-large;
-            padding: 10px;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100vh;
-        }
-
-        .post-inside-profile {
-            overflow-x: auto;
-            display: flex;
-            flex-direction: row;
-            gap: 8px;
-           flex-grow:1;
-            flex-wrap: wrap;
-            margin-left: 120px;
-            height: 100%;
-            margin-top: 0;
-        }
-
-        .post-in-profile {
-            cursor: pointer;
-        }
-
-        h2 {
-            margin-top: 0;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            row-gap: 10px;
-            position: fixed;
-            width: 100%;
-        }
-
-        form label {
-            margin-right: auto;
-            margin-left: 20%;
-            margin-top: 10px;
-        }
-
-        input[type="text"] {
-            /*margin:0 auto 10px 10px;*/
-            padding: 10px;
-            width: 60%;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        #overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-        }
-
-        /*#profile-pic-overlay {
-    display: none;
+    border: 1px solid rgba(144, 138, 138, 0.678);
     min-width: 90px;
-    position: fixed;
+    width: 90px;
     height: 90px;
-    width:90px;
+    margin: 10px 2px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.edit {
+    padding: 10px;
+    align-items: center;
+    margin-left: auto;
+    position: relative;
+    display: inline-block;
+}
+
+.editBtn {
+    border: none;
+    border-radius: 10px;
+    background-color:rgba(10, 136, 150, 0.997); 
+    padding: 10px 20px;
+    color: rgb(251, 250, 252);
+    font-size: medium;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.editBtn:hover,
+#editBtn:hover {
+    cursor: pointer;
+}
+
+#editBtn1 {
+    display: none;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgba(10, 136, 150, 0.997);
+    padding: 10px;
+    color: rgb(251, 250, 252);
+    font-size: medium;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.right-bottom {
+    margin: auto;
+    display: flex;
+    font-size: xx-large;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.post-inside-profile {
+    overflow-x: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-left: 120px;
+    height: 100%;
+    margin-top: 0;
+ 
+
+}
+
+.post-in-profile {
+    cursor: pointer;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 10px;
+    position: fixed;
+    width: 100%;
+}
+
+form label {
+    margin-right: auto;
+    margin-left: 20%;
+    margin-top: 10px;
+}
+
+input[type="text"] {
+    /*margin:0 auto 10px 10px;*/
+    padding: 10px;
+    width: 60%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
-    border-radius: 50%;
+}
+
+/*#profile-pic-overlay {
+display: none;
+min-width: 90px;
+position: fixed;
+height: 90px;
+width:90px;
+background-color: rgba(0, 0, 0, 0.5);
+z-index: 1000;
+border-radius: 50%;
 }*/
 
-        #overlay2 {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(211, 208, 208, 0.5);
-            z-index: 1002;
+#overlay2 {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(211, 208, 208, 0.5);
+    z-index: 1002;
+}
+
+#editPostForm,
+#editProfileForm {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    max-width: 600px;
+    height: 500px;
+    font-size: medium;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 30px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+#post-in-edit-actions,
+#profile-in-edit {
+    cursor: pointer;
+
+}
+
+#subBtn {
+    display: block;
+    margin: 0px;
+    padding: 10px 20px;
+    background-color: rgba(113, 6, 149, 0.732);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgb(78, 4, 95);
+    font-size: large;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#subBtn:hover {
+    background-color: rgba(88, 6, 113, 0.91);
+    color: white;
+}
+
+#post-edit-action-table,
+#profile-edit-pic-table {
+   
+    width: 100%;
+    cursor: pointer;
+    position: fixed;
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: white;
+    bottom: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display:none;
+    z-index: 1003;
+    margin-left: 0;
+    transition: height 0.5s ease-out;
+
+}
+
+#profile-edit-pic-table ul,
+#post-edit-action-table ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+#profile-edit-pic-table li,
+#post-edit-action-table li {
+    color: rgb(210, 20, 20);
+    padding: 15px;
+    text-align: center;
+    border-top: 1px solid rgb(147, 143, 143);
+}
+
+#profile-edit-pic-table li:first-child,
+#post-edit-action-table li:first-child {
+    border-top: none;
+    color: black;
+}
+
+#post-img {
+    cursor: pointer;
+    border-radius: 20%;
+
+    border: 1px solid rgba(144, 138, 138, 0.678);
+    min-width: 90px;
+    width: 200px;
+    height: 200px;
+    margin: 10px 2px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/*--------MOBILE VIEW--------*/
+.mobile-top,
+.mobile-bottom {
+    display: none;
+}
+
+@media (max-width:940px) {
+    .menu-items a {
+        display: none;
+    }
+
+    .logo-image {
+        width: 85px;
+    }
+}
+
+/* css changes for responsiveness */
+@media(max-width:1160px){
+    .not-approved-post,
+.approved-post {
+max-width: 215px;
+max-height: 215px;
+}
+}
+@media(max-width:1108px){
+    .right-profile{
+    padding-left:20%;
+    }
+}
+@media (max-width:900px) {
+    .right-profile li:first-child {
+        font-size: small;
+    }
+    .right-profile {
+        padding-left: 15%;
         }
-
-        #editPostForm,
-        #editProfileForm {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1001;
-            max-width: 600px;
-            height: 500px;
-            font-size: medium;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            border: 1px solid #ddd;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 350px;
-            text-align: center;
-            border-radius: 8px;
+        .right-profile ul{
+            margin-top:5px;
         }
+    .right-profile img {
+        width: 80px;
+        height: 80px;
+    }
 
-        .closeBtn {
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            font-size: 30px;
-            border: none;
-            background: none;
-            cursor: pointer;
-        }
-
-        #post-in-edit-actions,
-        #profile-in-edit {
-            cursor: pointer;
-
-        }
-
-        #subBtn {
-            display: block;
-            margin: 0px;
-            padding: 10px 20px;
-            background-color: rgba(113, 6, 149, 0.732);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgb(78, 4, 95);
-            font-size: large;
-            font-weight: bold;
-            cursor: pointer;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        #subBtn:hover {
-            background-color: rgba(88, 6, 113, 0.91);
-            color: white;
-        }
-
-        #post-edit-action-table,
-        #profile-edit-pic-table {
-           
-            width: 100%;
-            cursor: pointer;
-            position: fixed;
-
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            background-color: white;
-            bottom: 0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            
-            z-index: 1003;
-            margin-left: 0;
-            transition: height 0.5s ease-out;
-
-        }
-
-        #profile-edit-pic-table ul,
-        #post-edit-action-table ul {
-            padding: 0;
-            margin: 0;
-            list-style-type: none;
-        }
-
-        #profile-edit-pic-table li,
-        #post-edit-action-table li {
-            color: rgb(210, 20, 20);
-            padding: 15px;
-            text-align: center;
-            border-top: 1px solid rgb(147, 143, 143);
-        }
-
-        #profile-edit-pic-table li:first-child,
-        #post-edit-action-table li:first-child {
-            border-top: none;
-            color: black;
-        }
-
-        #post-img {
-            cursor: pointer;
-            border-radius: 20%;
-
-            border: 1px solid rgba(144, 138, 138, 0.678);
-            min-width: 90px;
-            width: 200px;
-            height: 200px;
-            margin: 10px 2px;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        /*--------MOBILE VIEW--------*/
-        .mobile-top,
-        .mobile-bottom {
-            display: none;
-        }
-
-        @media (max-width:940px) {
-            .menu-items a {
-                display: none;
-            }
-
-            .logo-image {
-                width: 85px;
-            }
-        }
-
-        /* css changes for responsiveness */
-        @media(max-width:1108){
-           .right-profile{
-            margin-left:30px;
-           } 
-        }
-        @media (max-width:900px) {
-            .right-profile li:first-child {
-                font-size: small;
-            }
-
-            .right-profile {
-                padding: 10px;
-            }
-
-            .right-profile img {
-                width: 80px;
-                height: 80px;
-            }
-
-            .right-profile #profile-image-placeholder-large {
-                width: 80px;
-                height: 80px;
-            }
-        }
-
-       @media (max-width:600px) {
+    .right-profile #profile-image-placeholder-large {
+        width: 80px;
+        height: 80px;
+    }
+    .not-approved-post,
+.approved-post {
+max-width: 162px;
+max-height: 162px;
+}
+}
+@media (max-width:800px){
+    .right-profile{
+    margin-left:40px;
+}
+    .editBtn{
+        display:none;
+    }
+    #editBtn1{
+        display:block;
+    }
+    .right-top ul{
+        margin:0;
+    }
+    .right-top ul:first-child {
+        width: 20px;
+        font-size:12px;
+    }
+    .right-top{
+        height:30%;
+        min-height:150px;
+    }
+} 
+@media (max-width:600px) {
     body {
         display: flex;
         flex-direction: column;
@@ -473,6 +507,7 @@
         display: flex;
         margin: 0;
         width: 100%;
+
     }
 
     .mobile-top ul {
@@ -491,6 +526,7 @@
         width: 24px;
         height: 24px;
     }
+
     .mobile-bottom svg {
         fill: black;
         width: 35px;
@@ -501,35 +537,45 @@
         margin-right: auto;
         padding: 4px;
     }
+
     .editBtn{
         display:none;
-    }
-    #editBtn1{
+        }
+        #editBtn1{
         display:block;
-    }
-    .right-top ul{
+        }
+        .right-top ul{
         margin:0;
-    }
+        }
     .right-top ul:first-child {
         width: 20px;
-        font-size:12px;
     }
     .right-top{
         height:30%;
         min-height:150px;
     }
+    .right-profile{
+        margin-left:1px;
+        padding-left:10px;
+    }
     .right-bottom{
-        height:350px;
+        height:3250px;
         overflow-y: auto;
     }
     .post-inside-profile{
         height:100%;
         margin-left: 0;
+        justify-content: space-evenly;
     }
    
     .span-svg-approve, .span-svg-not-approve {
         font-size: 8px;
     }
+    /* .svg-for-approve,
+    .svg-for-not-approve {
+         width: 20px;
+         height:20px;
+    } */
     .mobile-bottom {
         margin: 100%;
         display: flex;
@@ -567,7 +613,6 @@
         width: 100%;
         height: auto;
     }
-   
 
     .right::-webkit-scrollbar {
         display: none;
@@ -578,7 +623,6 @@
         scrollbar-width: none;
     }
 
-
     .right,
     .post,
     .mobile-top,
@@ -587,436 +631,273 @@
         margin: 0;
         padding: 0;
     }
+
     .not-approved-post,
     .approved-post {
-        max-width: 100px;
-        max-height: 100px;
+        max-width: 162px;
+        max-height: 162px;
     }
+    .chat-dot-svg{
+        width:35px;
+        }
+
 }
-        @media(max-height:660px){
+
+/*CSS changes for main edit-profile in user page  */
+#profile-image-placeholder-large {
+    width: 100px;
+    height: 100px;
+    background-color: #ccc;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+#profile-image-placeholder {
+    width: 30px;
+    height: 30px;
+    background-color: #ccc;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border-radius: 50%;
+    border: 1px solid black;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.img1 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.not-approved-post,
+.approved-post {
+    position: relative;
+    width: 300px;
+    background-color: #cccacae6;
+    height: 300px;
+    border-radius: 10px;
+    border: 1px solid black;
+    box-shadow: 0 4px 8px rgba(61, 59, 59, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#post {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+/* CSS for images inside the for loop
+.post {
+    align-items: center;
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+} */
+
+#post:hover{
+    cursor: pointer;
+    transform: scale(1.02);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+}
+
+.div-svg-approve, .div-svg-not-approve {
+    width: 24px;
+    height: 24px;
+    border-radius: 50px;
+    background-color: rgb(250, 249, 249);
+    color: white;
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    z-index: 1000;
+    transition: width 2s linear;
+}
+
+.div-svg-approve:hover ,  .div-svg-not-approve:hover {
+    width: 120px;
+    color: black;
+
+}
+
+.span-svg-approve, .span-svg-not-approve {
+display:none;
+    font-size: 14px;
+    position: absolute;
+    top: 1px;
+    left: 10px;
+    margin: auto;
+    overflow: hidden;
+    width: 70%;
+    height: 90%;
+    padding:2px 10px;
+  
+    transform: none;
+}
+.span-svg-not-approve {
+    width: 90%;
+    height: 90%;
+    padding:2px 5px;
+}
+.svg-for-approve,
+.svg-for-not-approve {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+    fill: green;
+
+}
+
+.svg-for-not-approve {
+    fill: rgb(229, 16, 16);
+}
+@media(max-height:660px){
     .left ul {
         padding-top:10px;
         row-gap:10px;
     }
 }
-
-        /*CSS changes for main edit-profile in user page  */
-        #profile-image-placeholder-large {
-            width: 100px;
-            height: 100px;
-            background-color: #ccc;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            border-radius: 50%;
-            font-weight: bold;
-        }
-
-        #profile-image-placeholder {
-            width: 30px;
-            height: 30px;
-            background-color: #ccc;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            border-radius: 50%;
-            border: 1px solid black;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .img1 {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-        }
-
-        .not-approved-post,
-        .approved-post {
-            position: relative;
-            width: 300px;
-            background-color: #cccacae6;
-            height: 300px;
-            border-radius: 10px;
-            border: 1px solid black;
-            box-shadow: 0 4px 8px rgba(61, 59, 59, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        #post {
-            width: 100%;
-            height: 100%;
-            border-radius: 10px;
-        }
-
-        /* CSS for images inside the for loop
-        .post {
-            align-items: center;
-            width: 100%;
-            max-width: 200px;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        } */
-
-        #post:hover{
-            cursor: pointer;
-            transform: scale(1.02);
-            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .div-svg-approve, .div-svg-not-approve {
-            width: 24px;
-            height: 24px;
-            border-radius: 50px;
-            background-color: rgb(250, 249, 249);
-            color: white;
-            position: absolute;
-            right: 1px;
-            top: 1px;
-            z-index: 1000;
-            transition: width 2s linear;
-        }
-
-        .div-svg-approve:hover ,  .div-svg-not-approve:hover {
-            width: 120px;
-            color: black;
-
-        }
-
-       .span-svg-approve, .span-svg-not-approve {
-        display:none;
-            font-size: 14px;
-            position: absolute;
-            top: 1px;
-            left: 10px;
-            margin: auto;
-            overflow: hidden;
-            width: 70%;
-            height: 90%;
-            padding:2px 10px;
-          
-            transform: none;
-        }
-        .span-svg-not-approve {
-            width: 90%;
-            height: 90%;
-            padding:2px 5px;
-        }
-        .svg-for-approve,
-        .svg-for-not-approve {
-            position: absolute;
-            right: 0;
-            top: 0;
-            z-index: 1000;
-            fill: green;
-
-        }
-
-        .svg-for-not-approve {
-            fill: rgb(229, 16, 16);
-        }
-        /* General styles for messages container */
-.messages {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
-}
-
-/* Individual message styles */
-.message {
-    padding: 15px;
-    border-radius: 5px;
-    font-size: 16px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Success Message */
-.message.success {
-    background-color: #e6f9f0;
-    color: #256f49;
-    border-left: 5px solid #1dbf73;
-}
-
-/* Error Message */
-.message.error {
-    background-color: #fdecea;
-    color: #b71c1c;
-    border-left: 5px solid #d32f2f;
-}
-
-/* Info Message (Optional) */
-.message.info {
-    background-color: #e3f2fd;
-    color: #1565c0;
-    border-left: 5px solid #1976d2;
-}
-
-/* Warning Message (Optional) */
-.message.warning {
-    background-color: #fff8e1;
-    color: #ff6f00;
-    border-left: 5px solid #ffa000;
-}
-
-/* Add icons (optional) */
-.message::before {
-    content: "⚠️"; /* Default icon */
-    font-size: 20px;
-    margin-right: 10px;
-}
-
-.message.success::before {
-    content: "✅";
-}
-
-.message.error::before {
-    content: "❌";
-}
-
-.message.info::before {
-    content: "ℹ️";
-}
-
-.message.warning::before {
-    content: "⚠️";
-}
-
-        {% endblock styleProfile %}  
-
-
-        {% block content %}  
-    <div class="right">
-        <div class="right-top">
-            <div class="right-profile">
-                {% if student_info.profile_image %}
-                <img class="profile-image" src="{{ student_info.profile_image.url }}">
-                </img>
-                {% else %}
-                <div id="profile-image-placeholder-large">
-                    {{ student_info.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
-                </div>
-
-                {% endif %}
-                <ul>
-
-                    <li><label>{{ student_info.email}}</label></li>
-                    <li><label>{{ student_info.name}}</label></li>
-                    <li><label>{{ student_info.class}}</label></li>
-                    <li><label>{{ student_info.roll_number}}</label></li>
-                    <li> <button class="editBtn" id="editBtn1">EDIT PROFILE</button></li>
-                </ul>
-
-            </div>
-            <div class="edit">
-                <button class="editBtn">Edit Profile</button>
-            </div>
-        </div>
-        {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li class="message {{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
-
-        <div class="right-bottom">
-            {% if posts %}
-            <div class="post-inside-profile">
-                {% for post in posts %}
-                {% if post.is_approved %}
-                <div class="approved-post"><img id="post" src="{{ post.image.url }}"
-                        onclick="showpost('{{ post.image.url }}','{{post.id}}',)" class="post" alt="Posts">
-                    <div class="div-svg-approve"><span class="span-svg-approve">Approved</span>
-                        <svg class="svg-for-approve" xmlns="http://www.w3.org/2000/svg" height="24px"
-                            viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
-                            <path
-                                d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
-                        </svg>
-                    </div>
-                </div>
-                {% else %}
-                <div class="not-approved-post"><img id="post"  onclick="showpost('{{ post.image.url}}','{{post.id}}',)"  
-                    class="post" src="{{ post.image.url }}" alt="Posts">
-                    <div class="div-svg-not-approve"><span class="span-svg-not-approve">Not approved</span><svg
-                            class="svg-for-not-approve" xmlns="http://www.w3.org/2000/svg" height="24px"
-                            viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
-                            <path
-                                d="m338-290 142-142 142 142 48-48-142-142 142-142-48-48-142 142-142-142-48 48 142 142-142 142 48 48ZM479.68-59q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
-                        </svg>
-                    </div>
-                </div>
-                {% endif %}
-                {% endfor%}
-            </div>
-
-
+{% endblock styleProfile %}
+{% block content %}
+<div class="right">
+    <div class="right-top">
+        <div class="right-profile">
+            {% if student_info.profile_image %}
+            <img class="profile-image" src="{{ student_info.profile_image.url }}">
+        </img>
             {% else %}
-
-            <div class="post-in-profile" onclick="window.location='/user_dash/add_post'"><svg
-                    xmlns="http://www.w3.org/2000/svg" height="100px" viewBox="0 -960 960 960" width="100px"
-                    fill="#5f6368">
-                    <path class="icon"
-                        d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
-                </svg>
+            <div id="profile-image-placeholder-large">
+                {{ student_info.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
             </div>
-            <div>Start posting</div>
-        </div>
-        {% endif %}
-        </div>
+
+            {% endif %}
+                
+          
+            
+           
+            <ul>
+               
+                <li><label>{{ student_info.email}}</label></li>
+                <li><label>{{ student_info.name}}</label></li>
+                <li><label>{{ student_info.class}}</label></li>
+                <li><label>{{ student_info.roll_number}}</label></li>
+                <li> <button class="editBtn" id="editBtn1">EDIT PROFILE</button></li>
+            </ul>
         
-    <div id="overlay"></div>
-    <div id="editProfileForm">
-        <button id="closeButton" class="closeBtn">&times;</button>
-        <h3>EDIT PROFILE</h3>
-        <form  method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="form_type" value="username">
-            <div id="overlay2"></div>
-            <div id="profile-in-edit">
-                {% if student_info.profile_image %}
+        </div>
+        <div class="edit"> 
+            <button class="editBtn">EDIT PROFILE</button>
+        </div>
+    </div>
+    <div class="right-bottom">
+        {% if posts %}
+        <div class="post-inside-profile">
+            {% for post in posts %}
+            {% if post.is_approved %}
+            <div class="approved-post"><img id="post" src="{{ post.image.url }}"
+                    onclick="showpost('{{ post.image.url }}',)" class="post" alt="Posts">
+                <div class="div-svg-approve"><span class="span-svg-approve">Approved</span>
+                    <svg class="svg-for-approve" xmlns="http://www.w3.org/2000/svg" height="24px"
+                        viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                        <path
+                            d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+                    </svg>
+                </div>
+            </div>
+            {% else %}
+            <div class="not-approved-post"><img id="post"  onclick="showpost('{{ post.image.url }}',)"  class="post" src="{{ post.image.url }}" alt="Posts">
+                <div class="div-svg-not-approve"><span class="span-svg-not-approve">Not approved</span><svg
+                        class="svg-for-not-approve" xmlns="http://www.w3.org/2000/svg" height="24px"
+                        viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+                        <path
+                            d="m338-290 142-142 142 142 48-48-142-142 142-142-48-48-142 142-142-142-48 48 142 142-142 142 48 48ZM479.68-59q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+                    </svg>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor%}
+        </div>
+
+
+        {% else %}
+
+        <div class="post-in-profile" onclick="window.location='/user_dash/add_post'"><svg
+                xmlns="http://www.w3.org/2000/svg" height="100px" viewBox="0 -960 960 960" width="100px"
+                fill="#5f6368">
+                <path class="icon"
+                    d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+            </svg>
+        </div>
+        <div>Start posting</div>
+    </div>
+    {% endif %}
+    
+</div>
+<div id="overlay"></div>
+
+<div id="editProfileForm">
+   
+    <button id="closeButton" class="closeBtn">&times;</button>
+    <h3>Edit Profile</h3>
+    <form>
+         <div id="overlay2"></div>
+         <div id="profile-in-edit">
+            {% if student_info.profile_image %}
                 <img id="profile-image-edit" src="{{ student_info.profile_image.url }}" alt="Profile Picture">
-                {% else %}
+            {% else %}
                 <div id="profile-image-placeholder-large">
                     {{ student_info.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
                 </div>
-                {% endif %}
-            </div>
-            <label for="name">Username:</label>
-            <input type="text" id="name" name="name" placeholder="{{ student_info.name}}">
-
-            <button type="submit" id="subBtn">Save</button>
-        </form>
-
-        <div id="profile-edit-pic-table">
-            <div><svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px"
-                    fill="grey">
-                    <path d="M160-450v-60h640v60H160Z" />
-                </svg></div>
-            <ul>
-                <li><form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <input type="hidden" name="form_type" value="profile_pic">
-                    <label for="img">Choose a profile image:</label>
-                    <input type="file" id="img" name="img" accept="image/*" required>
-                    <button type="submit">Upload</button>
-                </form></li>
-                <li onclick="window.location='/delete_profile_pic/'">Remove profile</li>
-                <li id="cancelBtn">Cancel</li>
-            </ul>
+            {% endif %}
         </div>
-    </div>
-    <!-- Form for Post display in user profile  -->
-    <div id="editPostForm">
-
-        <form>
-            
-            <div id="overlay2"></div>
-            <div id="post-in-edit-actions">
-                <img id="post-img" src="" alt="Profile Picture">
-            </div>
-
-        </form>
-
-        <div id="post-edit-action-table">
-            <div><svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px"
-                    fill="grey">
-                    <path d="M160-450v-60h640v60H160Z" />
-                </svg></div>
-            <ul>
-                <li>What to do</li>
-                <li id="deletePostBtn" >Delete</li>
-                <li id="cancelBtnP">Cancel</li>
-            </ul>
-        </div>
-    </div>
-    <!-- Form for post display end -->
-
-    
-      
-    <script>
-
-        // Function to show the post details and allow the user to delete it
-function showpost(imgurl, postId) {
-    const deleteButton = document.querySelector('#post-edit-action-table #deletePostBtn'); // Delete button
-    const postElement = document.getElementById('post-img'); // Image element to display the selected image
-    postElement.src = imgurl; // Set the image in the popup
-
-    // Set the postId as a data attribute for the delete button
-    deleteButton.setAttribute('data-post-id', postId);
-
-    // Show the popup and overlay
-    document.getElementById('editPostForm').style.display = 'block';
-    document.getElementById('overlay').style.display = 'block';
-}
-
-// Event listener for the delete button
-document.addEventListener('DOMContentLoaded', function () {
-    const deleteButton = document.querySelector('#post-edit-action-table #deletePostBtn');
-
-    deleteButton.addEventListener('click', function () {
-        // Get the post ID from the data attribute
-        const postId = this.getAttribute('data-post-id');
-
-        if (!postId) {
-            alert('Post ID not found!');
-            return;
-        }
-
-        // Construct the delete URL
-        const deleteUrl = `/delete/${postId}`;
-
-        // Confirm before proceeding
-        if (confirm(`Are you sure you want to delete post ID ${postId}?`)) {
-            fetch(deleteUrl, {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken'), // Add CSRF token if required
-                },
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Post deleted successfully!');
-                        window.location.reload();
-                        document.getElementById('editPostForm').style.display = 'none'; // Hide the popup
-                        document.getElementById('overlay').style.display = 'none';
-                        // Optionally, remove the post from the DOM
-                        document.querySelector(`img[onclick="showpost('${imgurl}', '${postId}')"]`)
-                            .closest('.approved-post, .not-approved-post').remove();
-                    } else {
-                        alert('Failed to delete post.');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
-    });
-});
-
-// Helper function to get the CSRF token (if using Django or another framework with CSRF protection)
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.startsWith(name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
+        <label for="name">Username:</label>
+        <input type="text" id="name" name="name" placeholder="Edit Username"><br><br>
         
-    </script>
-    <script src='{% static "js\profile.js" %}'></script>
-    {% endblock content %}  
+        <button type="submit" id="subBtn">Save</button>
+    </form>
+   
+    <div id="profile-edit-pic-table">
+       <div><svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="grey"><path d="M160-450v-60h640v60H160Z"/></svg></div> 
+        <ul>
+            <li><input type="file" id="img" name="img" accept="image/*" required></li>
+            <li>Remove profile</li>
+            <li id="cancelBtn">Cancel</li>
+        </ul>
+    </div>
+</div>
+<div id="editPostForm">
+
+    <form>
+        <div id="overlay2"></div>
+        <div id="post-in-edit-actions">
+            <img id="post-img" src="" alt="Profile Picture">
+        </div>
+
+    </form>
+
+    <div id="post-edit-action-table">
+        <div><svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="grey">
+                <path d="M160-450v-60h640v60H160Z" />
+            </svg></div>
+        <ul>
+            <li>What to do</li>
+            <li id="deletePostBtn">Delete</li>
+            <li id="cancelBtnP">Cancel</li>
+        </ul>
+    </div>
+</div>
+
+{% endblock content %}
