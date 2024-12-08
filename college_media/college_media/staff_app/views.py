@@ -52,7 +52,7 @@ def home(request):
     liked_by=Student.objects.get(roll_number=request.user)    
     liked_post_ids = Like.objects.filter(liked_by=liked_by).values_list('post_id', flat=True)
     likes=Like.objects.all()
-    # return render(request,"user_pages/user_home.html",{'posts':posts)
+   
     return render(request,"staff_pages/staf_home.html",{'posts':posts,'liked_post_ids': set(liked_post_ids),'likes':likes})
 
 def option_student_add(request):
@@ -116,16 +116,13 @@ def add_students(request):
         uploaded_file = request.FILES['file']
 
         # Save the file temporarily
-        file_path = f"/tmp/{uploaded_file.name}"
-        with open(file_path, "wb+") as dest:
-            for chunk in uploaded_file.chunks():
-                dest.write(chunk)
-
+        path = f"/tmp/{uploaded_file.name}"
+        print(uploaded_file)
         # Process the file (read Excel and save data to the database)
         try:
-            workbook = load_workbook(filename=file_path)
-            sheet = workbook.active  # Assuming data is in the first sheet
-
+            workbook = load_workbook(filename=path)
+            sheet = uploaded_file.active  # Assuming data is in the first sheet
+            print(sheet)
             # Loop through rows in the Excel file
             for row in sheet.iter_rows(min_row=2, values_only=True):  # Skip the header row
                 roll_number, email, name, section, school_name, dob, profile_image = row
@@ -157,7 +154,7 @@ def add_students(request):
             messages.error(request, f"Error processing file: {e}")
 
         # Clean up: Remove the temporary file
-        os.remove(file_path)
+        # os.remove(file_path)
         return redirect("/staff_dash/add_students")
 
     return render(request,"staff_pages/add_multiple_student.html")

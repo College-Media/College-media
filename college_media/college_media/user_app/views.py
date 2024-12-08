@@ -36,15 +36,20 @@ def user_profile(request):
     student_info=Student.objects.get(user=user) 
     post=Post.objects.filter(student__roll_number=student_info.user)
     comments=Comment.objects.filter(student__roll_number=student_info.user) 
-    if request.method =='POST':
+    if request.method == 'POST':
         form_type = request.POST.get('form_type')
         if form_type == 'username':
-            username=request.POST['name']
-            student_info.name=username
+            username = request.POST['name']
+            student_info.name = username
             student_info.save()
+            messages.success(request, "User Name Updated", extra_tags='username')
         elif form_type == 'profile_pic':
-            image_file = request.FILES['img']
-            student_info.profile_image=image_file  # Create a new model instance
-            student_info.save()
+            if 'img' in request.FILES:
+                image_file = request.FILES['img']
+                student_info.profile_image = image_file
+                student_info.save()
+                messages.success(request, "Profile Picture Updated", extra_tags='profile_pic')
+            else:
+                messages.error(request, "No image file provided.", extra_tags='profile_pic')
     return render(request,"user_pages/user_profile.html",{'student_info':student_info,'posts':post})
     

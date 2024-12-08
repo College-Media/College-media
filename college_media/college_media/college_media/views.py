@@ -103,7 +103,7 @@ def reset_password(request):
                    send_mail(subject, message, email_from, recipient_list)
                    return render(request,'reset_password.html',{'type':2})
                 else:
-                    messages.success(request,"email not exists ")
+                    messages.success(request,"email not exists ",extra_tags='email')
                     return render(request,'reset_password.html',{'type':1}) 
         elif btn=='2':
                 otp=request.POST.get('otp')
@@ -112,7 +112,7 @@ def reset_password(request):
                 if otp==a:
                   return render(request,'reset_password.html',{'type':3})  
                 else:
-                    messages.success(request,"please enter the correct otp")
+                    messages.success(request,"please enter the correct otp",extra_tags='send_otp')
                     return render(request,'reset_password.html',{'type':2}) 
         else:
                pas=request.POST.get('pas')
@@ -124,7 +124,7 @@ def reset_password(request):
                     user.save()
                     return redirect("login")
                else:
-                    messages.success(request,"enter the password correctly")
+                    messages.success(request,"enter the password correctly",extra_tags='wrong_password')
                     return render(request,'reset_password.html',{'type':3}) 
     return render(request,'reset_password.html',{'type':1})
 
@@ -241,13 +241,13 @@ def delete_profile_pic(request):
 
     # Check if the profile picture exists
     if not student.profile_image or not student.profile_image.name:  # Correct condition
-        messages.error(request, 'Profile Picture Not Found')
+        messages.error(request, 'Profile Picture Not Found',extra_tags='profile_notfound')
     else:
         # Delete the profile picture
         student.profile_image.delete(save=False)  # Deletes the file but doesn't save the model
         student.profile_image = None
         student.save()  # Save changes to the database
-        messages.success(request, 'Profile Picture Removed Successfully')
+        messages.success(request, 'Profile Picture Removed Successfully',extra_tags="profile_removed")
 
     # Redirect based on user type
     if CoustomUser.objects.get(username=user).is_student:

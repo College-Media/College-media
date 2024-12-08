@@ -821,12 +821,16 @@ q
             </div>
         </div>
         {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li class="message {{ message.tags }}">{{ message }}</li>
-        {% endfor %}
+            {% for message in messages %}
+                {% if message.tags == 'username' %}
+                    <div class="green"> {{ message}}</div>
+                {% elif message.tags == 'profile_pic'%}
+                    <div class="red"> {{ message}}</div>
+                {% endif %} 
+            {% endfor %}
+        {% endif %}
     </ul>
-{% endif %}
+
 
         <div class="right-bottom">
             {% if posts %}
@@ -891,7 +895,7 @@ q
                 {% endif %}
             </div>
             <label for="name">Username:</label>
-            <input type="text" id="name" name="name" placeholder="{{ student_info.name}}">
+            <input type="text" id="name" name="name" placeholder="{{ student_info.name}}" req>
 
             <button type="submit" id="subBtn">Save</button>
         </form>
