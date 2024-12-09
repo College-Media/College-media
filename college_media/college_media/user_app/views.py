@@ -17,7 +17,10 @@ def home(request):
     liked_by=Student.objects.get(roll_number=request.user)    
     liked_post_ids = Like.objects.filter(liked_by=liked_by).values_list('post_id', flat=True)
     likes=Like.objects.all()
-    return render(request,"user_pages/user_home.html",{'posts':posts,'liked_post_ids': set(liked_post_ids),'likes':likes})
+    commets=Comment.objects.all()
+    context=Student.objects.get(roll_number=request.user)
+    print(context)
+    return render(request,"user_pages/user_home.html",{'posts':posts,'liked_post_ids': set(liked_post_ids),'likes':likes,'coments':commets,'context':context})
 
 def add_post(request):
     if request.method=='POST':

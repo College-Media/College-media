@@ -240,7 +240,7 @@ margin:0px 10px;
     <div class="div-for-stu-details">
       
     {% for stu in student %}
-        <div class="student-card" onclick=window.location.href="{% url 'student_detail' stu.id %}">
+        <div class="student-card" onclick=window.location.href="{% url 'student_detail' stu.roll_number %}">
             <h3><strong>Roll Number:</strong> {{ stu.roll_number }}</h3>
             <p><strong>Name:</strong> {{ stu.name }}</p>
             <p><strong>Email:</strong> {{ stu.email }}</p>

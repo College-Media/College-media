@@ -112,7 +112,7 @@ column-gap:10px;
     {% if post.is_approved %}
     <div class="post" id="post-{{ post.id }}">
         <div class="post-head">
-            <div class="post-profile" onclick="window.location='/user_dash/user_profile'">
+            <div class="post-profile" onclick="checkAndRedirect('{{ post.student.roll_number }}', '{{ context.name }}', '{{ post.student.name }}','{{post.student.profile_image}}')">
                 {% if post.student.profile_image %}
                 <img src="{{ post.student.profile_image.url }}" class="post-profile-img" alt="Profile Picture">
                 <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
@@ -155,62 +155,30 @@ column-gap:10px;
 
 
             </div>
+            <div class="comment" 
+     onclick="showcomment({{ post.id }}, '{{ post.image.url }}', '{{ post.student.name }}', '{{ post.student.roll_number }}')">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+        <path
+            d="M80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
+    </svg>
+</div>
 
-            <div class="comment" onclick="showcomment('{{ post.image.url }}')">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
-                    <path
-                        d="M80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
-                </svg>
-            </div>
-            <div id="comments-display">
-                <div class="post-head">
-                    <div class="post-profile" onclick="window.location='/user_dash/user_profile'">
-                        {% if post.student.profile_image %}
-                        <img src="{{ post.student.profile_image.url }}" class="post-profile-img" alt="Profile Picture">
-                        <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
-                        {% else %}
-                        <div id="profile-image-placeholder">
-                            {{ post.student.name|slice:":2"|upper }}
-                        </div>
-                        <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="post-body"><img id="post-img" src="" alt="Post Image"></div>
-                <div class="comments-show-area">
-                    <div class="user-comment-area">
-                        <label class="label-in-comment">20232mca0191</label>
-                        <span>Jai shree radhakrishna</span>
-                    </div>
-                    <div class="user-comment-area">
-                        <label class="label-in-comment">20232mca0191</label>
-                        <span>Jai shree radhakrishna</span>
-                    </div>
-                    <div class="user-comment-area">
-                        <label class="label-in-comment">20232mca0191</label>
-                        <span>Jai shree radhakrishna</span>
-                    </div>
-                    <div class="user-comment-area">
-                        <label class="label-in-comment">20232mca0191</label>
-                        <span>Jai shree radhakrishna</span>
-                    </div>
-                    <div class="user-comment-area">
-                        <label class="label-in-comment">20232mca0191</label>
-                        <span>Jai shree radhakrishna</span>
-                    </div>
-                </div>
-                <div class="comments-post-area">
-                    <form class="form-in-comment">
-                        <input type="text" name="comment" id="comment-input">
-                        <button><svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960"
-                                width="35px" fill="white">
-                                <path
-                                    d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z" />
-                            </svg></button>
-                    </form>
-                </div>
-            </div>
-           
+            
+<div id="comments-display">
+    <div class="post-head">
+        <div class="post-profile" onclick="checkAndRedirect('{{ post.student.roll_number }}', '{{ context.name }}', '{{ post.student.name }}')">
+            <!-- Dynamically set the image URL here -->
+            <img id="profile-image" class="post-profile-img" alt="Profile Picture" />
+            <div class="post-profile-name" id="profile-name"></div>
+        </div>
+    </div>
+    <div class="post-body">
+        <img id="post-img" src="" alt="Post Image">
+    </div>
+    <div class="comments-show-area">
+        <!-- Comments content here -->
+    </div>
+</div>           
         </div>
         <div class="disc-in-home">{{post.content}}</div>
     </div>
@@ -219,6 +187,18 @@ column-gap:10px;
 </div>
 
 <script>
+    function checkAndRedirect(rollNumber, currentUsername, postUsername) {
+        // Debugging logs
+
+        if (currentUsername === postUsername) {
+            // Redirect to the current user's profile
+            window.location = '/user_dash/user_profile';
+        } else {
+            // Redirect to the student's details page using the roll number
+            window.location = `/student_details/${rollNumber}/`;
+        }
+    }
+    
     
 
     history.scrollRestoration = "manual"; // Prevents automatic scroll restoration
@@ -330,21 +310,66 @@ column-gap:10px;
         rightContainer.style.overflow = "auto";
     }
 
-    function showcomment(imgurl) {
-        const postElement = document.getElementById('post-img'); // Image element to display the selected image
-        postElement.src = imgurl; 
-        console.log('Image URL received:', imgurl);
+    //comments
+
+    function showcomment(postId, imgurl, studentName, studentId, profileImageUrl) {
+        // Set the image for the modal
+        const postImageElement = document.getElementById('post-img');
+        postImageElement.src = imgurl;
+        const profileurl=document.getElementById('profile-image');
+        {% comment %} profileurl.src=profileImageUrl.url; {% endcomment %}
+        console.log("url")
+        console.log(profileurl)
+        // Set the profile name and ID
+        const profileNameElement = document.querySelector('#comments-display .post-profile-name');
+        profileNameElement.textContent = `${studentName}: ${studentId}`;
+    
+        // Set the profile image for the user in the modal
+        const profileImageElement = document.getElementById('profile-image');
+        if (profileImageUrl) {
+            profileImageElement.src = profileImageUrl; // Use the URL passed dynamically
+        } else {
+            profileImageElement.src = '/path/to/default/image.jpg'; // Fallback to a default image if no profile image is available
+        }
+    
+        // Fetch and display comments for the specific post
+        const commentsArea = document.querySelector('.comments-show-area');
+        commentsArea.innerHTML = ''; // Clear any existing comments
+    
+        fetch(`/fetch_comments/${postId}/`) // Update this to your actual endpoint
+            .then(response => response.json())
+            .then(data => {
+                if (data.comments.length > 0) {
+                    data.comments.forEach(comment => {
+                        const commentDiv = document.createElement('div');
+                        commentDiv.className = 'user-comment-area';
+                        commentDiv.innerHTML = `
+                            <label class="label-in-comment">${comment.student}</label>
+                            <span>${comment.content}</span>
+                            <small>${comment.created_at}</small>
+                        `;
+                        commentsArea.appendChild(commentDiv);
+                    });
+                } else {
+                    const noCommentsMessage = document.createElement('p');
+                    noCommentsMessage.textContent = 'No comments yet.';
+                    commentsArea.appendChild(noCommentsMessage);
+                }
+            })
+            .catch(error => console.error('Error fetching comments:', error));
+    
+        // Show the modal
         const commentDisplay = document.getElementById('comments-display');
         commentDisplay.style.display = 'block';
         document.getElementById('overlay').style.display = 'block';
-        document.getElementById('overlay').addEventListener('click',function(){
-               commentDisplay.style.display='none';
-               document.getElementById('overlay').style='none';
+    
+        // Close the modal when clicking outside
+        document.getElementById('overlay').addEventListener('click', function () {
+            commentDisplay.style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
         });
     }
+    
+    
 </script>
-
-
-
-
 {% endblock content %}

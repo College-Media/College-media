@@ -15,7 +15,8 @@ urlpatterns = [
     path('profile',views.profile,name="profile"), #Showing the profile 
     path('logout',views.logout_user,name="logout"), #logout url
     path('login',views.login_page,name="login"),
-   
+    # path('add_comment/', views.add_comment, name='add_comment'),
+    # path('fetch_comments/<int:post_id>/', views.fetch_comments, name='fetch_comments'),
     path('like/<int:post_id>/', views.like_post, name='like_post'), #like url 
     path('like-counts/', views.like_counts, name='like_counts'), #like url 
     path('post/<int:post_id>/submit_comment/', views.submit_comment, name='submit_comment'),#comments
