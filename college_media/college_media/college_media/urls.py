@@ -15,14 +15,15 @@ urlpatterns = [
     path('profile',views.profile,name="profile"), #Showing the profile 
     path('logout',views.logout_user,name="logout"), #logout url
     path('login',views.login_page,name="login"),
-   
+    # path('add_comment/', views.add_comment, name='add_comment'),
+    # path('fetch_comments/<int:post_id>/', views.fetch_comments, name='fetch_comments'),
     path('like/<int:post_id>/', views.like_post, name='like_post'), #like url 
     path('like-counts/', views.like_counts, name='like_counts'), #like url 
     path('post/<int:post_id>/submit_comment/', views.submit_comment, name='submit_comment'),#comments
     path('post/<int:post_id>/get_comments/', views.get_comments, name='get_comments'),#comments
     path("chat",views.message,name="message"),
     path('student_details/<str:roll_number>/', views.student_detail, name='student_detail'),
-    path('delete_profile_pic/', views.delete_profile_pic,name='deletepost'),
+    path('delete_profile_pic/', views.delete_profile_pic,name='deletepost'),# delete post 
     path('search_student/',views.search_student,name="search_student"),
     path('delete/<int:post_id>', views.deletepost,name='deletepost'),
     path('add_post/',views.add_post,name="Add post"),
