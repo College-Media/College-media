@@ -670,18 +670,19 @@ margin-bottom:10px;
     </div>
     <!--start of form-->
 
-    <div id="message-container">
-        {% if messages %}
-        {% for message in messages %}
-        <div class="message {{ message.tags }}" style="display: block;">
-            {{ message }}
-        </div>
-        {% endfor %}
-        {% endif %}
-    </div>
+    
     {% block content %}
 
     <div class="right">
+        <div id="message-container">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="message {{ message.tags }}" style="display: block;">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
         <!--start of Post-->
         <div class="post">
             <div class="post-head">

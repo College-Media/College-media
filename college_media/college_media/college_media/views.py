@@ -65,16 +65,17 @@ def search_student(request):
     if request.method == "POST":
         roll_number = request.POST.get("roll_number")  # Retrieve the roll 
         student = Student.objects.filter(roll_number__icontains=roll_number)
-        if student:
+        if not student:
+            message="Student not found"
             if users.is_staff:
-                return render(request,"staff_pages/staff_search_page.html",{'student':student})
+                return render(request,"staff_pages/staff_search_page.html",{'student':student,'message':message})
             else:
                 return render(request, "search.html", {'student': student})  
-                 
-                 
-
-    # If the request is GET, simply render the form without any student data
-    
+        else:              
+             if users.is_staff:
+                return render(request,"staff_pages/staff_search_page.html",{'student':student})
+             else:
+                return render(request, "search.html", {'student': student})  
     if users.is_staff:
          return render(request,"staff_pages/staff_search_page.html")
     else:
@@ -102,7 +103,7 @@ def reset_password(request):
                    send_mail(subject, message, email_from, recipient_list)
                    return render(request,'reset_password.html',{'type':2})
                 else:
-                    messages.success(request,"email not exists ")
+                    messages.success(request,"email not exists ",extra_tags='email')
                     return render(request,'reset_password.html',{'type':1}) 
         elif btn=='2':
                 otp=request.POST.get('otp')
@@ -111,7 +112,7 @@ def reset_password(request):
                 if otp==a:
                   return render(request,'reset_password.html',{'type':3})  
                 else:
-                    messages.success(request,"please enter the correct otp")
+                    messages.success(request,"please enter the correct otp",extra_tags='send_otp')
                     return render(request,'reset_password.html',{'type':2}) 
         else:
                pas=request.POST.get('pas')
@@ -123,7 +124,7 @@ def reset_password(request):
                     user.save()
                     return redirect("login")
                else:
-                    messages.success(request,"enter the password correctly")
+                    messages.success(request,"enter the password correctly",extra_tags='wrong_password')
                     return render(request,'reset_password.html',{'type':3}) 
     return render(request,'reset_password.html',{'type':1})
 
@@ -157,7 +158,7 @@ from django.shortcuts import render, get_object_or_404  #used for showing profil
 def student_detail(request, roll_number):
     user=request.user
     users=CoustomUser.objects.get(username=user)
-    student_info=Student.objects.get(id=roll_number)
+    student_info=Student.objects.get(roll_number=roll_number)
     post=Post.objects.filter(student__roll_number=student_info.roll_number)  #here student__ will hel to extarct the table field name from the table use double under score
     if users.is_staff:
          return render(request, 'staff_pages/student_detail.html',{'student_info':student_info,'posts':post})
@@ -240,13 +241,13 @@ def delete_profile_pic(request):
 
     # Check if the profile picture exists
     if not student.profile_image or not student.profile_image.name:  # Correct condition
-        messages.error(request, 'Profile Picture Not Found')
+        messages.error(request, 'Profile Picture Not Found',extra_tags='profile_notfound')
     else:
         # Delete the profile picture
         student.profile_image.delete(save=False)  # Deletes the file but doesn't save the model
         student.profile_image = None
         student.save()  # Save changes to the database
-        messages.success(request, 'Profile Picture Removed Successfully')
+        messages.success(request, 'Profile Picture Removed Successfully',extra_tags="profile_removed")
 
     # Redirect based on user type
     if CoustomUser.objects.get(username=user).is_student:
