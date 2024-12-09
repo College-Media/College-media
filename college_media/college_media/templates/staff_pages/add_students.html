@@ -100,10 +100,13 @@ input[type="number"] {
       
         <div id="message-container">
             {% if messages %}
+           
                 {% for message in messages %}
+                {% if student_add in message.tags %}
                     <div class="message {{ message.tags }}" style="display: block;">
                         {{ message }}
                     </div>
+                {% endif %}
                 {% endfor %}
             {% endif %}
         </div>

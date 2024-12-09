@@ -14,7 +14,8 @@ def welcome(request):
 
 def home(request):    
     posts = Post.objects.select_related('student').order_by('?') 
-    liked_by=Student.objects.get(roll_number=request.user)    
+    print(request.user.roll_number)
+    liked_by=Student.objects.get(roll_number=request.user.roll_number)    
     liked_post_ids = Like.objects.filter(liked_by=liked_by).values_list('post_id', flat=True)
     likes=Like.objects.all()
     return render(request,"user_pages/user_home.html",{'posts':posts,'liked_post_ids': set(liked_post_ids),'likes':likes})
