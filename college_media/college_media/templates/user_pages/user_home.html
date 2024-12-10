@@ -102,7 +102,9 @@ column-gap:10px;
         height:160px;
     }
 }
-
+html {
+    scroll-behavior: smooth;
+}
 {% endblock style %}
 
 {% block content %}
@@ -155,13 +157,13 @@ column-gap:10px;
 
 
             </div>
-            <div class="comment" 
+            {% comment %} <div class="comment" 
      onclick="showcomment({{ post.id }}, '{{ post.image.url }}', '{{ post.student.name }}', '{{ post.student.roll_number }}')">
     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
         <path
             d="M80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
     </svg>
-</div>
+</div> {% endcomment %}
 
             
 <div id="comments-display">
@@ -319,7 +321,7 @@ column-gap:10px;
         const profileurl=document.getElementById('profile-image');
         {% comment %} profileurl.src=profileImageUrl.url; {% endcomment %}
         console.log("url")
-        console.log(profileurl)
+        console.log(profileImageUrl)
         // Set the profile name and ID
         const profileNameElement = document.querySelector('#comments-display .post-profile-name');
         profileNameElement.textContent = `${studentName}: ${studentId}`;
@@ -370,6 +372,21 @@ column-gap:10px;
         });
     }
     
+    document.addEventListener("DOMContentLoaded", () => {
+        // Scroll to the saved position
+        const savedScrollPos = localStorage.getItem("scrollPosition");
+        if (savedScrollPos) {
+            window.scrollTo({
+                top: parseInt(savedScrollPos, 10),
+                behavior: "smooth", // Smooth scrolling
+            });
+        }
+    
+        // Save the scroll position on unload
+        window.addEventListener("beforeunload", () => {
+            localStorage.setItem("scrollPosition", window.scrollY);
+        });
+    });
     
 </script>
 {% endblock content %}
