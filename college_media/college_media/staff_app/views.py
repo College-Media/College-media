@@ -32,7 +32,7 @@ def add_student(request):
         school_name=request.POST.get('class')
         s=CoustomUser.objects.filter(username=roll_num)
         if s:
-            messages.error(request,"student already exists")
+            messages.error(request,"student already exists",extra_tags='student_add')
             redirect("staff_dash/add_student/")
         else:
             user=CoustomUser.objects.create_user(roll_num,email,dob)
@@ -149,7 +149,7 @@ def add_students(request):
                     # profile_image=profile_image  # Ensure this is handled appropriately
                 )
 
-            messages.success(request, "Students added successfully.",extra_tags='student_add')
+            messages.success(request, "Students added successfully.")
         except Exception as e:
             messages.error(request, f"Error processing file: {e}")
 
