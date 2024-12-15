@@ -6,3 +6,10 @@ write all the testing or bugs that you find on daily basic pleace enter the date
 - our profile name should be shown as you in the chat
 
 Notification for students- Required or not ?
+
+
+http://127.0.0.1:8000/student_details/20232MCA0191/
+change posts width to occupy entire div if description not given
+profile picture is not properly set.
+
+if tag is added to a user whether it as to notify that user or not.

@@ -1,125 +1,162 @@
 {% extends "staff_pages/staff_base.html" %}
-
+{% load static %}
 {% block style %}
 /* Container for the Accept/Reject buttons */
+.no-posts{
+align-items:center;
+color:rgba(21, 121, 132, 0.997);
+font-weight:bold;
+font-size:30px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+margin:auto;
+padding:auto;
+height:100%;
+}
+.no-post-img{
+border-radius:50px;
+width:200px;
+height:200px;
+}
+
+.no-post-img img{
+    width: 100%;
+height: 100%;
+border-radius: 50%;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+}
 .post-foot {
-    display: flex;
-    flex-direction:column;
-    justify-content: flex-end;
-    row-gap: 10px;
-    margin-top: 10px;
+display: flex;
+flex-direction:column;
+justify-content: flex-end;
+row-gap: 10px;
+margin-top: 10px;
 }
 .post-action-buttons{
-    display:flex;
-    flex-direction:row;
-    column-gap:20px;
-    justify-content:center;
-    align-items:center;
+display:flex;
+flex-direction:row;
+column-gap:20px;
+justify-content:center;
+align-items:center;
 }
 /* Style for the Accept button */
 .accept-button,.reject-button {
-    padding: 10px ;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    border-radius: 4px;
-    font-size:32px;
-    background-color: #4CAF50; /* Green */
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-    
+padding: 10px ;
+font-family: Georgia, 'Times New Roman', Times, serif;
+border-radius: 4px;
+font-size:32px;
+background-color: #4CAF50; /* Green */
+color: white;
+border: none;
+cursor: pointer;
+font-size: 14px;
+font-weight: bold;
+transition: background-color 0.3s ease;
+
 }
 
 /* Hover effect for the Accept button */
 .accept-button:hover {
-    background-color: #45a049; /* Darker green */
+background-color: #45a049; /* Darker green */
 }
 
 /* Style for the Reject button */
 .reject-button {
-   
-    background-color: #f44336; /* Red */
-    color: white;
-   
+
+background-color: #f44336; /* Red */
+color: white;
+
 }
 
 /* Hover effect for the Reject button */
 .reject-button:hover {
-    background-color: #d32f2f; /* Darker red */
+background-color: #d32f2f; /* Darker red */
 }
 #profile-image-placeholder {
-    width: 30px;
-    height: 30px;
-    background-color: #ccc;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    border-radius: 50%;
-    border:1px solid black;
-    font-weight: bold;
-    cursor:pointer;
+width: 30px;
+height: 30px;
+background-color: #ccc;
+color: #fff;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 14px;
+border-radius: 50%;
+border:1px solid black;
+font-weight: bold;
+cursor:pointer;
 }
 
 {% endblock style %}
 {% block content %}
 <div class="right">
-{% for post in posts  %}
-        
-            <!-- Start of Post -->
-            <div class="post">
-                <div class="post-head">
-                    <div class="post-profile">
-                        {% if post.student.profile_image %}
-                        <img src="{{ post.student.profile_image.url }}"  class="post-profile-img" alt="Profile Picture">
-                        <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
-                        {% else %}
-                        <div id="profile-image-placeholder"">
-                            {{ post.student.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
-                        </div>
-                        <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
-                        {% endif %}
-                        
-                    </div>
-                    <div class="post-menu">
-                        <div class="post-menu-icon" onclick="fun1()">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368">
-                                <path d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z" />
-                            </svg>
-                            <div id="post-menu-table">
-                                <ul>
-                                    <li><a href="#" style="text-decoration: none;color:red">Report</a></li>
-                                    <li onclick="fun()">Cancel</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+    {% for post in posts %}
+
+    <!-- Start of Post -->
+    <div class="post">
+        <div class="post-head">
+            <div class="post-profile">
+                {% if post.student.profile_image %}
+                <img src="{{ post.student.profile_image.url }}" class="post-profile-img" alt="Profile Picture">
+                <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
+                {% else %}
+                <div id="profile-image-placeholder"">
+                            {{ post.student.name|slice:" :2"|upper }} <!-- First two letters of the student's name -->
                 </div>
-                <!-- Post Image -->
-                <img src="{{post.image.url}}" class="post-body" alt="Post Image">
-                <div class="post-foot">
-                   
-                    <div class="post-action-buttons">
-                        <form action="/staff_dash/approve_or_reject_post/" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" name="accept" value={{post.id}} class="accept-button" onclick="changeColor(this)">Accept</button>
-                        </form>
-                        <form action="/staff_dash/approve_or_reject_post/" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" name="reject"  value={{post.id}}  class="reject-button">Reject</button>
-                        </form>
+                <div class="post-profile-name">{{post.student.name}}:{{post.student}}</div>
+                {% endif %}
+
+            </div>
+            <div class="post-menu">
+                <div class="post-menu-icon" onclick="fun1()">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#5f6368">
+                        <path
+                            d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z" />
+                    </svg>
+                    <div id="post-menu-table">
+                        <ul>
+                            <li><a href="#" style="text-decoration: none;color:red">Report</a></li>
+                            <li onclick="fun()">Cancel</li>
+                        </ul>
                     </div>
-                    
                 </div>
             </div>
-            {% endfor %}
+        </div>
+        <!-- Post Image -->
+        <img src="{{post.image.url}}" class="post-body" alt="Post Image">
+        <div class="post-foot">
+
+            <div class="post-action-buttons">
+                <form action="/staff_dash/approve_or_reject_post/" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" name="accept" value={{post.id}} class="accept-button"
+                        onclick="changeColor(this)">Accept</button>
+                </form>
+                <form action="/staff_dash/approve_or_reject_post/" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" name="reject" value={{post.id}} class="reject-button">Reject</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    {% empty %}
+    <div class="no-posts">
+        <div class="no-post-img">
+            <img src="{% static 'images/turtoise.jpg' %}" alt="Turtoise Image">
+        </div>
+        <span>No posts requested.</span>
+    </div>
+    {% endfor %}
 </div>
-            <script>
-                function changeColor(button) {
-                    button.style.backgroundColor = 'yellow';
-                }
-                </script>
+<script>
+    function changeColor(button) {
+        button.style.backgroundColor = 'yellow';
+    }
+</script>
 {% endblock content %}
