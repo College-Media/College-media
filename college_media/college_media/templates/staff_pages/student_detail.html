@@ -150,8 +150,16 @@ list-style-type: none;
 .right-profile li:first-child {
 font-size: large;
 }
+.profile-image{
 
-.profile-image,
+width: 100%;
+height: 100%;
+border-radius: 50%;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+}
+<!-- .profile-image, -->
 #profile-image-edit {
 cursor: pointer;
 border-radius: 50%;
@@ -339,6 +347,85 @@ border-top: none;
 color: black;
 }
 
+<!-- tags creation css -->
+
+.tag-creation-table{
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+z-index: 1001;
+max-width: 600px;
+height: 500px;
+
+border: 1px solid #ddd;
+background-color: #fff;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+width: 350px;
+text-align: center;
+border-radius: 8px;
+}
+<!-- .tag-creation-table{
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+z-index: 1001;
+max-width: 600px;
+height: 500px;
+
+border: 1px solid #ddd;
+background-color: #fff;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+width: 350px;
+text-align: center;
+border-radius: 8px;
+} -->
+#tag-box{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.tag-options-list {
+border: 1px solid #ccc;
+background-color: white;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+border-radius: 4px;
+max-height: 150px;
+overflow-y: auto;
+z-index: 1;
+display:none;
+}
+/* Individual tag option */
+.tag-options {
+padding: 10px 10px 10px 2px;
+cursor: pointer;
+font-size: 16px;
+color: #555;
+}
+
+.tag-options:hover,
+.tag-options.highlight {
+background-color: rgba(36, 196, 213, 0.1);
+color: #000;
+}
+#tag-box{
+position: relative;
+display:flex;
+flex-direction:column;
+}
+.tag-input-value {
+width: 100%;
+padding: 10px;
+font-size: 12px;
+border: 1px solid #ccc;
+border-radius: 4px;
+outline: none;
+color:rgba(21, 121, 132, 0.997);
+
+}
 /*--------MOBILE VIEW--------*/
 .mobile-top,
 .mobile-bottom {
@@ -356,21 +443,21 @@ width: 85px;
 }
 /* css changes for responsiveness */
 @media (max-width:900px) {
-    .right-profile li:first-child {
-        font-size: small;
-        }
-        
-        .right-profile {
-        padding-left: 15%;
-        }
-        .right-profile ul{
-            margin-top:5px;
-        }
+.right-profile li:first-child {
+font-size: small;
+}
 
-.right-profile img{
+.right-profile {
+padding-left: 15%;
+}
+.right-profile ul{
+margin-top:5px;
+}
+
+<!-- .right-profile img{
 width:80px;
 height: 80px;
-}
+} -->
 .right-profile #profile-image-placeholder-large{
 width:80px;
 height:80px;
@@ -441,8 +528,8 @@ height:30%;
 min-height:150px;
 }
 .right-profile{
-    margin-left:1px;
-    padding-left:10px;
+margin-left:1px;
+padding-left:10px;
 }
 .mobile-bottom {
 margin: 100%;
@@ -536,160 +623,163 @@ border-radius: 50%;
 
 {% comment %} css for image container {% endcomment %}
 .chat-icon1{
-    color:white;
-    display:flex;
-    flex-direction:row;
-    column-gap:10px;
-    border-radius:10px;
-    margin:auto;
-    margin-left:100px;
-    padding:10px;
-    cursor:pointer;
-    font-size:16px;
-    background-color:rgba(10, 136, 150, 0.997);
-    }
-    .chat-icon1 svg{
-    fill: white;
-    }
-    .right-bottom {
-    margin-left:160px;
-    display: flex;
-    padding: 10px 15px 10px 10px;
-    justify-content: start;
-    align-items: flex-start;
-    <!-- width: 100%; -->
-    flex-wrap:wrap;
-    height: 100%;
-    flex-direction:row;
-    gap:10px;
-    overflow-y:auto;
-    flex-grow:1;
-    }
-    
-    .image-container {
-    width: 100%;
-    background-color: #cccacae6;
-    height: 80%;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(61, 59, 59, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .image-container img {
-    width: 100%;
-    height: 100%;
-    border-radius:10px;
-    }
-    
-    .post-in-stu{
-    display: flex;
-    background-color:rgb(247, 247, 247);
-    flex-direction: column;
-    border-radius:10px;
-    gap: 8px;
-    flex-wrap: wrap;
-    width:300px;
-    max-width:250px;
-    max-height:400px;
-    height:300px;
-    margin-top: 0;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.081), 0 1px 4px 0 rgba(0, 0, 0, 0.053);
-    }
-    .disc{
-    padding:0px 10px;
-    width:100%;
-    font-size:12px;
-    margin-top:10px;
-    }
-    @media(max-width:1057px){
-    .right-profile{
-    padding-left:10%;
-    }
-    }
-    @media(max-width:990px)
-    {
-    .chat-icon1{
-    margin-left:0px;
-    }
-    }
-    @media(max-width:700px){
-    .right-profile{
-    padding-left:30px;
-    }
-    }
-    @media(max-width:600px){
-    .right-bottom{
-    margin:5px;
-    }
-    .post-in-stu{
-    width:200px;
-    height:300px;
-    flex-grow:1;
-    margin:10px;
-    }
-    .chat-icon1{
-    margin-left:0px;
-    position: absolute;
-    right: 10px;
-    top: 20px;
-    }
-    .right-profile{
-    position:relative;
-    }
- .right-profile #profile-image-placeholder-large {
-    margin-top:-5px;
-    }
-    .profile-image{
+color:white;
+display:flex;
+flex-direction:row;
+column-gap:10px;
+border-radius:10px;
+margin:auto;
+margin-left:100px;
+padding:10px;
+cursor:pointer;
+font-size:16px;
+background-color:rgba(10, 136, 150, 0.997);
+}
+.chat-icon1 svg{
+fill: white;
+}
+.right-bottom {
+margin-left:160px;
+display: flex;
+padding: 10px 15px 10px 10px;
+justify-content: start;
+align-items: flex-start;
+<!-- width: 100%; -->
+flex-wrap:wrap;
+height: 100%;
+flex-direction:row;
+gap:10px;
+overflow-y:auto;
+flex-grow:1;
+}
+
+.image-container {
+width: 100%;
+background-color: #cccacae6;
+height: 80%;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(61, 59, 59, 0.2);
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-container img {
+width: 100%;
+height: 100%;
+border-radius:10px;
+}
+
+.post-in-stu{
+display: flex;
+background-color:rgb(247, 247, 247);
+flex-direction: column;
+border-radius:10px;
+gap: 8px;
+flex-wrap: wrap;
+width:300px;
+max-width:250px;
+max-height:400px;
+height:300px;
+margin-top: 0;
+box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.081), 0 1px 4px 0 rgba(0, 0, 0, 0.053);
+}
+.disc{
+padding:0px 10px;
+width:100%;
+font-size:12px;
+margin-top:10px;
+}
+@media(max-width:1057px){
+.right-profile{
+padding-left:10%;
+}
+}
+@media(max-width:990px)
+{
+.chat-icon1{
+margin-left:0px;
+}
+}
+@media(max-width:700px){
+.right-profile{
+padding-left:30px;
+}
+}
+@media(max-width:600px){
+.right-bottom{
+margin:5px;
+}
+.post-in-stu{
+width:200px;
+height:300px;
+flex-grow:1;
+margin:10px;
+}
+.chat-icon1{
+margin-left:0px;
+position: absolute;
+right: 10px;
+top: 20px;
+}
+.right-profile{
+position:relative;
+}
+.right-profile #profile-image-placeholder-large {
+margin-top:-5px;
+}
+<!-- .profile-image{
         margin-top:0px;
-    }
-    }
-    @media(max-width:450px){
-    .post-in-stu{
-    margin:auto;
-    }
-    }
-    @media(max-width:420px){
-    .right-profile{
-    width:100%;
-    padding:2px;
-    column-gap:5px;
-    }
-    .profile-image, #profile-image-placeholder-large{
-    max-width:60px;
-    max-height:60px;
-    }
-    .right-profile ul{
-    font-size:14px;
-    }
-    .chat-icon1{
-    right:52px;
-    top:20px;
-    padding:6px;
-    }
-    
-    }
-    
-    @media(max-height:660px){
-    .left ul {
-    padding-top:10px;
-    row-gap:10px;
-    }
+    } -->
+}
+@media(max-width:450px){
+.post-in-stu{
+margin:auto;
+}
+}
+@media(max-width:420px){
+.right-profile{
+width:100%;
+padding:2px;
+column-gap:5px;
+}
+.profile-image, #profile-image-placeholder-large{
+max-width:60px;
+max-height:60px;
+}
+.right-profile ul{
+font-size:14px;
+}
+.chat-icon1{
+right:52px;
+top:20px;
+padding:6px;
+}
+
+}
+
+@media(max-height:660px){
+.left ul {
+padding-top:10px;
+row-gap:10px;
+}
 }
 label {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
+display: block;
+margin-bottom: 5px;
+color: #555;
 }
 {% endblock styleProfile %}
 
 {% block content %}
+
 <div class="right">
+    <div class="overlay"></div>
     <div class="right-top">
         <div class="right-profile">
 
             {% if student_info.profile_image %}
-            <img class="profile-image" src="{{ student_info.profile_image.url }}">
-            </img>
+            <div id="profile-image-placeholder-large"> <img class="profile-image"
+                    src="{{ student_info.profile_image.url }}">
+                </img> </div>
             {% else %}
             <div id="profile-image-placeholder-large">
                 {{ student_info.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
@@ -702,9 +792,36 @@ label {
                 <li><label>{{ student_info.name}}</label></li>
                 <!-- <li><label>{{ student_info.class}}</label></li> -->
                 <li><label>{{ student_info.roll_number}}</label></li>
+                <li>
+                    <div class="tags-added">
+                        {% for tag in tags %}
+                        <span>&{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="create-tag" onclick="tagsCretaion()">
+                        <span>Add tag</span>
+                    </div>
+                    <div class="tag-creation-table">
+                        <!-- <center> -->
+                            <h3>Tag your friends</h3>
+                            <div class="tag-container" id="tag-box">
+                                <input type="text" class="tag-input-value" id="tag-input"
+                                    placeholder="press & to see tags" />
+                                <div class="tag-options-list">
+                                    <div class="tag-options" data-value="classrepresentative"><label>Class Representative</label></div>
+                                    <div class="tag-options" data-value="projectcoordinator"><label>Project Coordinator</label></div>
+                                    <div class="tag-options" data-value="placementcoordinator"><label>Placement Coordinator</label>
+                                    </div>
+                                    <div class="tag-options" data-value="culturecoordinator"><label>Cultural Coordinator</label></div>
+                                    <div class="tag-options" data-value="Sportscoordinator"><label>Sports Coordinator</label></div>
+                                </div>
+                            </div>
+                        <!-- </center> -->
+                    </div>
+                </li>
 
             </ul>
-            <div class="chat-icon1"  onclick="window.location='{% url 'chat' student_info.roll_number %}'">
+            <div class="chat-icon1" onclick="window.location='{% url 'chat' student_info.roll_number %}'">
 
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                     fill="#5f6368">
@@ -742,7 +859,91 @@ label {
         {% endfor %}
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const tagInput = document.getElementById("tag-input");
+        const tagOptionsList = document.querySelector(".tag-options-list");
+        const tagOptions = Array.from(document.querySelectorAll(".tag-options"));
+        let selectedIndex = -1;
 
+        // Function to filter and show the tag options
+        function filterTags(query) {
+            tagOptions.forEach((option) => {
+                const tagValue = option.getAttribute("data-value").toLowerCase();
+                if (tagValue.startsWith(query.toLowerCase())) {
+                    option.style.display = "block";
+                } else {
+                    option.style.display = "none";
+                }
+            });
+        }
+
+        // Show the dropdown and filter based on input
+        tagInput.addEventListener("input", function (e) {
+            const value = e.target.value;
+            const lastAmpersandIndex = value.lastIndexOf("&");
+
+            if (lastAmpersandIndex !== -1) {
+                const query = value.substring(lastAmpersandIndex + 1);
+                tagOptionsList.style.display = "block";
+                filterTags(query);
+            } else {
+                tagOptionsList.style.display = "none";
+            }
+        });
+
+        // Add tag to input when an option is clicked
+        tagOptions.forEach((option, index) => {
+            option.addEventListener("click", function () {
+                const tagValue = option.getAttribute("data-value");
+                const value = tagInput.value;
+                const lastAmpersandIndex = value.lastIndexOf("&");
+
+                // Replace text after last "&" with the selected tag value
+                tagInput.value = `${value.substring(0, lastAmpersandIndex)}&${tagValue} `;
+                tagOptionsList.style.display = "none";
+            });
+        });
+
+        // Keyboard navigation
+        tagInput.addEventListener("keydown", function (e) {
+            if (tagOptionsList.style.display === "block") {
+                if (e.key === "ArrowDown") {
+                    selectedIndex = (selectedIndex + 1) % tagOptions.length;
+                    updateHighlight();
+                    e.preventDefault();
+                } else if (e.key === "ArrowUp") {
+                    selectedIndex = (selectedIndex - 1 + tagOptions.length) % tagOptions.length;
+                    updateHighlight();
+                    e.preventDefault();
+                } else if (e.key === "Enter" && selectedIndex >= 0) {
+                    const tagValue = tagOptions[selectedIndex].getAttribute("data-value");
+                    const value = tagInput.value;
+                    const lastAmpersandIndex = value.lastIndexOf("&");
+
+                    // Replace text after last "&" with the selected tag value
+                    tagInput.value = `${value.substring(0, lastAmpersandIndex)}&${tagValue} `;
+                    tagOptionsList.style.display = "none";
+                    e.preventDefault();
+                } else if (e.key === "Escape") {
+                    tagOptionsList.style.display = "none";
+                }
+            }
+        });
+
+        // Hide dropdown when clicking outside
+        document.addEventListener("click", function (e) {
+            if (!e.target.closest(".tag-container")) {
+                tagOptionsList.style.display = "none";
+            }
+        });
+
+        function updateHighlight() {
+            tagOptions.forEach((opt, i) => opt.classList.toggle("highlight", i === selectedIndex));
+        }
+    });
+
+</script>
 
 
 {% endblock content %}

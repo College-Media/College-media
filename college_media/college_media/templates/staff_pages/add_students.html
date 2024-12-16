@@ -1,146 +1,456 @@
 {% extends "staff_pages/staff_base.html" %}
 {% block style %}
 .right{
-    height:100vh;
+height:100vh;
+
 }
+
 .container {
-    max-width: 500px;
-    margin: 20px auto;
-    background: #fff;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(10, 136, 150, 0.997);
+max-width: 500px;
+
+margin: 0px 10px 10px 10px;
+background: #fff;
+padding: 40px;
+border-radius: 8px;
+box-shadow: 0 2px 10px rgba(10, 136, 150, 0.997);
+
+}
+.form-stu-add{
+    max-width: 500px; 
+    overflow-y:auto;
+}
+.stu-add{
+display: flex;
+flex-direction:column;
+gap: 21px;
+}
+.stu-add-top{
+<!-- height:30%; -->
+}
+.stu-add-bottom{
+border-radius:5px;
+display: flex;
+flex-direction: row;
+gap:20px;
 }
 h2 {
-    margin-top:0px;
-    margin-bottom:8px;
-    text-align: center;
-    color:rgba(21, 121, 132, 0.997);
+margin-top:0px;
+margin-bottom:8px;
+text-align: center;
+color:rgba(21, 121, 132, 0.997);
 }
 label {
-    display: block;
-    margin-bottom: 8px;
+display: block;
+margin-bottom: 8px;
+color: #555;
+}
+<!-- css for tag -->
+
+.tag-container {
+position: relative;
+background-color:black;
+}
+#tag-box{
+    position: relative;
+   display:flex;
+   flex-direction:column-reverse;
+}
+.tag-input-value {
+width: 100%;
+padding: 10px;
+font-size: 12px;
+border: 1px solid #ccc;
+border-radius: 4px;
+outline: none;
+color:rgba(21, 121, 132, 0.997);
+
+}
+
+/* Tag options list (dropdown) */
+.tag-options-list {
+    position: absolute;
+    top: -156px;
+    left: 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1;
+    display:none;
+}
+/* Individual tag option */
+.tag-options {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
     color: #555;
 }
-input[type="text"],
-input[type="email"],
-input[type="number"] {
+
+.tag-options:hover,
+.tag-options.highlight {
+    background-color: rgba(36, 196, 213, 0.1);
+    color: #000;
+}
+/* Style for the input container */
+.custom-date-container {
+    position: relative;
     width: 100%;
-    padding: 10px;
     margin-bottom: 15px;
+}
+
+/* Style the date input to match other input fields */
+.custom-date-container input[type="date"]{
+    width: 100%;
+    padding: 6px;
+    font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
     transition: border-color 0.3s;
+    background-color: #fff;
 }
+
+/* Focused state for the date input */
+.custom-date-container input[type="date"]:focus {
+    border-color: rgba(36, 196, 213, 0.997);
+    outline: none;
+}
+
+/* Add custom icon or styling if desired */
+.custom-date-container input[type="date"]::-webkit-calendar-picker-indicator {
+    background-color: transparent;
+    color: transparent;
+    cursor: pointer;
+}
+
+/* Custom placeholder for date input */
+.custom-date-container input[type="date"]::before {
+    content: attr(placeholder);
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 16px;
+}
+
+<!-- End of css for tag -->
+
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+width: 100%;
+padding: 10px;
+margin-bottom: 15px;
+border: 1px solid #ccc;
+border-radius: 4px;
+box-sizing: border-box;
+transition: border-color 0.3s;
+}
+
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="number"]:focus {
-    border-color:rgba(36, 196, 213, 0.997);
-    outline: none;
+border-color:rgba(36, 196, 213, 0.997);
+outline: none;
 }
 input[type="submit"] {
-    background-color:rgba(36, 196, 213, 0.997);
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    font-size: 16px;
-    transition: background-color 0.3s;
+background-color:rgba(36, 196, 213, 0.997);
+color: white;
+padding: 10px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+width: 100%;
+font-size: 16px;
+transition: background-color 0.3s;
 }
 input[type="submit"]:hover {
-    background-color: rgba(10, 136, 150, 0.997);
+background-color: rgba(10, 136, 150, 0.997);
 }
 .message {
-    padding: 20px;
-    margin: 20px;
-    border-radius: 5px;
-    display: none; /* Hide initially */
+padding: 20px;
+margin: 10px;
+border-radius: 5px;
+display: none; /* Hide initially */
 }
 .success {
-    background-color: black; /* For success */
-    color: white; /* Change text color for better visibility */
+background-color: green; /* For success */
+color: white; /* Change text color for better visibility */
 }
 .error {
-    background-color: red; /* For error */
-    color: white;
+background-color: red; /* For error */
+color: white;
 }
 .warning {
-    background-color: blue; /* For warning */
-    color: white;
+background-color: blue; /* For warning */
+color: white;
 }
 .footer{
-    margin:5px;
+margin:5px;
+text-align:center;
 }
 @media(max-width:600px){
-    input[type="text"],
+input[type="text"],
 input[type="email"],
 input[type="number"] {
-    padding:5px;
-    margin-bottom:10px;
+padding:5px;
+margin-bottom:10px;
 }
-    label{
-        margin-bottom:5px;
-    }
+label{
+margin-bottom:5px;
+}
+.custom-date-container {
+    margin-bottom:5px;
+}
+.custom-date-container input[type="date"]{
+padding:4px;
+}
 }
 @media(max-height:660px){
-    input[type="text"],
-    input[type="email"],
-    input[type="number"] {
-        padding:6px;
-    margin-bottom:10px;
-    }
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+padding:6px;
+margin-bottom:10px;
+}
 }
 {% endblock style %}
 {% block content %}
-    <div class="right">
-        <!--start of form-->
-      
-        <div id="message-container">
-            {% if messages %}
-           
-                {% for message in messages %}
-                {% if student_add in message.tags %}
-                    <div class="message {{ message.tags }}" style="display: block;">
-                        {{ message }}
-                    </div>
-                {% endif %}
-                {% endfor %}
-            {% endif %}
-        </div>
-        <div class="container">
-            <h2>Student Details Form</h2>
-            <form action="/staff_dash/add_student/" method="POST">
-                {% csrf_token %}
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-        
-                <label for="roll">Roll Number:</label>
-                <input type="text" id="roll" name="roll" required>
-        
-                <label for="email">Email ID:</label>
-                <input type="email" id="email" name="email" required>
+<div class="right">
+    <!--start of form-->
 
-                <label for="dob">Date of Birth:</label>
-                <input type="text" id="dob" name="dob" placeholder="02-02-2003" required>
-        
-                <label for="class">Class:</label>
-                <input type="text" id="class" name="class" required>
-        
-                <label for="section">Section:</label>
-                <input type="text" id="section" name="section" required>
-        
-                <input type="submit" value="Submit">
-            </form>
-            <div class="footer">
-                &copy; 2023 Student Management System
+    <div id="message-container">
+        {% if messages %}
+
+        {% for message in messages %}
+        {% if student_add in message.tags %}
+        <div class="message {{ message.tags }}" style="display: block;">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="container">
+        <h2>Student Details Form</h2>
+        <form action="/staff_dash/add_student/" method="POST" class="form-stu-add">
+            {% csrf_token %}
+            <div class="stu-add">
+                <div class="stu-add-top">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    <label for="roll">Roll Number:</label>
+                    <input type="text" id="roll" name="roll" required>
+                    <label for="email">Email ID:</label>
+                    <input type="email" id="email" name="email" required>
+
+                </div>
+                <div class="stu-add-bottom">
+                    <div class="stu-btmLeft">
+
+                        <label for="dob">Date of Birth:</label>
+                        <div class="custom-date-container">
+                            <input type="date" id="dob" name="dob" required />
+                        </div>
+                 
+                        <label for="section">Section:</label>
+                        <input type="text" id="section" name="section" required>
+
+
+                    </div>
+                    <div class="stu-btmRight">
+
+                        <label for="class">Class:</label>
+                        <input type="text" id="class" name="class" required>
+
+                        <label for="tag">ADD Tag:</label>
+
+                        <div class="tag-container" id="tag-box">
+                            <input type="text" class="tag-input-value" id="tag-input"
+                                placeholder="press & to see tags" />
+                            <div class="tag-options-list">
+                                <div class="tag-options" data-value="classrepresentative">Class Representative</div>
+                                <div class="tag-options" data-value="projectcoordinator">Project Coordinator</div>
+                                <div class="tag-options" data-value="placementcoordinator">Placement Coordinator</div>
+                                <div class="tag-options" data-value="culturecoordinator">Cultural Coordinator</div>
+                                <div class="tag-options" data-value="Sportscoordinator">Sports Coordinator</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
+            <input type="submit" value="Submit">
+        </form>
+        <div class="footer">
+            &copy; 2024 Student Management System
         </div>
     </div>
-        <!--start of Form-->
 
-    <!--DESIGN FOR MOBILE VIEW-->
+</div>
 
-    {% endblock content %}
+<!--start of Form-->
+
+<!--DESIGN FOR MOBILE VIEW-->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tagInput = document.getElementById("tag-input");
+    const tagOptionsList = document.querySelector(".tag-options-list");
+    const tagOptions = Array.from(document.querySelectorAll(".tag-options"));
+    const noTagMessage = document.getElementById("no-tag-message");
+    const messageContainer = document.getElementById("message-container");
+    const dobInput = document.getElementById("dob");
+    const form = document.querySelector("form");
+
+    let selectedIndex = -1;
+
+    // Show options when & is typed and filter by input value
+    tagInput.addEventListener("input", function (e) {
+        const currentValue = e.target.value.trim();
+        if (currentValue.includes("&")) {
+            tagOptionsList.style.display = "block";
+
+            // Filter options based on input
+            const query = currentValue.split("&").pop().toLowerCase();
+            let hasMatches = false;
+            tagOptions.forEach(option => {
+                const tagText = option.textContent.toLowerCase();
+                if (tagText.startsWith(query)) {
+                    option.style.display = "block";
+                    hasMatches = true;
+                } else {
+                    option.style.display = "none";
+                }
+            });
+
+            // Show or hide the "No tag present" message
+            if (!hasMatches) {
+                noTagMessage.style.display = "block";
+            } else {
+                noTagMessage.style.display = "none";
+            }
+        } else {
+            tagOptionsList.style.display = "none";
+            noTagMessage.style.display = "none";
+        }
+    });
+
+    // Add tag to input when an option is clicked
+    tagOptions.forEach(option => {
+        option.addEventListener("click", function () {
+            const tagValue = option.getAttribute("data-value");
+            const currentValue = tagInput.value.split("&")[0]; // Get text before &
+            tagInput.value = `${currentValue}&${tagValue} `;
+            tagOptionsList.style.display = "none";
+            noTagMessage.style.display = "none";
+        });
+    });
+
+    // Validate date of birth and age
+    dobInput.addEventListener("input", function () {
+        const dob = dobInput.value;
+        const dobYear = dob.split("-")[2]; // Assuming format is dd-mm-yyyy
+
+        if (dobYear && dobYear.length === 4) {
+            const currentYear = new Date().getFullYear();
+            const age = currentYear - dobYear;
+
+            if (age < 18) {
+                showMessage("Enter correct year: Age must be 18 or older.", "error");
+            } else {
+                hideMessage();
+            }
+        }
+    });
+
+    // Form submission handling
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const tagValue = tagInput.value.trim();
+        const validTags = tagOptions.map(option => option.textContent.toLowerCase());
+
+        // Validate if the tag entered is valid
+        if (tagValue && !validTags.some(tag => tag === tagValue.toLowerCase())) {
+            showMessage("No tag found. Please add tag before use.", "error");
+            return;
+        }
+
+        // Validate age and date of birth
+        const dob = dobInput.value;
+        const dobYear = dob.split("-")[2]; // Assuming format is dd-mm-yyyy
+
+        if (dobYear && dobYear.length === 4) {
+            const currentYear = new Date().getFullYear();
+            const age = currentYear - dobYear;
+
+            if (age < 18) {
+                showMessage("Enter correct year: Age must be 18 or older.", "error");
+                return;
+            }
+        }
+
+        // If everything is fine, show success message
+        showMessage("Student added.", "success");
+
+        // Optionally, you can now submit the form if no validation error
+        // e.target.submit(); 
+    });
+
+    // Display message in message container
+    function showMessage(message, type) {
+        messageContainer.style.display = "block";
+        messageContainer.textContent = message;
+        messageContainer.className = `message ${type}`;
+    }
+
+    // Hide the message container
+    function hideMessage() {
+        messageContainer.style.display = "none";
+    }
+
+    // Hide dropdown and message when clicking outside
+    document.addEventListener("click", function (e) {
+        if (!e.target.closest(".tag-container")) {
+            tagOptionsList.style.display = "none";
+            noTagMessage.style.display = "none";
+        }
+    });
+
+    // Keyboard navigation
+    tagInput.addEventListener("keydown", function (e) {
+        if (tagOptionsList.style.display === "block") {
+            if (e.key === "ArrowDown") {
+                selectedIndex = (selectedIndex + 1) % tagOptions.length;
+                updateHighlight();
+                e.preventDefault();
+            } else if (e.key === "ArrowUp") {
+                selectedIndex = (selectedIndex - 1 + tagOptions.length) % tagOptions.length;
+                updateHighlight();
+                e.preventDefault();
+            } else if (e.key === "Enter" && selectedIndex >= 0) {
+                const tagValue = tagOptions[selectedIndex].getAttribute("data-value");
+                const currentValue = tagInput.value.split("&")[0];
+                tagInput.value = `${currentValue}&${tagValue} `;
+                tagOptionsList.style.display = "none";
+                noTagMessage.style.display = "none";
+                e.preventDefault();
+            } else if (e.key === "Escape") {
+                tagOptionsList.style.display = "none";
+                noTagMessage.style.display = "none";
+            }
+        }
+    });
+
+    function updateHighlight() {
+        tagOptions.forEach((opt, i) => opt.classList.toggle("highlight", i === selectedIndex));
+    }
+});
+
+</script>
+{% endblock content %}
