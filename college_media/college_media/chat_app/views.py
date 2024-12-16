@@ -61,6 +61,7 @@ def chat_view(request, conversation_id):
             print(last_message)
             print("______________________________________________________________")
             if last_message:
+                
                 # Normalize sender and receiver: make the logged-in user always the sender
                 if last_message.sender != sender_id:
                     last_message.sender, last_message.receiver = last_message.receiver, last_message.sender
