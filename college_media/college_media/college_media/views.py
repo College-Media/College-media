@@ -175,13 +175,13 @@ def tag_submit(request):
         tag_reciver=get_object_or_404(Student,roll_number =reciver)
         tag_exists=Tag.objects.filter(tag_given_by=tag_giver, tag_person=tag_reciver, tag=tag)
         if tag_exists:
-             messages.success(request,"tag already exists",extra_tags='wrong_password')
+             messages.success(request,"tag already exists",extra_tags='tag_exists')
              return redirect('student_detail',roll_number=reciver)
         else:
             Tag.objects.create(
                     tag_given_by=tag_giver, tag_person=tag_reciver, tag=tag
                 )
-            messages.success(request,"tag added successfully",extra_tags='wrong_password')
+            messages.success(request,"tag added successfully",extra_tags='tag_added')
             return redirect('student_detail',roll_number=reciver)
     
 def like_counts(request): #like counts

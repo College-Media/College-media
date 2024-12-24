@@ -1,0 +1,213 @@
+{% extends "user_pages/base.html" %}
+
+{% block style %}
+.tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.tag-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 250px;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #e0e0e0;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #42aebc;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.tag-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(42, 174, 188, 0.3);
+}
+
+.tag-title {
+    font-size: 24px;
+    color: #42aebc;
+    margin-bottom: 10px;
+}
+
+.button-group {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style for the edit form */
+.edit-form {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    width: 100%; /* Align form with card width */
+}
+
+.edit-form input[type="text"] {
+    padding: 8px 10px;
+    border: 2px solid #42aebc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 90%; /* Adjust input width */
+    margin: auto;
+}
+
+.edit-form button {
+    padding: 8px 10px;
+    background-color: #42aebc;
+    color: white;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-form button:hover {
+    background-color: #3696a1;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.edit {
+    background-color: #42aebc;
+    color: white;
+    width: 100px; /* Uniform button sizes */
+}
+
+button.edit:hover {
+    background-color: #3696a1;
+}
+
+button.delete {
+    background-color: #e74c3c;
+    color: white;
+    width: 100px; /* Uniform button sizes */
+}
+
+button.delete:hover {
+    background-color: #c0392b;
+}
+.message {
+    margin: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    flex-grow: 1;
+    padding: 0 10px;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+    height: 50px;
+    color: rgb(252, 252, 252);
+    font-weight: bold;
+    max-width: 300px;
+    background-color: rgb(16, 108, 33);
+
+    border-radius: 10px;
+}
+
+.message-red {
+    margin: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    flex-grow: 1;
+    padding: 0 10px;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+    height: 50px;
+    color: rgb(252, 252, 252);
+    font-weight: bold;
+    max-width: 300px;
+    background-color: rgb(251, 39, 46);
+
+    border-radius: 10px;
+}
+{% endblock style %}
+
+
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+    {% if 'tag_deleted' in message.tags %}
+    <div class="message-red">
+        <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960"
+                width="30px" fill="#FFFFFF">
+                <path
+                    d="m338-290 142-142 142 142 48-48-142-142 142-142-48-48-142 142-142-142-48 48 142 142-142 142 48 48ZM479.68-59q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+            </svg></div>
+        <div class="message-text">{{message}}</div>
+    </div>
+    {% elif 'tag_updated' in message.tags %}
+    <div class="message">
+        <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960"
+                width="30px" fill="white">
+                <path
+                    d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+            </svg></div>
+        <div class="message-text">{{message}}</div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+<div class="right">
+    <div class="tag-cloud">
+        {% for tag in tags %}
+        <div class="tag-card">
+            <div class="tag-title">{{ tag.tag }}</div>
+            <p>Tagged Person: {{ tag.tag_person.name }}</p>
+            {% if tag.universal %}
+            <p><strong>Universal Tag</strong></p>
+            {% endif %}
+            <div class="button-group">
+                <button class="edit" onclick="showEditField({{ tag.id }})">Edit</button>
+                <form id="edit-form-{{ tag.id }}" class="edit-form" method="POST" action="{% url 'delete_tag' tag.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="tag_id" value="{{ tag.id }}">
+                    <input type="text" name="new_tag" placeholder="New tag value" required>
+                    <button type="submit">Save</button>
+                </form>
+                <form method="post" action="{% url 'delete_tag' tag.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="delete">Delete</button>
+                </form>
+            </div>
+        </div>
+        {% empty %}
+        <p>No tags found.</p>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    function showEditField(tagId) {
+        // Hide all other edit forms
+        document.querySelectorAll('.edit-form').forEach(form => form.style.display = 'none');
+        // Show the specific form
+        document.getElementById('edit-form-' + tagId).style.display = 'flex';
+    }
+</script>
+{% endblock content %}

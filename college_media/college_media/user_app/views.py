@@ -57,3 +57,33 @@ def user_profile(request):
                 messages.error(request, "No image file provided.", extra_tags='profile_pic')
     return render(request,"user_pages/user_profile.html",{'student_info':student_info,'posts':post})
     
+def tags(request):
+    roll_number=request.user
+    roll_number=Student.objects.get(user=roll_number) 
+    
+    tags=Tag.objects.filter(tag_given_by=roll_number)
+    unique_tags = {}
+    for tag in tags:
+        if tag.tag not in unique_tags:
+            unique_tags[tag.tag] = tag
+
+    # Convert unique tags dictionary to a list of Tag objects
+    unique_tags_list = list(unique_tags.values())
+    print(unique_tags_list)
+    return render(request, 'user_pages/user_tags.html', {'tags': unique_tags_list})
+
+def delete_tag(request, tag_id):
+    tag = get_object_or_404(Tag, id=tag_id)
+    
+    
+    if request.method == 'POST':
+        if 'new_tag' in request.POST:
+            new_tag_value = request.POST['new_tag']
+            Tag.objects.filter(tag=tag.tag).update(tag=new_tag_value)
+            messages.success(request, "Tag updated successfully", extra_tags="tag_updated")
+        else:
+            Tag.objects.filter(tag=tag.tag).delete()
+            print("deletd tag will be")
+            print(tag.tag)
+            messages.success(request,"tag deleted successfully",extra_tags="tag_deleted")
+    return redirect('tags')  # Redirect back to the user's tag list
