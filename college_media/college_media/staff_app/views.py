@@ -21,30 +21,49 @@ def mail_send(subject,message,mail):
 def welcome(request):
     return render(request,"welcome.html")
 
+
 def add_student(request):
-    
-    if request.method=="POST":
-        name=request.POST.get('name')
-        email=request.POST.get('email')
-        dob=request.POST.get('dob')
-        roll_num=request.POST.get('roll')
-        section=request.POST.get('section')
-        school_name=request.POST.get('class')
-        s=CoustomUser.objects.filter(username=roll_num)
+    if request.method == "POST":
+        # Extract form data
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        dob = request.POST.get('dob')
+        roll_num = request.POST.get('roll')
+        section = request.POST.get('section')
+        school_name = request.POST.get('class')
+        tag = request.POST.get('tag')
+        
+        # Check if student already exists
+        s = CoustomUser.objects.filter(username=roll_num)
         if s:
-            messages.error(request,"student already exists",extra_tags='student_add')
-            redirect("staff_dash/add_student/")
+            messages.error(request, "Student already exists", extra_tags='student_add')
+            print("student alredy exists")
+            return redirect("add_student")  # Redirect to the add_student page
         else:
-            user=CoustomUser.objects.create_user(roll_num,email,dob)
-            user.roll_number=roll_num
-            user.is_student=True
+            # Create new user and student
+            user = CoustomUser.objects.create_user(roll_num, email, dob)
+            user.roll_number = roll_num
+            user.is_student = True
             user.save()
-            custom_user_instance = get_object_or_404(CoustomUser, username=roll_num)
-            print(custom_user_instance)
-            student_add=Student.objects.create(user=custom_user_instance,roll_number=roll_num,name=name,email=email,section=section,school=school_name,dob=dob)
-            messages.success(request,"student added success")
-            redirect("staff_dash/add_student/")
-    return render(request,"staff_pages/add_students.html")
+            
+            # Create student instance
+            custom_user_instance = CoustomUser.objects.get(username=roll_num)
+            Student.objects.create(
+                user=custom_user_instance, roll_number=roll_num,
+                name=name, email=email, section=section, school=school_name, dob=dob
+            )
+            
+            # Create tag
+            tag_giver = Student.objects.get(user=request.user)
+            tag_reciver = Student.objects.get(user=user)
+            Tag.objects.create(
+                tag_given_by=tag_giver, tag_person=tag_reciver, tag=tag, universal=True
+            )
+            print("Student added successfully")
+            messages.success(request, "Student added successfully")
+            return redirect("add_student")  # Redirect to the add_student page
+
+    return render(request, "staff_pages/add_students.html")
 
 
 def home(request):

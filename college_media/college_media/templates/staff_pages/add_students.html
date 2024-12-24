@@ -218,6 +218,19 @@ padding:6px;
 margin-bottom:10px;
 }
 }
+.message {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+.student_add {
+    background-color: red;
+    color: white;
+}
+.student_success {
+    background-color: green;
+    color: white;
+}
 {% endblock style %}
 {% block content %}
 <div class="right">
@@ -225,15 +238,18 @@ margin-bottom:10px;
 
     <div id="message-container">
         {% if messages %}
-
         {% for message in messages %}
-        {% if student_add in message.tags %}
-        <div class="message {{ message.tags }}" style="display: block;">
-            {{ message }}
-        </div>
-        {% endif %}
+            {% if 'student_add' in message.tags %}
+                <div class="message student_add">
+                    {{ message }}
+                </div>
+            {% elif 'student_success' in message.tags %}
+                <div class="message student_success">
+                    {{ message }}
+                </div>
+            {% endif %}
         {% endfor %}
-        {% endif %}
+    {% endif %}
     </div>
 
     <div class="container">
@@ -271,7 +287,7 @@ margin-bottom:10px;
                         <label for="tag">ADD Tag:</label>
 
                         <div class="tag-container" id="tag-box">
-                            <input type="text" class="tag-input-value" id="tag-input"
+                            <input type="text" class="tag-input-value" id="tag-input" name="tag"
                                 placeholder="press & to see tags" />
                             <div class="tag-options-list">
                                 <div class="tag-options" data-value="classrepresentative">Class Representative</div>
@@ -287,9 +303,9 @@ margin-bottom:10px;
             </div>
             <input type="submit" value="Submit">
         </form>
-        <div class="footer">
+        {% comment %} <div class="footer">
             &copy; 2024 Student Management System
-        </div>
+        </div> {% endcomment %}
     </div>
 
 </div>
@@ -297,7 +313,7 @@ margin-bottom:10px;
 <!--start of Form-->
 
 <!--DESIGN FOR MOBILE VIEW-->
-<script>
+{% comment %} <script>
   document.addEventListener("DOMContentLoaded", function () {
     const tagInput = document.getElementById("tag-input");
     const tagOptionsList = document.querySelector(".tag-options-list");
@@ -452,5 +468,5 @@ margin-bottom:10px;
     }
 });
 
-</script>
+</script> {% endcomment %}
 {% endblock content %}

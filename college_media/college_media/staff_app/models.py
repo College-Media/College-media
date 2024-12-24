@@ -21,3 +21,12 @@ class Student(models.Model):
     def __str__(self):
         return self.roll_number
     
+    
+class Tag(models.Model):
+    tag_given_by=models.ForeignKey(Student,on_delete=models.CASCADE,related_name='tags_given')
+    tag_person=models.ForeignKey(Student,on_delete=models.CASCADE,related_name='tags_received')
+    tag=models.CharField(max_length=20,blank=True)
+    universal=models.BooleanField(default=False)
+    
+    def __str__(self):
+        return '{}-{}'.format(self.tag,self.tag_person)

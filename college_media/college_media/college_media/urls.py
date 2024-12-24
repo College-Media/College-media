@@ -27,6 +27,8 @@ urlpatterns = [
     path('search_student/',views.search_student,name="search_student"),
     path('delete/<int:post_id>', views.deletepost,name='deletepost'),
     path('add_post/',views.add_post,name="Add post"),
-    path('get_liked_posts/',views.get_liked_posts,name="get_liked_posts")
+    path('get_liked_posts/',views.get_liked_posts,name="get_liked_posts"),
+    path('tag_submit',views.tag_submit,name="tag_submit"),
+    
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
