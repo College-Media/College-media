@@ -30,3 +30,13 @@ class Tag(models.Model):
     
     def __str__(self):
         return '{}-{}'.format(self.tag,self.tag_person)
+class Main_Notifications(models.Model):
+    
+    sender=models.ForeignKey(Student,on_delete=models.CASCADE,related_name="sent_notification")
+    receiver=models.ForeignKey(Student,on_delete=models.CASCADE,related_name="received_notification")
+    is_read=models.BooleanField(default=False)
+    created_at=models.DateTimeField(auto_now_add=True)
+    content=models.TextField(blank=True)
+    
+    def __str__(self) :
+        return f"{self.sender}-{self.receiver}-{self.is_read}-{self.created_at}"

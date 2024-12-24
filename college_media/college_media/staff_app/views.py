@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect # type: ignore
 from django.contrib.auth import authenticate,login,logout # type: ignore
 from staff_app.models import *
 from user_app.models import *
+from chat_app.models import *
 from django.contrib import messages # type: ignore
 # Create your views here.
 from django.shortcuts import get_object_or_404
@@ -92,6 +93,9 @@ def approve_or_reject_post(request):
             post=get_object_or_404(Post,id=accept)
             post.is_approved=True
             post.save()
+            sender=get_object_or_404(Student,roll_number=post.student.roll_number)
+            reciver=get_object_or_404(Student,user=request.user)
+            Main_Notifications.objects.create(sender=sender,receiver=reciver,content="College Media:{} Post Accepted from staff post on{}".format(post.student.name,post.created_at))
             subject="College Media:Post Acceptence from staff post on{}".format(post.created_at)
             message="Your post is accepted "
             mail=post.student.email
@@ -99,6 +103,9 @@ def approve_or_reject_post(request):
             return redirect('/staff_dash/staff_post_request')
         elif reject:
             post=get_object_or_404(Post,id=reject)
+            sender=get_object_or_404(Student,roll_number=post.student.roll_number)
+            reciver=get_object_or_404(Student,user=request.user)
+            Main_Notifications.objects.create(sender=sender,receiver=reciver,content="College Media:{} Post Rejected from staff post on{}".format(post.student.name,post.created_at))
             subject="College Media:{} Post Rejected from staff post on{}".format(post.student.name,post.created_at)
             message="Your post is Rejected "
             mail=post.student.email

@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from staff_app.models import *
 from user_app.models import *
+from chat_app.models import *
 from django.http import JsonResponse #like 
 from django.contrib.auth.decorators import login_required #comments
 
@@ -273,3 +274,8 @@ def delete_profile_pic(request):
     else:
         return redirect("/staff_dash/staff_profile")
 
+def notification(request):
+    sender=get_object_or_404(Student,user=request.user)
+    notification=Main_Notifications.objects.filter(sender=sender,is_read=False)
+    print(notification)
+    return render(request,"user_pages/user_notification.html",{"notifications":notification})

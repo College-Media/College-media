@@ -4,3 +4,4 @@ from staff_app.models import *
 admin.site.register(CoustomUser)
 admin.site.register(Student)
 admin.site.register(Tag)
+admin.site.register(Main_Notifications)

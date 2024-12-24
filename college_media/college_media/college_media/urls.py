@@ -29,6 +29,7 @@ urlpatterns = [
     path('add_post/',views.add_post,name="Add post"),
     path('get_liked_posts/',views.get_liked_posts,name="get_liked_posts"),
     path('tag_submit',views.tag_submit,name="tag_submit"),
+    path('notification',views.notification,name='notification'),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
