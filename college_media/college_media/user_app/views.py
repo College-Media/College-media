@@ -87,3 +87,17 @@ def delete_tag(request, tag_id):
             print(tag.tag)
             messages.success(request,"tag deleted successfully",extra_tags="tag_deleted")
     return redirect('tags')  # Redirect back to the user's tag list
+def tag_messages(request):
+    roll_number=request.user
+    roll_number=Student.objects.get(user=roll_number) 
+    
+    tags=Tag.objects.filter(tag_given_by=roll_number)
+    unique_tags = {}
+    for tag in tags:
+        if tag.tag not in unique_tags:
+            unique_tags[tag.tag] = tag
+
+    # Convert unique tags dictionary to a list of Tag objects
+    unique_tags_list = list(unique_tags.values())
+    print(unique_tags_list)
+    return render(request, 'user_pages/tag-messages.html', {'tags': unique_tags_list})

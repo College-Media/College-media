@@ -30,8 +30,19 @@ class Tag(models.Model):
     
     def __str__(self):
         return '{}-{}'.format(self.tag,self.tag_person)
-class Main_Notifications(models.Model):
     
+    
+class TagMessage(models.Model):
+    sender = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='sent_messages')
+    tag = models.ForeignKey('Tag', on_delete=models.CASCADE, related_name='messages')
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Message from {self.sender.user} to tag {self.tag.tag}"
+    
+    
+class Main_Notifications(models.Model):
     sender=models.ForeignKey(Student,on_delete=models.CASCADE,related_name="sent_notification")
     receiver=models.ForeignKey(Student,on_delete=models.CASCADE,related_name="received_notification")
     is_read=models.BooleanField(default=False)
