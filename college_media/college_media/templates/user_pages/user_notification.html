@@ -369,6 +369,7 @@
       }
 {% endblock style %}
 {% block content %}
+
 <div id="webcrumbs">
     <div class="w-[800px] bg-white rounded-lg shadow-lg min-h-[600px]"> 
         <header class="px-6 py-4 border-b border-neutral-200"> 
@@ -383,4 +384,33 @@
             
                 </main> </div>
   </div>
+  <script>
+    // In your JavaScript file
+    const socket = new WebSocket('ws://localhost:8000/ws/messages/');
+  
+  socket.onmessage = function(e) {
+      const data = JSON.parse(e.data);
+      const sender = data.sender;
+      const message = data.message;
+      console.log(sender)
+      console.log(message)
+  
+      // Display the notification (you can modify this as per your UI)
+      const notificationList = document.getElementById('notification-list');
+      const newNotification = document.createElement('li');
+      newNotification.textContent = `New message from ${sender.}: ${message}`;
+      notificationList.appendChild(newNotification);
+  
+      // Optionally, mark the notification as unread/unseen until the user clicks on it
+  };
+  
+  socket.onopen = function(e) {
+      console.log("WebSocket connection established.");
+  };
+  
+  socket.onclose = function(e) {
+      console.log("WebSocket connection closed.");
+  };
+  
+</script>
 {% endblock content %}

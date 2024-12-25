@@ -2,11 +2,12 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer # type: ignore
 from django.contrib.auth import get_user_model
 from .models import  Message,Notification
-from staff_app .models import CoustomUser
+from staff_app .models import CoustomUser,Tag,TagMessage
 from asgiref.sync import sync_to_async
 from channels.db import database_sync_to_async # type: ignore
 User = get_user_model()
 from datetime import datetime
+from .models import Student, Tag, Message
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -125,5 +126,57 @@ class Notifications(AsyncWebsocketConsumer):
     #     print(message)
     #     print(receiver_id)
     #     print(timestamp)
-    #     print("-----------------------------------------------")
-        
+
+from django.core.exceptions import ObjectDoesNotExist
+
+class MessageConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+
+    async def disconnect(self, close_code):
+        pass
+
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        sender_id = data['sender_id']
+        message_content = data['message']
+        selected_tags = data['tags']
+        print("-----------------------------------------------------------------------")
+        print("Sender id: ", sender_id)
+        print("Selected Tags: ", selected_tags)
+        print("-----------------------------------------------------------------------------")
+
+        # Save the message asynchronously
+        sender = await sync_to_async(Student.objects.get)(roll_number=sender_id)
+
+        for tag_name in selected_tags:
+            try:
+                # Wrap the Tag.objects.get in sync_to_async
+                tag = await sync_to_async(Tag.objects.get)(tag=tag_name)
+                # Create the tag message asynchronously
+                await sync_to_async(TagMessage.objects.create)(sender=sender, tag=tag, message=message_content)
+                
+                # Notify all tag holders asynchronously
+                tag_holders = await sync_to_async(lambda: list(tag.tag_person.tags_received.all()))()  # Access related tags_received for tag_person
+
+                print("_____________________________________________")
+                print("Tag Holders")
+                print(tag_holders)
+                print("_____________________________________________")
+                for tag_holder in tag_holders:
+                    print("Tag Holder:", tag_holder)
+                    # Convert the Student object to a dictionary with relevant fields
+                    recipient = tag_holder.tag_person
+                    sender_data = {
+                        'roll_number': sender.roll_number,
+                        'name': sender.name
+                    }
+                    await self.send(json.dumps({
+                        'recipient': recipient.name,  # You can send other info like name, roll_number, etc.
+                        'sender': sender_data,         # Send a dictionary for sender
+                        'message': message_content
+                    }))
+            except Tag.DoesNotExist:
+                await self.send(json.dumps({'error': f"Tag '{tag_name}' does not exist."}))
+            except Student.DoesNotExist:
+                await self.send(json.dumps({'error': f"Student with roll number '{sender_id}' does not exist."}))
