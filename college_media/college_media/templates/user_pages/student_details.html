@@ -134,7 +134,7 @@ font-size: large;
 }
 
 .profile-image{
-    width: 100%;
+width: 100%;
 height: 100%;
 border-radius: 50%;
 background-size: cover;
@@ -195,7 +195,7 @@ cursor: pointer;
 h2 {
 margin-top: 0;
 }
-
+/*
 form {
 display: flex;
 flex-direction: column;
@@ -211,14 +211,13 @@ margin-right: auto;
 margin-left: 20%;
 margin-top: 10px;
 }
-
 input[type="text"] {
 /*margin:0 auto 10px 10px;*/
 padding: 10px;
 width: 60%;
 border: 1px solid #ddd;
 border-radius: 4px;
-}
+} */
 
 #overlay {
 display: none;
@@ -242,7 +241,7 @@ z-index: 1000;
 border-radius: 50%;
 }*/
 
-#overlay2 {
+<!-- #overlay2 {
 display: none;
 position: fixed;
 top: 0;
@@ -251,7 +250,7 @@ width: 100%;
 height: 100%;
 background-color: rgba(211, 208, 208, 0.5);
 z-index: 1002;
-}
+} -->
 
 #editProfileForm {
 display: none;
@@ -350,20 +349,20 @@ width: 85px;
 font-size: small;
 }
 .right-profile {
-    padding-left: 15%;
-    }
-    .right-profile ul{
-        margin-top:5px;
-    }
-    .right-profile img {
-    width: 80px;
-    height: 80px;
-    }
-    
-    .right-profile #profile-image-placeholder-large {
-    width: 80px;
-    height: 80px;
-    }
+padding-left: 15%;
+}
+.right-profile ul{
+margin-top:5px;
+}
+.right-profile img {
+width: 80px;
+height: 80px;
+}
+
+.right-profile #profile-image-placeholder-large {
+width: 80px;
+height: 80px;
+}
 }
 
 @media (max-width:600px) {
@@ -430,8 +429,8 @@ height:30%;
 min-height:150px;
 }
 .right-profile{
-    margin-left:1px;
-    padding-left:10px;
+margin-left:1px;
+padding-left:10px;
 }
 .mobile-bottom {
 margin: 100%;
@@ -626,11 +625,11 @@ top: 20px;
 .right-profile{
 position:relative;
 }
- .right-profile #profile-image-placeholder-large {
+.right-profile #profile-image-placeholder-large {
 margin-top:-5px;
 }
 .profile-image{
-    margin-top:0px;
+margin-top:0px;
 }
 }
 @media(max-width:450px){
@@ -665,138 +664,134 @@ padding-top:10px;
 row-gap:10px;
 }
 }
-label {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
-}
+
 .form-container {
-    background: #fff;
-    padding: 30px 40px;
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    width: 450px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+background: #fff;
+border-radius: 10px;
+box-shadow:inset -3px -3px 20px rgba(42, 174, 188, 0.4);
+display: flex;
+flex-direction: column;
+align-items: center;
+gap:10px;
+justify-content:center;
+margin:30px 15px;
+padding:10px;
+}
 
-  .form-container h1 {
-    font-size: 24px;
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .form-container label {
-    font-size: 14px;
-    font-weight: 600;
-    color: #555;
-    display: block;
-    margin-bottom: 5px;
-    width: 100%;
-  }
-
-  .form-container .input-group {
-    display: flex;
-    width: 40%;
-    align-items: center;
-  }
-
-  .form-container input[type="text"] {
-    width: 40%;
-    padding: 15px; /* Increased padding for larger input */
-    border: 1px solid rgb(42, 174, 188);
-    border-radius: 5px;
-    font-size: 16px; /* Larger font size */
-    margin-right: 10px;
-    box-sizing: border-box; /* Ensures the padding doesn't break layout */
-  }
 .tag-class{
+background: #fff; /* No gradient, pure white background */
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+z-index: 1001;
+max-width: 600px;
+height: 500px;
+font-size: medium;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background-color: #fff;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+width: 350px;
+text-align: center;
+border-radius: 8px;
+border:1px solid rgba(42, 174, 188, 0.4);
+display:none;
+}
+.form-container form{
+position:relative;
+}
+.form-container button {
+background: rgb(42, 174, 188);
+padding:10px;
+color: #fff;
+font-size: 16px;
+font-weight: 600;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: background 0.3s ease;
+}
 
- font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: #fff; /* No gradient, pure white background */
-    }
+.form-container button:hover {
+background: #2575fc;
+}
 
-  .form-container button {
-    padding: 12px 20px;
-    background: rgb(42, 174, 188);
-    color: #fff;
-    font-size: 16px;
-    font-weight: 600;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
+.form-container .footer {
+margin-top: 20px;
+font-size: 12px;
+color: #555;
+}
 
-  .form-container button:hover {
-    background: #2575fc;
-  }
+.form-container .footer a {
+color: rgb(42, 174, 188);
+text-decoration: none;
+font-weight: 600;
+}
 
-  .form-container .footer {
-    margin-top: 20px;
-    font-size: 12px;
-    text-align: center;
-    color: #555;
-  }
+.form-container .footer a:hover {
+text-decoration: underline;
+}
+.input-group{
+display:flex;
+flex-direction:column;
+align-items:start;
+}
+#img-in-tags{
+width:100px;
+padding:20px;
+heigh:100px;
+margin:10px;
+border-radius:50%;
+border:2px solid rgba(42, 174, 188,0.5);
+}
+#img-in-tags img{
+width: 100%;
+height: 100%;
+border-radius: 50%;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+}
+.message {
+margin: 10px;
+position: absolute;
+top: 0;
+right: 0;
+flex-grow: 1;
+padding: 0 10px;
+justify-content: center;
+display: flex;
+flex-direction: row;
+align-items: center;
+column-gap: 10px;
+height: 50px;
+color: rgb(252, 252, 252);
+font-weight: bold;
+max-width: 300px;
+background-color: rgb(16, 108, 33);
 
-  .form-container .footer a {
-    color: rgb(42, 174, 188);
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  .form-container .footer a:hover {
-    text-decoration: underline;
-  }
-
-  .message {
-    margin: 10px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    flex-grow: 1;
-    padding: 0 10px;
-    justify-content: center;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: 10px;
-    height: 50px;
-    color: rgb(252, 252, 252);
-    font-weight: bold;
-    max-width: 300px;
-    background-color: rgb(16, 108, 33);
-
-    border-radius: 10px;
+border-radius: 10px;
 }
 
 .message-red {
-    margin: 10px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    flex-grow: 1;
-    padding: 0 10px;
-    justify-content: center;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: 10px;
-    height: 50px;
-    color: rgb(252, 252, 252);
-    font-weight: bold;
-    max-width: 300px;
-    background-color: rgb(251, 39, 46);
+margin: 10px;
+position: absolute;
+top: 0;
+right: 0;
+flex-grow: 1;
+padding: 0 10px;
+justify-content: center;
+display: flex;
+flex-direction: row;
+align-items: center;
+column-gap: 10px;
+height: 50px;
+color: rgb(252, 252, 252);
+font-weight: bold;
+max-width: 300px;
+background-color: rgb(251, 39, 46);
 
-    border-radius: 10px;
+border-radius: 10px;
 }
 
 {% endblock style %}
@@ -804,107 +799,122 @@ label {
 {% block content %}
 
 {% if messages %}
-    {% for message in messages %}
-    {% if 'tag_exists' in message.tags %}
-    <div class="message-red">
-        <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960"
-                width="30px" fill="#FFFFFF">
-                <path
-                    d="m338-290 142-142 142 142 48-48-142-142 142-142-48-48-142 142-142-142-48 48 142 142-142 142 48 48ZM479.68-59q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
-            </svg></div>
-        <div class="message-text">{{message}}</div>
-    </div>
-    {% elif 'tag_added' in message.tags %}
-    <div class="message">
-        <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960"
-                width="30px" fill="white">
-                <path
-                    d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
-            </svg></div>
-        <div class="message-text">{{message}}</div>
-    </div>
-    {% endif %}
-    {% endfor %}
-    {% endif %}
+{% for message in messages %}
+{% if 'tag_exists' in message.tags %}
+<div class="message-red">
+  <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px"
+      fill="#FFFFFF">
+      <path
+        d="m338-290 142-142 142 142 48-48-142-142 142-142-48-48-142 142-142-142-48 48 142 142-142 142 48 48ZM479.68-59q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+    </svg></div>
+  <div class="message-text">{{message}}</div>
+</div>
+{% elif 'tag_added' in message.tags %}
+<div class="message">
+  <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px"
+      fill="white">
+      <path
+        d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+    </svg></div>
+  <div class="message-text">{{message}}</div>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+<div id="overlay"></div>
 <div class="right">
-    <div class="right-top">
-        <div class="right-profile">
+  <div class="right-top">
+    <div class="right-profile">
 
-            {% if student_info.profile_image %}
-           <div id="profile-image-placeholder-large"><img class="profile-image" src="{{ student_info.profile_image.url }}">
-            </img></div> 
-            {% else %}
-            <div id="profile-image-placeholder-large">
-                {{ student_info.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
-            </div>
+      {% if student_info.profile_image %}
+      <div id="profile-image-placeholder-large"><img class="profile-image" src="{{ student_info.profile_image.url }}">
+        </img></div>
+      {% else %}
+      <div id="profile-image-placeholder-large">
+        {{ student_info.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
+      </div>
 
-            {% endif %}
-            <ul>
+      {% endif %}
+      <ul>
 
-                <li><label>{{ student_info.email}}</label></li>
-                <li><label>{{ student_info.name}}</label></li>
-                <!-- <li><label>{{ student_info.class}}</label></li> -->
-                <li><label>{{ student_info.roll_number}}</label></li>
+        <li><label>{{ student_info.email}}</label></li>
+        <li><label>{{ student_info.name}}</label></li>
+        <!-- <li><label>{{ student_info.class}}</label></li> -->
+        <li><label>{{ student_info.roll_number}}</label></li>
 
-            </ul>
-            <div class="chat-icon1" onclick="window.location='{% url 'chat' student_info.roll_number %}'">
+      </ul>
+      <div class="chat-icon1" onclick="window.location='{% url 'chat' student_info.roll_number %}'">
 
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                    fill="#5f6368">
-                    <path
-                        d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
-                </svg>
-                <div>chat</div>
-            </div>
-            <div>
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368">
+          <path
+            d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z" />
+        </svg>
+        <div>chat</div>
+      </div>
+      <div>
 
-            </div>
-        </div>
-
-    </div>
-    <div class="tag-class">
-    <div class="form-container">
-        <h1>Tag a Person</h1>
-        <form action="/tag_submit" method="POST">
-            {% csrf_token %}
-          <label for="tag">Enter Tag:</label>
-          <div class="input-group">
-            <input type="text" id="tag" name="tag" placeholder="E.g., Awesome Leader" required>
-            <button type="submit" name="tag_receiver" value={{student_info.roll_number}}>Add Tag</button>
-          </div>
-        </form>
-        <div class="footer">
-          <p>Want to view tags? <a href="/tags-list">Click here</a></p>
-        </div>
       </div>
     </div>
-    <div class="right-bottom">
-        {% for post in posts %}
-        {% if post %}
-        {% if post.is_approved %}
-        <div class="post-in-stu">
-            <div class="image-container">
-                <img src="{{ post.image.url }}" alt="Posts">
-            </div>
-            {% if post.content %}
-            <div class="disc">{{post.content}}</div>
-            {% endif %}
+
+  </div>
+  <div class="tag-class">
+    <h3>Tag a Person</h3>
+    <div class="form-container">
+
+
+      <div id="img-in-tags">
+        <img src="{% static 'images/turtle.png' %}" alt="Turtoise Image">
+      </div>
+
+      <form action="/tag_submit" method="POST">
+        {% csrf_token %}
+
+        <div class="input-group">
+          <label for="tag">Enter Tag:</label>
+          <input type="text" id="tag" name="tag" placeholder="E.g., Awesome Leader" required>
+          <button type="submit" name="tag_receiver" value={{student_info.roll_number}}>Add Tag</button>
         </div>
-        {% endif %}
-        {% else %}
-        <center>
-            <div>No Post</div>
-        </center>
-
-
-
-        {% endif %}
-
-
-        {% endfor %}
+      </form>
+      <div class="footer">
+        <p>Want to view tags? <a href="/tags-list">Click here</a></p>
+      </div>
     </div>
+  </div>
+  <div class="right-bottom">
+    {% for post in posts %}
+    {% if post %}
+    {% if post.is_approved %}
+    <div class="post-in-stu">
+      <div class="image-container">
+        <img src="{{ post.image.url }}" alt="Posts">
+      </div>
+      {% if post.content %}
+      <div class="disc">{{post.content}}</div>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% else %}
+    <center>
+      <div>No Post</div>
+    </center>
+
+
+
+    {% endif %}
+
+
+    {% endfor %}
+  </div>
 </div>
 <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.editBtn').forEach(button => {
+      button.addEventListener('click', function () {
+        document.getElementById('editProfileForm').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
 
+      });
+    });
+  });
 </script>
 {% endblock content %}
