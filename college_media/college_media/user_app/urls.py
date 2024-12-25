@@ -8,7 +8,8 @@ urlpatterns = [
     path("user_profile",views.user_profile,name="user_profile"),
     path("tags",views.tags,name="tags"),
     path('tag/delete/<int:tag_id>/', views.delete_tag, name='delete_tag'),
-    path('tag-messages',views.tag_messages,name="tag_messages"),
+    path('tag_messages',views.tag_messages,name="tag_messages"),
+    path('tag_messages/<str:tag>/', views.tag_messages_load, name='tag_messages_load'), 
     
     
 ]
