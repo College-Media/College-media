@@ -131,52 +131,71 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class MessageConsumer(AsyncWebsocketConsumer):
     async def connect(self):
+        # Group name can be unique per chat room or global for all
+        self.group_name = "notifications"
+
+        # Add user to the group
+        await self.channel_layer.group_add(
+            self.group_name,
+            self.channel_name
+        )
         await self.accept()
 
     async def disconnect(self, close_code):
-        pass
-
+        # Remove user from the group
+            await self.channel_layer.group_discard(
+            self.group_name,
+            self.channel_name
+        )
     async def receive(self, text_data):
         data = json.loads(text_data)
         sender_id = data['sender_id']
         message_content = data['message']
         selected_tags = data['tags']
-        print("-----------------------------------------------------------------------")
-        print("Sender id: ", sender_id)
-        print("Selected Tags: ", selected_tags)
-        print("-----------------------------------------------------------------------------")
 
-        # Save the message asynchronously
         sender = await sync_to_async(Student.objects.get)(roll_number=sender_id)
 
         for tag_name in selected_tags:
             try:
-                # Wrap the Tag.objects.get in sync_to_async
                 tag = await sync_to_async(Tag.objects.get)(tag=tag_name)
-                # Create the tag message asynchronously
-                await sync_to_async(TagMessage.objects.create)(sender=sender, tag=tag, message=message_content)
-                
-                # Notify all tag holders asynchronously
-                tag_holders = await sync_to_async(lambda: list(tag.tag_person.tags_received.all()))()  # Access related tags_received for tag_person
 
-                print("_____________________________________________")
-                print("Tag Holders")
-                print(tag_holders)
-                print("_____________________________________________")
+                # Save the message in the database
+                await sync_to_async(TagMessage.objects.create)(
+                    sender=sender, tag=tag, message=message_content
+                )
+
+                # Get all tag holders
+                tag_holders = await sync_to_async(lambda: list(tag.tag_person.tags_received.all()))()
+
                 for tag_holder in tag_holders:
-                    print("Tag Holder:", tag_holder)
-                    # Convert the Student object to a dictionary with relevant fields
                     recipient = tag_holder.tag_person
                     sender_data = {
                         'roll_number': sender.roll_number,
-                        'name': sender.name
+                        'name': sender.name,
                     }
-                    await self.send(json.dumps({
-                        'recipient': recipient.name,  # You can send other info like name, roll_number, etc.
-                        'sender': sender_data,         # Send a dictionary for sender
-                        'message': message_content
-                    }))
+                    await self.channel_layer.group_send(
+                        self.group_name,
+                        {
+                            'type': 'broadcast_message',
+                            'recipient_name': recipient.name,
+                            'sender_data': sender_data,
+                            'message': message_content,
+                        },
+                    )
+
             except Tag.DoesNotExist:
                 await self.send(json.dumps({'error': f"Tag '{tag_name}' does not exist."}))
             except Student.DoesNotExist:
                 await self.send(json.dumps({'error': f"Student with roll number '{sender_id}' does not exist."}))
+
+    async def broadcast_message(self, event):
+        recipient_name = event['recipient_name']
+        sender_data = event['sender_data']
+        message = event['message']
+
+        # Send the message to WebSocket
+        await self.send(text_data=json.dumps({
+            'recipient': recipient_name,
+            'sender': sender_data,
+            'message': message,
+        }))
