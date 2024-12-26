@@ -132,14 +132,14 @@ html {
                         <path
                             d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z" />
                     </svg>
-                    <div id="post-menu-table">
-                        <ul>
-                            <li><a href="#" style="text-decoration: none;color:red">Report</a></li>
-                            <li class="cancelBtnHome" id="cancel-menu-display" onclick="cancel()">Cancel</li>
-                        </ul>
-                    </div>
+                    
                 </div>
-
+                <div id="post-menu-table">
+                    <ul>
+                        <li><a href="#" style="text-decoration: none;color:red">Report</a></li>
+                        <li class="cancelBtnHome" id="cancel-menu-display" >Cancel</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -290,7 +290,7 @@ html {
     // Poll every 2 seconds to update like counts
     setInterval(updateLikeCounts, 2000);
     function display() {
-        var menuTable = document.querySelector("#post-menu-table");
+        var menuTable = document.getElementById("post-menu-table");
         var rightContainer = document.querySelector(".right");
         menuTable.style.display = "block";
         document.getElementById('overlay').style.display = 'block';
@@ -304,13 +304,18 @@ html {
                document.getElementById('overlay').style='none';
         });
     }
-    function cancel() {
-        var menuTable = document.querySelector("#post-menu-table");
-        var rightContainer = document.querySelector(".right");
-        menuTable.style.display = "none";
-        document.getElementById('overlay').style.display = 'none';
-        rightContainer.style.overflow = "auto";
-    }
+    // function cancel() {
+    //     var menuTable = document.querySelector("#post-menu-table");
+    //     var rightContainer = document.querySelector(".right");
+    //     menuTable.style.display = "none";
+    //     document.getElementById('overlay').style.display = 'none';
+    //     rightContainer.style.overflow = "auto";
+    // }
+
+// function display(){
+//     const 
+// }
+
 
     //comments
 

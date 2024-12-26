@@ -96,9 +96,11 @@ width: calc(100% - 120px); /* Fill remaining space */
 overflow:hidden;
 margin-top:0px;
 margin-bottom:0px;
+gap:4px;
 }
 
 .right-top {
+margin-left: 237px;
 background-color: rgb(248, 248, 248);
 width: 100%;
 height: 30%;
@@ -126,13 +128,24 @@ align-items: start;
 flex-direction: column;
 text-decoration: none;
 list-style-type: none;
-
+margin:0;
 }
 
 .right-profile li:first-child {
 font-size: large;
 }
-
+#added-tags{
+color: rgb(42, 174, 188);
+text-decoration:underline;
+font-style:italic;
+}
+#add-tag-btn{
+color: rgb(42, 174, 188);
+}
+#add-tag-btn:hover{
+text-decoration:underline;
+cursor:pointer;
+}
 .profile-image{
 width: 100%;
 height: 100%;
@@ -141,12 +154,11 @@ background-size: cover;
 background-position: center;
 background-repeat: no-repeat;
 }
+
 #profile-image-edit {
 cursor: pointer;
 border-radius: 50%;
-
 border: 1px solid rgba(144, 138, 138, 0.678);
-<!-- min-width: 90px; -->
 width: 90px;
 height: 90px;
 margin: 10px 2px;
@@ -297,17 +309,14 @@ display: none;
 width: 100%;
 cursor: pointer;
 position: fixed;
-
 border-top-left-radius: 10px;
 border-top-right-radius: 10px;
 background-color: white;
 bottom: 0;
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-;
 z-index: 1003;
 margin-left: 0;
 transition: height 0.5s ease-out;
-
 }
 
 #profile-edit-pic-table ul {
@@ -425,6 +434,7 @@ width: 20px;
 font-size:12px;
 }
 .right-top{
+
 height:30%;
 min-height:150px;
 }
@@ -541,16 +551,15 @@ background-color:rgba(10, 136, 150, 0.997);
 fill: white;
 }
 .right-bottom {
-margin-left:300px;
+margin-left:237px;
 display: flex;
-padding: 10px 15px 10px 10px;
 justify-content: start;
 align-items: flex-start;
 width: 100%;
 flex-wrap:wrap;
 height: 100%;
 flex-direction:row;
-gap:10px;
+gap:5px;
 overflow-y:auto;
 flex-grow:1;
 }
@@ -558,8 +567,8 @@ flex-grow:1;
 .image-container {
 width: 100%;
 background-color: #cccacae6;
-height: 80%;
-border-radius: 10px;
+height: 100%;
+border-radius: 0px;
 box-shadow: 0 4px 8px rgba(61, 59, 59, 0.2);
 transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -567,29 +576,28 @@ transition: transform 0.3s ease, box-shadow 0.3s ease;
 .image-container img {
 width: 100%;
 height: 100%;
-border-radius:10px;
 }
 
 .post-in-stu{
 display: flex;
 background-color:rgb(247, 247, 247);
 flex-direction: column;
-border-radius:10px;
-gap: 8px;
+gap: 3px;
 flex-wrap: wrap;
-width:300px;
-max-width:300px;
-max-height:400px;
-height:300px;
+width:340px;
+max-width:340px;
+max-height:450px;
+height:450px;
 margin-top: 0;
-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.081), 0 1px 4px 0 rgba(0, 0, 0, 0.053);
 }
+
 .disc{
 padding:0px 10px;
 width:100%;
 font-size:12px;
 margin-top:10px;
 }
+
 @media(max-width:1057px){
 .right-profile{
 padding-left:10%;
@@ -736,6 +744,10 @@ display:flex;
 flex-direction:column;
 align-items:start;
 }
+.input-group input{
+  padding:15px;
+  margin-bottom:35px;
+ }
 #img-in-tags{
 width:100px;
 padding:20px;
@@ -769,7 +781,6 @@ color: rgb(252, 252, 252);
 font-weight: bold;
 max-width: 300px;
 background-color: rgb(16, 108, 33);
-
 border-radius: 10px;
 }
 
@@ -779,7 +790,7 @@ position: absolute;
 top: 0;
 right: 0;
 flex-grow: 1;
-padding: 0 10px;
+padding: 0px 90px 0px 10px;
 justify-content: center;
 display: flex;
 flex-direction: row;
@@ -790,10 +801,25 @@ color: rgb(252, 252, 252);
 font-weight: bold;
 max-width: 300px;
 background-color: rgb(251, 39, 46);
-
 border-radius: 10px;
 }
 
+.message-red svg, .message svg{
+fill:white;
+}
+.post-in-stu-profile{
+  margin-right:50px;
+  display: flex;
+justify-content: start;
+align-items: flex-start;
+width: 100%;
+flex-wrap:wrap;
+height: 100%;
+flex-direction:row;
+gap:5px;
+overflow-y:auto;
+flex-grow:1;
+}
 {% endblock style %}
 
 {% block content %}
@@ -802,26 +828,28 @@ border-radius: 10px;
 {% for message in messages %}
 {% if 'tag_exists' in message.tags %}
 <div class="message-red">
-  <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px"
-      fill="#FFFFFF">
-      <path
-        d="m338-290 142-142 142 142 48-48-142-142 142-142-48-48-142 142-142-142-48 48 142 142-142 142 48 48ZM479.68-59q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
-    </svg></div>
+  <!-- <div class="message-icon"> -->
+  <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#FFFFFF">
+    <path
+      d="m338-290 142-142 142 142 48-48-142-142 142-142-48-48-142 142-142-142-48 48 142 142-142 142 48 48ZM479.68-59q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+  </svg>
+  <!-- </div> -->
   <div class="message-text">{{message}}</div>
 </div>
 {% elif 'tag_added' in message.tags %}
 <div class="message">
-  <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px"
-      fill="white">
-      <path
-        d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
-    </svg></div>
+  <!-- <div class="message-icon"> -->
+  <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="white">
+    <path
+      d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+  </svg>
+  <!-- </div> -->
   <div class="message-text">{{message}}</div>
 </div>
 {% endif %}
 {% endfor %}
 {% endif %}
-<div id="overlay"></div>
+<!-- <div id="overlay"></div> -->
 <div class="right">
   <div class="right-top">
     <div class="right-profile">
@@ -839,8 +867,13 @@ border-radius: 10px;
 
         <li><label>{{ student_info.email}}</label></li>
         <li><label>{{ student_info.name}}</label></li>
-        <!-- <li><label>{{ student_info.class}}</label></li> -->
         <li><label>{{ student_info.roll_number}}</label></li>
+        <li>
+          <div id="added-tags">&dhosth</div>
+        </li>
+        <li>
+          <div id="add-tag-btn">Add Tag</div>
+        </li>
 
       </ul>
       <div class="chat-icon1" onclick="window.location='{% url 'chat' student_info.roll_number %}'">
@@ -857,7 +890,7 @@ border-radius: 10px;
     </div>
 
   </div>
-  <div class="tag-class">
+  <div class="tag-class" id="tag-add-table">
     <h3>Tag a Person</h3>
     <div class="form-container">
 
@@ -881,19 +914,21 @@ border-radius: 10px;
     </div>
   </div>
   <div class="right-bottom">
-    {% for post in posts %}
-    {% if post %}
-    {% if post.is_approved %}
-    <div class="post-in-stu">
-      <div class="image-container">
-        <img src="{{ post.image.url }}" alt="Posts">
+    <div class="post-in-stu-profile">
+      {% for post in posts %}
+      {% if post %}
+      {% if post.is_approved %}
+      <div class="post-in-stu">
+        <div class="image-container">
+          <img src="{{ post.image.url }}" alt="Posts">
+        </div>
+        <!-- {% if post.content %}
+        <div class="disc">{{post.content}}</div>
+        {% endif %} -->
       </div>
-      {% if post.content %}
-      <div class="disc">{{post.content}}</div>
       {% endif %}
+      {% else %}
     </div>
-    {% endif %}
-    {% else %}
     <center>
       <div>No Post</div>
     </center>
@@ -908,13 +943,17 @@ border-radius: 10px;
 </div>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.editBtn').forEach(button => {
-      button.addEventListener('click', function () {
-        document.getElementById('editProfileForm').style.display = 'block';
-        document.getElementById('overlay').style.display = 'block';
-
-      });
+    const tag = document.getElementById('tag-add-table');
+    const over = document.getElementById('overlay');
+    const addTag = document.getElementById('add-tag-btn');
+    addTag.addEventListener('click', function () {
+      tag.style.display = 'block';
+      over.style.display = 'block';
     });
+    over.addEventListener('click', function () {
+      tag.style.display = 'none';
+      over.style.display = 'none';
+    })
   });
 </script>
 {% endblock content %}
