@@ -9,7 +9,6 @@ Notification for students- Required or not ?
 
 
 http://127.0.0.1:8000/student_details/20232MCA0191/
-change posts width to occupy entire div if description not given
-profile picture is not properly set.
 
-if tag is added to a user whether it as to notify that user or not.
+search student error in redirecting page 
+Profile click redirection in home page

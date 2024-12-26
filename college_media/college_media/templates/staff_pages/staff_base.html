@@ -150,7 +150,7 @@
             margin: auto;
             display: flex;
             flex-direction: column;
-            row-gap: 4%;
+            row-gap: 2%;
             border-radius: 2%;
             border-bottom: 1px solid rgba(182, 180, 180, 0.505);
             max-width: 100%;
@@ -193,48 +193,30 @@
             cursor: pointer;
         }
 
-        #post-menu-table {
-            display: none;
-            margin: auto;
-            position: fixed;
-            top: 50%;
-            left: 58%;
-            transform: translate(-50%, -50%);
-            z-index: 1001;
-            max-width: 600px;
-            height: 160px;
-            border: 1px solid #ddd;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 350px;
-            text-align: center;
-            border-radius: 8px;
-        }
-
-        #post-menu-table ul {
+        .post-menu-table ul {
             list-style-type: none;
             padding: 2px;
             margin: 0;
             text-align: center;
         }
 
-        #post-menu-table li {
+        .post-menu-table li {
             margin: auto;
-            border-top: 1px solid rgb(164, 161, 161);
+            border-top: 1px solid rgb(42, 174, 188);
             color: rgb(72, 70, 70);
             font-size: medium;
             font-weight: bold;
             padding: 20px;
         }
 
-        #post-menu-table li:hover {
+        .post-menu-table li:hover {
             cursor: pointer;
         }
 
-        #post-menu-table li:first-child {
+        .post-menu-table li:first-child {
             border: none;
             color: rgb(171, 17, 17);
-            border: 2px solid rgb(42, 174, 188);
+            /* border: 2px solid rgb(42, 174, 188); */
         }
 
         .post-body {
@@ -254,14 +236,12 @@
         }
 
         .post-foot {
-            margin: 4px;
-            padding-bottom: 5px;
             display: flex;
             flex-direction: row;
         }
 
        .comment, .post-like {
-            margin: 2px;
+            margin: 2px 3px;
             display: flex;
             flex-direction: column;
             align-items: start;

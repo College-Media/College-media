@@ -220,7 +220,7 @@
             overflow: hidden;
         }
 
-        #post-menu-table {
+        .post-menu-table {
             max-width: 125px;
             position: absolute;
             /* right: 0; */
@@ -232,30 +232,29 @@
             background-color: rgba(255, 255, 255, 0.908);
         }
 
-        #post-menu-table ul {
+        .post-menu-table ul {
             list-style-type: none;
             padding: 2px;
             margin: 0;
             text-align: center;
         }
 
-        #post-menu-table li {
+        .post-menu-table li {
             margin: auto;
-            border-top: 1px solid rgb(164, 161, 161);
+            border-top: 1px solid rgb(42, 174, 188);
             color: rgb(72, 70, 70);
             font-size: medium;
             font-weight: bold;
             padding: 20px;
         }
 
-        #post-menu-table li:hover {
+        .post-menu-table li:hover {
             cursor: pointer;
         }
 
-        #post-menu-table li:first-child {
+        .post-menu-table li:first-child {
             border: none;
             color: rgb(171, 17, 17);
-            border: 2px solid rgb(42, 174, 188);
         }
 
         .post-body {
@@ -283,9 +282,9 @@
 
         .comment,
         .post-like {
-            /* margin: 2px; */
+            margin: 2px 3px;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             align-items: start;
             max-width: 50%;
            column-gap:4px;

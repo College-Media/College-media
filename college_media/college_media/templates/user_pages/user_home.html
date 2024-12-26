@@ -1,5 +1,44 @@
 {% extends "user_pages/base.html" %}
 {% block style %}
+
+/* Ensure the post-menu is a relatively positioned container */
+.post-menu {
+    position: relative; /* Relative positioning to make the table position absolute within it */
+    display: inline-block; /* Ensures it stays within the post bounds */
+}
+
+/* Initially hide the menu */
+.post-menu-table {
+    display: none;
+    position: absolute;
+    top: 67%;
+    left: -99px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 150px; /* Adjust width based on the content */
+    z-index: 1000; /* Ensure it's on top of other elements */
+    <!-- padding: 10px 0; -->
+}
+
+
+
+.post-menu-table ul li {
+    padding: 16px 10px;
+    cursor: pointer;
+}
+
+.post-menu-table ul :hover {
+    background-color: #f5f5f5;
+}
+
+/* Show the menu when the post-menu-icon is clicked */
+.post-menu .post-menu-icon:active + .post-menu-table,
+.post-menu .post-menu-table:hover {
+    display: block;
+}
+
+
 #profile-image-placeholder {
 width: 30px;
 height: 30px;
@@ -93,6 +132,10 @@ column-gap:10px;
 .form-in-comment svg{
     fill:white;
 }
+.disc-in-home{
+    padding-left:5px;
+    padding-bottom:5px;
+}
 @media(max-width:600px){
     #comments-display{
         height:500px;
@@ -113,6 +156,7 @@ html {
     {% for post in posts %}
     {% if post.is_approved %}
     <div class="post" id="post-{{ post.id }}">
+       
         <div class="post-head">
             <div class="post-profile" onclick="checkAndRedirect('{{ post.student.roll_number }}', '{{ context.name }}', '{{ post.student.name }}','{{post.student.profile_image}}')">
                 {% if post.student.profile_image %}
@@ -126,7 +170,7 @@ html {
                 {% endif %}
             </div>
             <div class="post-menu">
-                <div class="post-menu-icon" onclick="display()">
+                <div class="post-menu-icon" onclick="display({{ post.id }})">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#5f6368">
                         <path
@@ -134,10 +178,10 @@ html {
                     </svg>
                     
                 </div>
-                <div id="post-menu-table">
+                <div id="post-menu-table-{{ post.id }}" class="post-menu-table">
                     <ul>
                         <li><a href="#" style="text-decoration: none;color:red">Report</a></li>
-                        <li class="cancelBtnHome" id="cancel-menu-display" >Cancel</li>
+                        <li class="cancelBtnHome" id="cancel-menu-display" onclick="closeMenu({{ post.id }})">Cancel</li>
                     </ul>
                 </div>
             </div>
@@ -153,7 +197,7 @@ html {
                     <path
                         d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
                 </svg>
-                <span id="like-count-{{ post.id }}">{{ post.likes.count }}</span> Likes
+                <div><span id="like-count-{{ post.id }}">{{ post.likes.count }}</span><span> Likes</span></div>
 
 
             </div>
@@ -289,32 +333,36 @@ html {
 
     // Poll every 2 seconds to update like counts
     setInterval(updateLikeCounts, 2000);
-    function display() {
-        var menuTable = document.getElementById("post-menu-table");
-        var rightContainer = document.querySelector(".right");
-        menuTable.style.display = "block";
-        document.getElementById('overlay').style.display = 'block';
-        rightContainer.style.overflow = "hidden";
-        document.getElementById('overlay').addEventListener('click',function(){
-               menuTable.style.display='none';
-               document.getElementById('overlay').style='none';
-        });
-        document.getElementById('cancel-menu-display').addEventListener('click',function(){
-               menuTable.style.display='none';
-               document.getElementById('overlay').style='none';
-        });
-    }
-    // function cancel() {
-    //     var menuTable = document.querySelector("#post-menu-table");
-    //     var rightContainer = document.querySelector(".right");
-    //     menuTable.style.display = "none";
-    //     document.getElementById('overlay').style.display = 'none';
-    //     rightContainer.style.overflow = "auto";
-    // }
 
-// function display(){
-//     const 
-// }
+
+    function display(postId) {
+    // Hide all menus
+    const allMenus = document.querySelectorAll('.post-menu-table');
+    allMenus.forEach(menu => menu.style.display = 'none');
+
+    // Show the specific menu for the clicked post
+    const menuTable = document.getElementById(`post-menu-table-${postId}`);
+    menuTable.style.display = "block";
+
+    // Show the overlay
+    // document.getElementById('overlay').style.display = 'block';
+    
+    // Prevent scrolling
+    const rightContainer = document.querySelector(".right");
+    rightContainer.style.overflow = "hidden";
+
+    // Add event listener to close the menu when clicking the overlay
+    document.getElementById('overlay').addEventListener('click', function () {
+        menuTable.style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+        rightContainer.style.overflow = "auto";
+    });
+}
+function closeMenu(postId) {
+    const menuTable = document.getElementById(`post-menu-table-${postId}`);
+    menuTable.style.display = 'none';
+    // document.getElementById('overlay').style.display = 'none';
+}
 
 
     //comments
