@@ -17,7 +17,7 @@
     height: 80vh;
     background-color: #fff;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 15px rgb(31 135 146);
     overflow: hidden;
 }
 
@@ -25,7 +25,8 @@
 .chat-list {
     width: 30%;
     border-right: 1px solid #e0e0e0;
-    background-color: #ffffff;
+    background-color:rgb(213 218 219);
+    border-top-right-radius: 10px;
 }
 
 .chat-list .chat-header {
@@ -33,9 +34,10 @@
     font-size: 1.5em;
     font-weight: bold;
     text-align: center;
-    background-color: #f7f7f7;
+    background-color: rgb(42, 174, 188);
     color: #333;
     border-bottom: 1px solid #e0e0e0;
+    border-top-right-radius: 10px;
 }
 
 .chat-list ul {
@@ -72,6 +74,7 @@
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
+    border:1px solid #bfb5b5;
 }
 
 .user-info {
@@ -85,7 +88,7 @@
 }
 
 .user-info .last-message {
-    color: #888;
+    color: #606060;
     font-size: 0.9em;
 }
 
@@ -101,7 +104,7 @@
     padding: 15px;
     font-size: 1.5em;
     font-weight: bold;
-    background-color: #ffffff;
+    background-color: rgb(229 229 229);
     text-align: center;
     border-bottom: 1px solid #e0e0e0;
     color: #333;
@@ -147,7 +150,7 @@
     border-radius:27px;
     padding-bottom:3px;
     padding-left:20px;
-    padding-right:10px;
+    padding-right:20px;
     text-align: right;
     margin-left: auto;
     animation: fadeInRight 0.3s ease-in-out;
@@ -209,6 +212,7 @@
     display: flex;
     align-items: center;
     padding: 15px;
+    gap:10px;
     border-top: 1px solid #e0e0e0;
     background-color: #ffffff;
 }
@@ -219,7 +223,7 @@
     border: 1px solid #ddd;
     border-radius: 20px;
     background-color: #f1f1f1;
-    margin-right: 10px;
+    margin: 0px;
     outline: none;
 }
 
@@ -227,7 +231,7 @@
     padding: 10px;
     border: none;
     border-radius: 50%;
-    background-color: #0095f6;
+    background-color: rgb(42, 174, 188);
     color: white;
     cursor: pointer;
     transition: background 0.3s;
@@ -237,13 +241,13 @@
     background-color: #007bb5;
 }
 .chat-invite {
-            background-color: #3f51b5;
+            background-color: rgb(42, 174, 188);
             color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 20px;
-            padding: 20px 30px;
+            padding: 5px 30px;
             border-radius: 30px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             cursor: pointer;
@@ -266,8 +270,8 @@
             height: 40px;
         }
         #profile-image-placeholder {
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             background-color: #ccc;
             color: #fff;
             display: flex;
@@ -275,6 +279,7 @@
             justify-content: center;
             font-size: 14px;
             border-radius: 50%;
+            margin-right: 10px;
             border: 1px solid black;
             font-weight: bold;
             cursor: pointer;

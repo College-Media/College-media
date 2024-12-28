@@ -2,6 +2,12 @@
 {% load static %}
 {% block style %}
 /* Container for the Accept/Reject buttons */
+.post{
+    height:570px;
+}
+.post-body{
+    height:450px;
+}
 .no-posts{
 align-items:center;
 color:rgba(21, 121, 132, 0.997);
@@ -111,7 +117,7 @@ cursor:pointer;
                 {% endif %}
 
             </div>
-            <div class="post-menu">
+            <!-- <div class="post-menu">
                 <div class="post-menu-icon" onclick="fun1()">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#5f6368">
@@ -125,7 +131,7 @@ cursor:pointer;
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- Post Image -->
         <img src="{{post.image.url}}" class="post-body" alt="Post Image">
