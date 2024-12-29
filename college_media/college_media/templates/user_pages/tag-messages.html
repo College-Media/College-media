@@ -391,10 +391,10 @@
             const data = JSON.parse(e.data);
             const { sender, message, timestamp } = data;
 
-            if (!sender || !message || !timestamp) {
+            <!-- if (!sender || !message || !timestamp) {
                 console.error("Invalid message format:", data);
                 return;
-            }
+            } -->
             const messageContainer = document.createElement('div');
             messageContainer.classList.add(data.sender == userId ? 'message-sender' : 'message-receiver');
             messageContainer.innerHTML = `<p class="messege-text">${data.message}</p><div class="timestamp">${data.timestamp}</div>`;
