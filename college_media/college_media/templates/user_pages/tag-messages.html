@@ -330,7 +330,7 @@
         
         <!-- Chat Window Section -->
         <div class="chat-window">
-            <div class="chat-header"></div>
+            <div class="chat-header">{{tag}}</div>
             <div class="chat-messages" id="chat-messages">
                 {% for tag in tag_messeges %}
                 <p class="messege-text">{{ tag.message }}</p>
@@ -359,8 +359,8 @@
 
     <script>
        
-        const tag = '{{tag}}';
-        console.log(tag);
+        const main_tag = "{{tag}}";
+        console.log(main_tag);
         const userId = "{{ request.user.roll_number }}";
         let selectedTags = [];
     const senderId = "{{ request.user.roll_number }}"; // Example sender ID
@@ -418,7 +418,7 @@
                    'message': message,
                    'sender_id': userId,
                   'timestamp':timestamp,
-                  'tags':tag
+                  'tags':main_tag
                  }));
             }
             

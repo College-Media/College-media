@@ -105,6 +105,11 @@ def tag_messages(request):
 def tag_messages_load(request,tag):
     roll_number=request.user
     roll_number=Student.objects.get(user=roll_number) 
+    main_tag=tag
+    print("____________________________________________________")
+    
+    print("tag is :",tag)
+    print("-----------------------------------------------------")
     
     tags=Tag.objects.filter(tag_given_by=roll_number)
     unique_tags = {}
@@ -120,4 +125,4 @@ def tag_messages_load(request,tag):
     print("_________________________________________")
     
     print(tag_messeges)
-    return render(request, 'user_pages/tag-messages.html', {'tags': unique_tags_list,'tag_messeges':tag_messeges,"tag":tag})
+    return render(request, 'user_pages/tag-messages.html', {'tags': unique_tags_list,'tag_messeges':tag_messeges,'tag':main_tag})

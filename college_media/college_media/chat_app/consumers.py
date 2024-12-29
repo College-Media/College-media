@@ -127,73 +127,99 @@ class Notifications(AsyncWebsocketConsumer):
     #     print(receiver_id)
     #     print(timestamp)
 
-from django.core.exceptions import ObjectDoesNotExist
+import json
+from asgiref.sync import sync_to_async
+from channels.generic.websocket import AsyncWebsocketConsumer
+from .models import Tag, TagMessage, Student
 
 class MessageConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        # Group name can be unique per chat room or global for all
-        self.group_name = "notifications"
+        # Define a group name for WebSocket communication
+        self.group_name = "notifications"  # Group name can be customized
 
-        # Add user to the group
+        # Add the WebSocket connection to the group
         await self.channel_layer.group_add(
             self.group_name,
             self.channel_name
         )
-        await self.accept()
+        await self.accept()  # Accept the WebSocket connection
 
     async def disconnect(self, close_code):
-        # Remove user from the group
-            await self.channel_layer.group_discard(
+        # Remove the WebSocket connection from the group upon disconnection
+        await self.channel_layer.group_discard(
             self.group_name,
             self.channel_name
         )
+
     async def receive(self, text_data):
+        """
+        Handles incoming WebSocket messages.
+        Expects data in JSON format with 'sender_id', 'message', and 'tags'.
+        """
         data = json.loads(text_data)
-        sender_id = data['sender_id']
-        message_content = data['message']
-        selected_tags = data['tags']
+        sender_id = data.get('sender_id')  # Extract sender's roll number
+        message_content = data.get('message')  # Extract message content
+        selected_tags = data.get('tags')  # Extract selected tags
 
-        sender = await sync_to_async(Student.objects.get)(roll_number=sender_id)
+        # Ensure 'selected_tags' is always a list
+        if isinstance(selected_tags, str):
+            selected_tags = [selected_tags]
 
+        # Debugging information (can be removed in production)
+        print("--------------------------------------------------------")
+        print("Sender ID:", sender_id)
+        print("Tags:", selected_tags)
+
+        # Retrieve the sender's Student object
+        try:
+            sender = await sync_to_async(Student.objects.get)(roll_number=sender_id)
+        except Student.DoesNotExist:
+            await self.send(json.dumps({'error': f"Student with roll number '{sender_id}' does not exist."}))
+            return
+
+        # Process each tag in the list
         for tag_name in selected_tags:
             try:
-                tag = await sync_to_async(Tag.objects.get)(tag=tag_name)
+                # Get all tags matching the tag name
+                tags = await sync_to_async(list)(Tag.objects.filter(tag=tag_name))
 
-                # Save the message in the database
-                await sync_to_async(TagMessage.objects.create)(
-                    sender=sender, tag=tag, message=message_content
-                )
-
-                # Get all tag holders
-                tag_holders = await sync_to_async(lambda: list(tag.tag_person.tags_received.all()))()
-
-                for tag_holder in tag_holders:
-                    recipient = tag_holder.tag_person
-                    sender_data = {
-                        'roll_number': sender.roll_number,
-                        'name': sender.name,
-                    }
-                    await self.channel_layer.group_send(
-                        self.group_name,
-                        {
-                            'type': 'broadcast_message',
-                            'recipient_name': recipient.name,
-                            'sender_data': sender_data,
-                            'message': message_content,
-                        },
+                for tag in tags:
+                    # Save the message in the database for the current tag
+                    await sync_to_async(TagMessage.objects.create)(
+                        sender=sender,
+                        tag=tag,
+                        message=message_content
                     )
 
+                    # Get all users associated with the current tag
+                    tag_holders = await sync_to_async(lambda: list(tag.tag_person.tags_received.all()))()
+
+                    # Send the message to all recipients within the tag
+                    for tag_holder in tag_holders:
+                        recipient = tag_holder.tag_person
+                        await self.channel_layer.group_send(
+                            self.group_name,
+                            {
+                                'type': 'broadcast_message',  # Event type for group send
+                                'recipient_name': recipient.name,
+                                'sender_data': sender.roll_number,
+                                'message': message_content,
+                            },
+                        )
+
             except Tag.DoesNotExist:
+                # Send error response if the tag does not exist
                 await self.send(json.dumps({'error': f"Tag '{tag_name}' does not exist."}))
-            except Student.DoesNotExist:
-                await self.send(json.dumps({'error': f"Student with roll number '{sender_id}' does not exist."}))
 
     async def broadcast_message(self, event):
+        """
+        Handles broadcasting messages to the group.
+        """
         recipient_name = event['recipient_name']
         sender_data = event['sender_data']
         message = event['message']
 
-        # Send the message to WebSocket
+        # Send the message to the WebSocket
         await self.send(text_data=json.dumps({
             'recipient': recipient_name,
             'sender': sender_data,

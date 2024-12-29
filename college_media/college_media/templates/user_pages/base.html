@@ -858,7 +858,7 @@ margin-bottom:10px;
         };
 
         // When the notification menu is opened
-document.getElementById('notification-icon-default').addEventListener('click', function () {
+{% comment %} document.getElementById('notification-icon-default').addEventListener('click', function () {
     const badge = document.getElementById('notification-badge');
     badge.style.display = 'none'; // Clear the badge
 
@@ -881,7 +881,7 @@ document.getElementById('notification-icon-unread').addEventListener('click', fu
             'X-CSRFToken': getCookie('csrftoken'), // Include CSRF token
         },
     });
-});
+}); {% endcomment %}
 
     </script>
 </body>
