@@ -20,7 +20,7 @@ max-width:80%;
 max-height:700px;
 flex-wrap:wrap;
 border-radius:20px;
-gap:10px;      <!--   New -->
+gap:10px; <!--   New -->
 box-sizing: border-box;
 box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 8px rgba(0, 0, 0, 0.08);
 
@@ -128,7 +128,7 @@ width:300px;
 height:460px;
 min-height:100%;
 flex:1;
-margin:10px ;                  
+margin:10px ;
 padding:10px;
 border-radius:10px;
 display:none;
@@ -151,11 +151,11 @@ margin:auto;
 
 }
 @media(max-width:600px){
-    .container-m{
-        margin-top:0;
-        padding:0px 25px;
-        overflow-y:auto;
-    }
+.container-m{
+margin-top:0;
+padding:0px 25px;
+overflow-y:auto;
+}
 .container-right{
 display:none;
 max-width:100%;
@@ -175,7 +175,7 @@ font-size: medium;
 display: flex;
 position: relative;
 flex-direction:column;
-margin-top: 10px;  
+margin-top: 10px;
 }
 .tag-container {
 display: flex;
@@ -203,75 +203,79 @@ background-color:rgb(199 244 249 / 40%);
 
 }
 .container-m .child:nth-child(3) {
-    flex-direction: column; /* Align its content in a column */
+flex-direction: column; /* Align its content in a column */
 }
 .message {
-    margin: 10px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    flex-grow: 1;
-    padding: 0 10px;
-    justify-content: center;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: 10px;
-    height: 50px;
-    color: rgb(252, 252, 252);
-    font-weight: bold;
-    max-width: 300px;
-    background-color: rgb(16, 108, 33);
+margin: 10px;
+position: absolute;
+top: 0;
+right: 0;
+flex-grow: 1;
+padding: 0 10px;
+justify-content: center;
+display: flex;
+flex-direction: row;
+align-items: center;
+column-gap: 10px;
+height: 50px;
+color: rgb(252, 252, 252);
+font-weight: bold;
+max-width: 300px;
+background-color: rgb(16, 108, 33);
 
-    border-radius: 10px;
+border-radius: 10px;
 }
 
 .message-red {
-    margin: 10px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    flex-grow: 1;
-    padding: 0 10px;
-    justify-content: center;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: 10px;
-    height: 50px;
-    color: rgb(252, 252, 252);
-    font-weight: bold;
-    max-width: 300px;
-    background-color: rgb(251, 39, 46);
+margin: 10px;
+position: absolute;
+top: 0;
+right: 0;
+flex-grow: 1;
+padding: 0 10px;
+justify-content: center;
+display: flex;
+flex-direction: row;
+align-items: center;
+column-gap: 10px;
+height: 50px;
+color: rgb(252, 252, 252);
+font-weight: bold;
+max-width: 300px;
+background-color: rgb(251, 39, 46);
 
-    border-radius: 10px;
+border-radius: 10px;
+}
+.message-icon svg{
+fill:white;
 }
 {% endblock style %}
 
 {% block content %}
 {% if messages %}
-    {% for message in messages %}
-    {% if 'post_sent' in message.tags %}
-    <div class="message">
-        <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960"
-                width="30px" fill="#FFFFFF">
-                <path
-                    d="m338-290 142-142 142 142 48-48-142-142 142-142-48-48-142 142-142-142-48 48 142 142-142 142 48 48ZM479.68-59q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
-            </svg></div>
-        <div class="message-text">{{message}}</div>
+{% for message in messages %}
+{% if 'post_sent' in message.tags %}
+<div class="message">
+    <div class="message-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#FFFFFF">
+            <path
+                d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+        </svg>
     </div>
-    {% elif 'tag_updated' in message.tags %}
-    <div class="message">
-        <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960"
-                width="30px" fill="white">
-                <path
-                    d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
-            </svg></div>
-        <div class="message-text">{{message}}</div>
-    </div>
-    {% endif %}
-    {% endfor %}
-    {% endif %}
+    <div class="message-text">{{message}}</div>
+</div>
+{% elif 'tag_updated' in message.tags %}
+<div class="message">
+    <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960"
+            width="30px" fill="white">
+            <path
+                d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+        </svg></div>
+    <div class="message-text">{{message}}</div>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
 <div class="right">
     <div class="container-m" id="add-post">
         <div class="container-left" id="image-display-for-drag">
@@ -323,9 +327,9 @@ background-color:rgb(199 244 249 / 40%);
                         {% for tag in tags %}
                         <div class="tag" data-tag="{{tag.tag}}"> &{{tag.tag}}</div>
                         {% endfor %}
-                        
-                      
-                      
+
+
+
                         <!-- More tags can be added here -->
                     </div>
                 </div>
@@ -334,13 +338,13 @@ background-color:rgb(199 244 249 / 40%);
 
             </div>
         </div>
-        
+
 
         <!-- <div class="buttons">
             <button type="submit" class="btnSubmit">Submit Post</button>
             <button type="reset" class="btnCancel" id="btnCancel" onclick="cancelPost()">Cancel</button>
         </div> -->
-    </form>
+        </form>
     </div>
 </div>
 <script>
@@ -575,7 +579,7 @@ background-color:rgb(199 244 249 / 40%);
         hiddenTagsInput.value = selectedTags.join(','); // Join selected tags with a comma
         console.log("Form submitted with tags:", hiddenTagsInput.value);
     });
-    
+
     {% comment %} const socket = new WebSocket('ws://localhost:8000/ws/messages/');
 
     socket.onopen = () => {
@@ -605,7 +609,7 @@ background-color:rgb(199 244 249 / 40%);
         console.log('Message sent:', payload);
 
         // Clear selected tags and message after sending
-        
+
     }); {% endcomment %}
 
 </script>
