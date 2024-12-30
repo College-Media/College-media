@@ -255,9 +255,11 @@ background-color:rgb(199 244 249 / 40%);
                     <input type="text" class="tag-input-value" id="tag-input" name="tag"
                         placeholder="Press & to see tags" />
                     <div class="tag-options-list" id="tag-options-list">
-                        <div class="tag" data-tag="&dosth"> &dosth</div>
-                        <div class="tag" data-tag="&sakhi"> &sakhi</div>
-                        <div class="tag" data-tag="&maraya"> &maraya</div>
+                        {% for tag in tags %}
+                        <div class="tag" data-tag="&{{tag.tag}}"> &{{tag.tag}}</div>
+                        {% endfor %}
+                        
+                      
                       
                         <!-- More tags can be added here -->
                     </div>
@@ -481,7 +483,37 @@ background-color:rgb(199 244 249 / 40%);
         // Validate input
         validateTagInput();
     });
+    const socket = new WebSocket('ws://localhost:8000/ws/messages/');
 
+    socket.onopen = () => {
+        console.log('WebSocket connection established');
+    };
+
+    socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        const messageContainer = document.getElementById('message-container');
+        const newMessage = document.createElement('li');
+        newMessage.textContent = `Message from ${data.sender.roll_number} to ${data.recipient} and messege is  ${data.message}`;
+        messageContainer.appendChild(newMessage);
+    };
+
+    socket.onclose = () => {
+        console.log('WebSocket connection closed');
+    };
+
+    document.getElementById('send-message-btn').addEventListener('click', () => {
+        const message = document.getElementById('message').value;
+        const payload = {
+            sender_id: senderId,
+            tags: selectedTags,
+            message: message,
+        };
+        socket.send(JSON.stringify(payload));
+        console.log('Message sent:', payload);
+
+        // Clear selected tags and message after sending
+        
+    });
 
 </script>
 {% endblock content %}

@@ -24,6 +24,17 @@ def home(request):
     return render(request,"user_pages/user_home.html",{'posts':posts,'liked_post_ids': set(liked_post_ids),'likes':likes,'coments':commets,'context':context})
 
 def add_post(request):
+    roll_number=request.user
+    roll_number=Student.objects.get(user=roll_number) 
+    tags=Tag.objects.filter(tag_given_by=roll_number)
+    unique_tags = {}
+    for tag in tags:
+        if tag.tag not in unique_tags:
+            unique_tags[tag.tag] = tag
+
+    # Convert unique tags dictionary to a list of Tag objects
+    unique_tags_list = list(unique_tags.values())
+    print(unique_tags_list)
     if request.method=='POST':
         body=request.POST['body']
         img=request.FILES['img']
@@ -33,7 +44,7 @@ def add_post(request):
         posts.save()
         messages.success(request,"post sent for verification")
         return redirect('/user_dash/add_post')    
-    return render(request,"user_pages/add_post.html")
+    return render(request,"user_pages/add_post.html",{'tags':unique_tags_list})
 
 def user_profile(request):
     user=request.user

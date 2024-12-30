@@ -34,5 +34,25 @@ class Comment(models.Model):
     def __str__(self):
         return self.content
 
+    
+class Tag(models.Model):
+    tag_given_by=models.ForeignKey(Student,on_delete=models.CASCADE,related_name='tags_given')
+    tag_person=models.ForeignKey(Student,on_delete=models.CASCADE,related_name='tags_received')
+    tag=models.CharField(max_length=20,blank=True)
+    universal=models.BooleanField(default=False)
+    
+    def __str__(self):
+        return '{}-{}'.format(self.tag,self.tag_person)
+    
+    
+class TagMessage(models.Model):
+    sender = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='sent_messages')
+    tag = models.ForeignKey('Tag', on_delete=models.CASCADE, related_name='messages')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='tag_messages', null=True, blank=True)
+    message = models.TextField()
+    
+    timestamp = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"Message from {self.sender.user} to tag {self.tag.tag}"
 # Create your models here.
