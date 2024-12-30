@@ -1,711 +1,300 @@
 {% extends "user_pages/base.html" %}
-
+{% load static %}
 {% block style %}
 .left ul:first-child {
-  margin-top: 20px;
-}
-.tag-cloud {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-}
-
-.tag-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    width: 250px;
-    padding: 20px;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: #e0e0e0;
-    color: #333;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 2px solid #42aebc;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-}
-
-.tag-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(42, 174, 188, 0.3);
-}
-
-.tag-title {
-    font-size: 24px;
-    color: #42aebc;
-    margin-bottom: 10px;
-}
-
-.button-group {
-    margin-top: 10px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Style for the edit form */
-.edit-form {
-    display: none;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
-    width: 100%; /* Align form with card width */
-}
-
-.edit-form input[type="text"] {
-    padding: 8px 10px;
-    border: 2px solid #42aebc;
-    border-radius: 5px;
-    font-size: 16px;
-    width: 90%; /* Adjust input width */
-    margin: auto;
-}
-
-.edit-form button {
-    padding: 8px 10px;
-    background-color: #42aebc;
-    color: white;
-    font-size: 14px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.edit-form button:hover {
-    background-color: #3696a1;
-}
-
-button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button.edit {
-    background-color: #42aebc;
-    color: white;
-    width: 100px; /* Uniform button sizes */
-}
-
-button.edit:hover {
-    background-color: #3696a1;
-}
-
-button.delete {
-    background-color: #e74c3c;
-    color: white;
-    width: 100px; /* Uniform button sizes */
-}
-
-button.delete:hover {
-    background-color: #c0392b;
+margin-top: 20px;
 }
 .message {
-    margin: 10px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    flex-grow: 1;
-    padding: 0 10px;
-    justify-content: center;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: 10px;
-    height: 50px;
-    color: rgb(252, 252, 252);
-    font-weight: bold;
-    max-width: 300px;
-    background-color: rgb(16, 108, 33);
+  margin: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  flex-grow: 1;
+  padding: 0 10px;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 10px;
+  height: 50px;
+  color: rgb(252, 252, 252);
+  font-weight: bold;
+  max-width: 300px;
+  background-color: rgb(16, 108, 33);
 
-    border-radius: 10px;
+  border-radius: 10px;
 }
 
 .message-red {
-    margin: 10px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    flex-grow: 1;
-    padding: 0 10px;
-    justify-content: center;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: 10px;
-    height: 50px;
-    color: rgb(252, 252, 252);
-    font-weight: bold;
-    max-width: 300px;
-    background-color: rgb(251, 39, 46);
-
-    border-radius: 10px;
-}
-@import url(https://fonts.googleapis.com/css2?family=Lato&display=swap);
-      
-@import url(https://fonts.googleapis.com/css2?family=Open+Sans&display=swap);
-
-@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css);
-
-/*! tailwindcss v3.4.11 | MIT License | https://tailwindcss.com*/
-*,
-:after,
-:before {
-  border: 0 solid #e5e7eb;
-  box-sizing: border-box;
-}
-:after,
-:before {
-  --tw-content: "";
-}
-:host,
-html {
-  line-height: 1.5;
-  -webkit-text-size-adjust: 100%;
-  font-family:
-    Open Sans,
-    ui-sans-serif,
-    system-ui,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol,
-    Noto Color Emoji;
-  font-feature-settings: normal;
-  font-variation-settings: normal;
-  -moz-tab-size: 4;
-  tab-size: 4;
-  -webkit-tap-highlight-color: transparent;
-}
-body {
-  line-height: inherit;
-  margin: 0;
-}
-hr {
-  border-top-width: 1px;
-  color: inherit;
-  height: 0;
-}
-abbr:where([title]) {
-  text-decoration: underline dotted;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: inherit;
-  font-weight: inherit;
-}
-a {
-  color: inherit;
-  text-decoration: inherit;
-}
-b,
-strong {
-  font-weight: bolder;
-}
-code,
-kbd,
-pre,
-samp {
-  font-family:
-    ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    Monaco,
-    Consolas,
-    Liberation Mono,
-    Courier New,
-    monospace;
-  font-feature-settings: normal;
-  font-size: 1em;
-  font-variation-settings: normal;
-}
-small {
-  font-size: 80%;
-}
-sub,
-sup {
-  font-size: 75%;
-  line-height: 0;
-  position: relative;
-  vertical-align: baseline;
-}
-sub {
-  bottom: -0.25em;
-}
-sup {
-  top: -0.5em;
-}
-table {
-  border-collapse: collapse;
-  border-color: inherit;
-  text-indent: 0;
-}
-button,
-input,
-optgroup,
-select,
-textarea {
-  color: inherit;
-  font-family: inherit;
-  font-feature-settings: inherit;
-  font-size: 100%;
-  font-variation-settings: inherit;
-  font-weight: inherit;
-  letter-spacing: inherit;
-  line-height: inherit;
-  margin: 0;
-  padding: 0;
-}
-button,
-select {
-  text-transform: none;
-}
-button,
-input:where([type="button"]),
-input:where([type="reset"]),
-input:where([type="submit"]) {
-  -webkit-appearance: button;
-  background-color: transparent;
-  background-image: none;
-}
-:-moz-focusring {
-  outline: auto;
-}
-:-moz-ui-invalid {
-  box-shadow: none;
-}
-progress {
-  vertical-align: baseline;
-}
-::-webkit-inner-spin-button,
-::-webkit-outer-spin-button {
-  height: auto;
-}
-[type="search"] {
-  -webkit-appearance: textfield;
-  outline-offset: -2px;
-}
-::-webkit-search-decoration {
-  -webkit-appearance: none;
-}
-::-webkit-file-upload-button {
-  -webkit-appearance: button;
-  font: inherit;
-}
-summary {
-  display: list-item;
-}
-blockquote,
-dd,
-dl,
-figure,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-hr,
-p,
-pre {
-  margin: 0;
-}
-fieldset {
-  margin: 0;
-}
-fieldset,
-legend {
-  padding: 0;
-}
-menu,
-ol,
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-dialog {
-  padding: 0;
-}
-textarea {
-  resize: vertical;
-}
-input::placeholder,
-textarea::placeholder {
-  color: #9ca3af;
-  opacity: 1;
-}
-[role="button"],
-button {
-  cursor: pointer;
-}
-:disabled {
-  cursor: default;
-}
-audio,
-canvas,
-embed,
-iframe,
-img,
-object,
-svg,
-video {
-  display: block;
-  vertical-align: middle;
-}
-img,
-video {
-  height: auto;
-  max-width: 100%;
-}
-[hidden] {
-  display: none;
-}
-*,
-:after,
-:before {
-  --tw-border-spacing-x: 0;
-  --tw-border-spacing-y: 0;
-  --tw-translate-x: 0;
-  --tw-translate-y: 0;
-  --tw-rotate: 0;
-  --tw-skew-x: 0;
-  --tw-skew-y: 0;
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
-  --tw-pan-x: ;
-  --tw-pan-y: ;
-  --tw-pinch-zoom: ;
-  --tw-scroll-snap-strictness: proximity;
-  --tw-gradient-from-position: ;
-  --tw-gradient-via-position: ;
-  --tw-gradient-to-position: ;
-  --tw-ordinal: ;
-  --tw-slashed-zero: ;
-  --tw-numeric-figure: ;
-  --tw-numeric-spacing: ;
-  --tw-numeric-fraction: ;
-  --tw-ring-inset: ;
-  --tw-ring-offset-width: 0px;
-  --tw-ring-offset-color: #fff;
-  --tw-ring-color: rgba(59, 130, 246, 0.5);
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-colored: 0 0 #0000;
-  --tw-blur: ;
-  --tw-brightness: ;
-  --tw-contrast: ;
-  --tw-grayscale: ;
-  --tw-hue-rotate: ;
-  --tw-invert: ;
-  --tw-saturate: ;
-  --tw-sepia: ;
-  --tw-drop-shadow: ;
-  --tw-backdrop-blur: ;
-  --tw-backdrop-brightness: ;
-  --tw-backdrop-contrast: ;
-  --tw-backdrop-grayscale: ;
-  --tw-backdrop-hue-rotate: ;
-  --tw-backdrop-invert: ;
-  --tw-backdrop-opacity: ;
-  --tw-backdrop-saturate: ;
-  --tw-backdrop-sepia: ;
-  --tw-contain-size: ;
-  --tw-contain-layout: ;
-  --tw-contain-paint: ;
-  --tw-contain-style: ;
-}
-::backdrop {
-  --tw-border-spacing-x: 0;
-  --tw-border-spacing-y: 0;
-  --tw-translate-x: 0;
-  --tw-translate-y: 0;
-  --tw-rotate: 0;
-  --tw-skew-x: 0;
-  --tw-skew-y: 0;
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
-  --tw-pan-x: ;
-  --tw-pan-y: ;
-  --tw-pinch-zoom: ;
-  --tw-scroll-snap-strictness: proximity;
-  --tw-gradient-from-position: ;
-  --tw-gradient-via-position: ;
-  --tw-gradient-to-position: ;
-  --tw-ordinal: ;
-  --tw-slashed-zero: ;
-  --tw-numeric-figure: ;
-  --tw-numeric-spacing: ;
-  --tw-numeric-fraction: ;
-  --tw-ring-inset: ;
-  --tw-ring-offset-width: 0px;
-  --tw-ring-offset-color: #fff;
-  --tw-ring-color: rgba(59, 130, 246, 0.5);
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-colored: 0 0 #0000;
-  --tw-blur: ;
-  --tw-brightness: ;
-  --tw-contrast: ;
-  --tw-grayscale: ;
-  --tw-hue-rotate: ;
-  --tw-invert: ;
-  --tw-saturate: ;
-  --tw-sepia: ;
-  --tw-drop-shadow: ;
-  --tw-backdrop-blur: ;
-  --tw-backdrop-brightness: ;
-  --tw-backdrop-contrast: ;
-  --tw-backdrop-grayscale: ;
-  --tw-backdrop-hue-rotate: ;
-  --tw-backdrop-invert: ;
-  --tw-backdrop-opacity: ;
-  --tw-backdrop-saturate: ;
-  --tw-backdrop-sepia: ;
-  --tw-contain-size: ;
-  --tw-contain-layout: ;
-  --tw-contain-paint: ;
-  --tw-contain-style: ;
-}
-#webcrumbs .absolute {
+  margin: 10px;
   position: absolute;
-}
-#webcrumbs .relative {
-  position: relative;
-}
-#webcrumbs .bottom-0 {
-  bottom: 0;
-}
-#webcrumbs .bottom-6 {
-  bottom: 24px;
-}
-#webcrumbs .left-0 {
-  left: 0;
-}
-#webcrumbs .left-8 {
-  left: 32px;
-}
-#webcrumbs .mb-2 {
-  margin-bottom: 8px;
-}
-#webcrumbs .mb-4 {
-  margin-bottom: 16px;
-}
-#webcrumbs .flex {
+  top: 0;
+  right: 0;
+  flex-grow: 1;
+  padding: 0 10px;
+  justify-content: center;
   display: flex;
-}
-#webcrumbs .h-\[120px\] {
-  height: 120px;
-}
-#webcrumbs .h-\[50px\] {
-  height: 50px;
-}
-#webcrumbs .w-\[300px\] {
-  width: 300px;
-}
-#webcrumbs .w-\[50px\] {
-  width: 50px;
-}
-#webcrumbs .w-full {
-  width: 100%;
-}
-#webcrumbs .flex-row {
   flex-direction: row;
-}
-#webcrumbs .items-center {
   align-items: center;
+  column-gap: 10px;
+  height: 50px;
+  color: rgb(252, 252, 252);
+  font-weight: bold;
+  max-width: 300px;
+  background-color: rgb(251, 39, 46);
+
+  border-radius: 10px;
 }
-#webcrumbs .justify-between {
-  justify-content: space-between;
+.tag-cloud {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 20px;
+flex-direction:row;
 }
-#webcrumbs .gap-4 {
-  gap: 16px;
+body {
+line-height: inherit;
+padding: 24px;
+display: flex;
+flex-direction: column;
+min-width: 100vw;
+min-height: 100vh;
+align-items: center;
+justify-content: center;
 }
-#webcrumbs .rounded-full {
-  border-radius: 9999px;
+.tag-card{
+display:flex;
+flex-direction:column;
+justify-content:center;
+border:1px solid rgba(42, 174, 188, 0.9);
+border-radius:10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+
 }
-#webcrumbs .rounded-lg {
-  border-radius: 24px;
+.tag-head{
+display:flex;
+flex-direction:row;
+justify-content:end;
+gap:10px;
+padding:5px;
+border-bottom:1px solid rgba(0, 0, 0, 0.2);
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-#webcrumbs .bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+.tag-title{
+color:rgb(42, 174, 188);
+font-weight:bold;
+margin-right:auto;
 }
-#webcrumbs .bg-gradient-to-b {
-  background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
+.button-action{
+display:flex;
+column-gap:10px;
 }
-#webcrumbs .from-sky-500 {
-  --tw-gradient-from: #0ea5e9 var(--tw-gradient-from-position);
-  --tw-gradient-to: rgba(14, 165, 233, 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-#webcrumbs .to-blue-500 {
-  --tw-gradient-to: #3b82f6 var(--tw-gradient-to-position);
-}
-#webcrumbs .p-6 {
-  padding: 24px;
-}
-#webcrumbs .px-6 {
-  padding-left: 24px;
-  padding-right: 24px;
-}
-#webcrumbs .py-2 {
-  padding-bottom: 8px;
-  padding-top: 8px;
-}
-#webcrumbs .text-center {
-  text-align: center;
-}
-#webcrumbs .font-title {
-  font-family:
-    Lato,
-    ui-sans-serif,
-    system-ui,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol,
-    Noto Color Emoji;
-}
-#webcrumbs .text-lg {
-  font-size: 18px;
-  line-height: 27px;
-}
-#webcrumbs .text-sm {
-  font-size: 14px;
-  line-height: 21px;
-}
-#webcrumbs .font-bold {
-  font-weight: 700;
-}
-#webcrumbs .font-medium {
-  font-weight: 500;
-}
-#webcrumbs .text-primary-100 {
-  --tw-text-opacity: 1;
-  color: rgb(233 229 255 / var(--tw-text-opacity));
-}
-#webcrumbs .text-sky-500 {
-  --tw-text-opacity: 1;
-  color: rgb(14 165 233 / var(--tw-text-opacity));
-}
-#webcrumbs .text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-#webcrumbs .shadow-lg {
-  --tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
-    0 4px 6px -4px var(--tw-shadow-color);
-}
-#webcrumbs .shadow-lg,
-#webcrumbs .shadow-md {
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-#webcrumbs .shadow-md {
-  --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color),
-    0 2px 4px -2px var(--tw-shadow-color);
-}
-#webcrumbs {
-  font-family: Open Sans !important;
-  font-size: 16px !important;
+.tag-body-p{
+margin:20px 10px 10px 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+display:flex;
+flex-direction:column;
+border-radius:10px;
 }
 
-body {
-  line-height: inherit;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  min-width: 100vw;
-  min-height: 100vh;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #ffffff, #d4d4d4);
+.tag-body-e{
+display:none;
+margin:20px 10px 10px 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+border-radius:10px;
+}
+
+.tagged-people-list{
+display:flex;
+flex-direction:row;
+padding:10px;
+border-bottom:1px solid rgba(0, 0, 0, 0.2);
+width:350px;
+justify-content:start;
+}
+
+.delete-tag-person{
+margin-left:auto;
+}
+
+.button-action svg{
+fill:#524a4a;
+}
+.delete{
+border:none;
+width:28px;
+height:28px;
+padding:0px;
+background-color:white;
+}
+.delete svg{
+fill:#c91919;
+}
+.edit-form{
+  display:flex;
+  flex-direction:column;
+  padding:10px;
+  border-bottom:1px solid rgba(0, 0, 0, 0.2);
+  width:350px;
+  justify-content:start;
+  align-items:center;
+}
+.edit-form button{
+  background-color:rgba(42, 174, 188, 0.9);
+  padding:10px;
+  border-radius:10px;
+  width:100px;
+  border:none;
+  color:white;
+  font-weight:bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+#no-tags{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  border:1px solid rgb(42,174,188);
+  box-shadow: 0px 5px 18px rgba(42, 174, 188, 0.4);
+  padding:10px;
+  border-radius:10px;
+  align-items:center;
+}
+#no-tags p,h3{
+  margin:0;
+}
+.have-tag-btn{
+  border-radius:10px;
+  padding:10px;
+  background-color:rgb(21 138 150);
+  border:none;
+  font-weight:bold;
+  color:white;
+}
+.have-tag-btn:hover{
+  cursor:pointer;
+  background-color:rgb(42,174,170);
 }
 {% endblock style %}
 
 
 {% block content %}
 {% if messages %}
-    {% for message in messages %}
-    {% if 'tag_deleted' in message.tags %}
-    <div class="message-red">
-        <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960"
-                width="30px" fill="#FFFFFF">
-                <path
-                    d="m338-290 142-142 142 142 48-48-142-142 142-142-48-48-142 142-142-142-48 48 142 142-142 142 48 48ZM479.68-59q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
-            </svg></div>
-        <div class="message-text">{{message}}</div>
-    </div>
-    {% elif 'tag_updated' in message.tags %}
-    <div class="message">
-        <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960"
-                width="30px" fill="white">
-                <path
-                    d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
-            </svg></div>
-        <div class="message-text">{{message}}</div>
-    </div>
-    {% endif %}
-    {% endfor %}
-    {% endif %}
+{% for message in messages %}
+{% if 'tag_deleted' in message.tags %}
+<div class="message-red">
+  <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px"
+      fill="#FFFFFF">
+      <path
+        d="m338-290 142-142 142 142 48-48-142-142 142-142-48-48-142 142-142-142-48 48 142 142-142 142 48 48ZM479.68-59q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+    </svg></div>
+  <div class="message-text">{{message}}</div>
+</div>
+{% elif 'tag_updated' in message.tags %}
+<div class="message">
+  <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px"
+      fill="white">
+      <path
+        d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+    </svg></div>
+  <div class="message-text">{{message}}</div>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
 <div class="right">
-    <div class="tag-cloud">
-        {% for tag in tags %}
-        <div class="tag-card">
-            <div class="tag-title">{{ tag.tag }}</div>
-            <p>Tagged Person: {{ tag.tag_person.name }}</p>
-            {% if tag.universal %}
-            <p><strong>Universal Tag</strong></p>
-            {% endif %}
-            <div class="button-group">
-                <button class="edit" onclick="showEditField({{ tag.id }})">Edit</button>
-                <form id="edit-form-{{ tag.id }}" class="edit-form" method="POST" action="{% url 'delete_tag' tag.id %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="tag_id" value="{{ tag.id }}">
-                    <input type="text" name="new_tag" placeholder="New tag value" required>
-                    <button type="submit">Save</button>
-                </form>
-                <form method="post" action="{% url 'delete_tag' tag.id %}" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="delete">Delete</button>
-                </form>
-            </div>
+  <div class="tag-cloud">
+    {% for tag in tags %}
+    <div class="tag-card">
+      <div class="tag-head">
+        <div class="tag-title">{{ tag.tag }}</div>
+        <div class="button-action">
+          <div class="group" onclick="showTagPerson({{ tag.id }})"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+              fill="#EA3323">
+              <path
+                d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0 320Zm0-400Z" />
+            </svg></div>
+          <div class="edit" onclick="showEditField({{ tag.id }})"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+              viewBox="0 -960 960 960" width="24px" fill="red">
+              <path
+                d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
+            </svg></div>
         </div>
-        {% empty %}
-        <div id="webcrumbs">
-            <div class="w-[300px] bg-gradient-to-b from-sky-500 to-blue-500 text-white text-center rounded-lg shadow-lg p-6 relative"> <h1 class="text-lg font-title font-bold mb-2">No Tags Still Now?</h1> <p class="text-sm font-medium mb-4"> Give a tag <span class="text-primary-100">to</span> your classmate or friend! </p> <div> <button class="bg-white text-sky-500 font-bold py-2 px-6 rounded-full shadow-md"> Have a tag </button> </div> <div class="absolute bottom-0 left-0 w-full h-[120px]"> <svg width="100%" height="100%" viewBox="0 0 300 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute bottom-0 left-0"> <path d="M0 40c25 20 50-20 75 0s50 20 75 0 50-20 75 0 50 20 75 0" stroke="#ffffff" stroke-width="2"></path> </svg> <div class="w-[50px] h-[50px] bg-white rounded-full absolute bottom-6 left-8"></div> </div> </div>
-        
-        
+      </div>
+
+      <div class="tag-body-p" id="tag-person-{{ tag.id }}">
+
+        <!-- for loop for tags -->
+        <div class="tagged-people-list">
+          <div>Person name</div>
+          <div class="delete-tag-person">
+            <form method="post" action="{% url 'delete_tag' tag.id %}" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="delete"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                  viewBox="0 -960 960 960" width="24px" fill="#EA3323">
+                  <path
+                    d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                </svg></button>
+            </form>
           </div>
-        {% endfor %}
+        </div>
+        <div class="tagged-people-list">
+          <div>Person name</div>
+          <div class="delete-tag-person">
+            <form method="post" action="{% url 'delete_tag' tag.id %}" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="delete"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                  viewBox="0 -960 960 960" width="24px" fill="#EA3323">
+                  <path
+                    d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                </svg></button>
+            </form>
+          </div>
+        </div>
+
+        <!-- for loop for tags -->
+
+      </div>
+      <div class="tag-body-e" id="tag-edit-{{ tag.id }}">
+        <form id="edit-form-{{ tag.id }}" class="edit-form" method="POST" action="{% url 'delete_tag' tag.id %}">
+          {% csrf_token %}
+          <input type="hidden" name="tag_id" value="{{ tag.id }}">
+          <input type="text" name="new_tag" placeholder="New tag value" required>
+          <button type="submit">Save</button>
+        </form>
+      </div>
     </div>
+    {% empty %}
+    <div id="no-tags">
+        <h3>No Tags Still Now!!</h3>
+        <img src="{% static 'images/eye-closed-turtle.jpeg' %}" width="120px" height="100px">
+
+        <p class="text-sm font-medium mb-4"> Give a tag to your classmate or
+          friend! </p>
+        
+          <button class="have-tag-btn" onclick="window.location='/search_student'"> Have a tag </button>
+    </div>
+    {% endfor %}
+  </div>
 </div>
 <script>
-    function showEditField(tagId) {
-        // Hide all other edit forms
-        document.querySelectorAll('.edit-form').forEach(form => form.style.display = 'none');
-        // Show the specific form
-        document.getElementById('edit-form-' + tagId).style.display = 'flex';
-    }
+
+  function showEditField(tagId) {
+      const tagPerson = document.getElementById('tag-person-' + tagId);
+      const tagEdit = document.getElementById('tag-edit-' + tagId);
+
+      if (tagPerson) tagPerson.style.display = 'none';
+      if (tagEdit) tagEdit.style.display = 'flex';
+  }
+
+
+  function showTagPerson(tagId) {
+      const tagPerson = document.getElementById('tag-person-' + tagId);
+      const tagEdit = document.getElementById('tag-edit-' + tagId);
+
+      if (tagPerson) tagPerson.style.display = 'block';
+      if (tagEdit) tagEdit.style.display = 'none';
+  }
 </script>
+
 {% endblock content %}
