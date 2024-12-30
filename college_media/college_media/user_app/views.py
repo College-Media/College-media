@@ -38,14 +38,42 @@ def add_post(request):
     if request.method=='POST':
         body=request.POST['body']
         img=request.FILES['img']
+        selected_tags=request.POST.get('selected_tags')
+        print("-------------------------------------------------------------------")
+        print(selected_tags)
         user=request.user
         student_instence=get_object_or_404(Student, user=user)
-        posts=Post.objects.create(student=student_instence,content=body,image=img ,is_approved=False)
-        posts.save()
-        messages.success(request,"post sent for verification")
-        return redirect('/user_dash/add_post')    
-    return render(request,"user_pages/add_post.html",{'tags':unique_tags_list})
+        post=Post.objects.create(student=student_instence,content=body,image=img ,is_approved=False)
+        post.save()
+        tags = [tag.strip() for tag in selected_tags.split(",") if tag.strip()]
+        unique_tags = set(tags) 
+        print(tags)
+        for tag_name in unique_tags:
+            print("comes inside the loop")
+            tags = Tag.objects.filter(tag=tag_name, tag_given_by=roll_number)
+            print(tags)
+            for tag in tags:
+                # Notify the tag_person
+                print("sender{} receiver:{} ".format(student_instence,tag.tag_person))
+                print("comes inside if ")
+                Main_Notifications.objects.create(
+                    sender=student_instence,
+                    receiver=tag.tag_person,
+                    content=f"You have been tagged in a post: {post.content}",
+                )
 
+                # Create a TagMessage
+                TagMessage.objects.create(
+                    sender=student_instence,
+                    tag=tag,
+                    post=post,
+                    message=f"You have been tagged with {tag.tag}",
+                )
+
+        messages.success(request, "Post sent for verification and notifications have been sent!",extra_tags='post_sent')
+        return redirect('/user_dash/add_post')    
+
+    return render(request, "user_pages/add_post.html", {'tags': unique_tags_list})
 def user_profile(request):
     user=request.user
     student_info=Student.objects.get(user=user) 

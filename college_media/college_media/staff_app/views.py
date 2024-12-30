@@ -93,25 +93,28 @@ def approve_or_reject_post(request):
             post=get_object_or_404(Post,id=accept)
             post.is_approved=True
             post.save()
-            sender=get_object_or_404(Student,roll_number=post.student.roll_number)
-            reciver=get_object_or_404(Student,user=request.user)
+            sender= get_object_or_404(Student,user=request.user)
+            reciver=get_object_or_404(Student,roll_number=post.student.roll_number)
             Main_Notifications.objects.create(sender=sender,receiver=reciver,content="College Media:{} Post Accepted from staff post on{}".format(post.student.name,post.created_at))
             subject="College Media:Post Acceptence from staff post on{}".format(post.created_at)
             message="Your post is accepted "
             mail=post.student.email
             mail_send(subject,message,mail)
+            messages.success(request, "post is accepted successfully", extra_tags='post_accepted')
             return redirect('/staff_dash/staff_post_request')
         elif reject:
             post=get_object_or_404(Post,id=reject)
-            sender=get_object_or_404(Student,roll_number=post.student.roll_number)
-            reciver=get_object_or_404(Student,user=request.user)
+            sender= get_object_or_404(Student,user=request.user)
+            reciver=get_object_or_404(Student,roll_number=post.student.roll_number)
             Main_Notifications.objects.create(sender=sender,receiver=reciver,content="College Media:{} Post Rejected from staff post on{}".format(post.student.name,post.created_at))
             subject="College Media:{} Post Rejected from staff post on{}".format(post.student.name,post.created_at)
             message="Your post is Rejected "
             mail=post.student.email
             mail_send(subject,message,mail)
             post.delete()
+            messages.success(request, "post is  rejected successfully", extra_tags='post_rejected')
             return redirect('/staff_dash/staff_post_request')
+            
     return redirect('/staff_dash/staff_post_request')        
 
 def staff_profile(request):

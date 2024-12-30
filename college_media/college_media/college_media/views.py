@@ -276,6 +276,6 @@ def delete_profile_pic(request):
 
 def notification(request):
     sender=get_object_or_404(Student,user=request.user)
-    notification=Main_Notifications.objects.filter(sender=sender,is_read=False)
+    notification=Main_Notifications.objects.filter(receiver=sender,is_read=False)
     print(notification)
     return render(request,"user_pages/user_notification.html",{"notifications":notification})
