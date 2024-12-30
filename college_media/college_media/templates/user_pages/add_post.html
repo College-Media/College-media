@@ -205,9 +205,73 @@ background-color:rgb(199 244 249 / 40%);
 .container-m .child:nth-child(3) {
     flex-direction: column; /* Align its content in a column */
 }
+.message {
+    margin: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    flex-grow: 1;
+    padding: 0 10px;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+    height: 50px;
+    color: rgb(252, 252, 252);
+    font-weight: bold;
+    max-width: 300px;
+    background-color: rgb(16, 108, 33);
+
+    border-radius: 10px;
+}
+
+.message-red {
+    margin: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    flex-grow: 1;
+    padding: 0 10px;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+    height: 50px;
+    color: rgb(252, 252, 252);
+    font-weight: bold;
+    max-width: 300px;
+    background-color: rgb(251, 39, 46);
+
+    border-radius: 10px;
+}
 {% endblock style %}
 
 {% block content %}
+{% if messages %}
+    {% for message in messages %}
+    {% if 'post_sent' in message.tags %}
+    <div class="message">
+        <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960"
+                width="30px" fill="#FFFFFF">
+                <path
+                    d="m338-290 142-142 142 142 48-48-142-142 142-142-48-48-142 142-142-142-48 48 142 142-142 142 48 48ZM479.68-59q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+            </svg></div>
+        <div class="message-text">{{message}}</div>
+    </div>
+    {% elif 'tag_updated' in message.tags %}
+    <div class="message">
+        <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960"
+                width="30px" fill="white">
+                <path
+                    d="m419-285 291-292-63-64-228 228-111-111-63 64 174 175Zm60.68 226q-86.32 0-163.65-32.6-77.32-32.61-134.57-89.86T91.6-316.03Q59-393.35 59-479.86q0-87.41 32.66-164.28Q124.33-721 181.7-778.58q57.38-57.57 134.41-90.49Q393.15-902 479.34-902q87.55 0 164.83 32.85 77.29 32.85 134.57 90.3 57.29 57.46 90.27 134.52Q902-567.26 902-479.46q0 86.74-32.93 163.55-32.92 76.81-90.49 134.2Q721-124.33 644.13-91.66 567.26-59 479.68-59Z" />
+            </svg></div>
+        <div class="message-text">{{message}}</div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
 <div class="right">
     <div class="container-m" id="add-post">
         <div class="container-left" id="image-display-for-drag">
@@ -241,6 +305,7 @@ background-color:rgb(199 244 249 / 40%);
                 </div> -->
             </div>
             <div class="buttons">
+                <input type="hidden" id="selected-tags-hidden" name="selected_tags" value="">
                 <button type="submit" class="btnSubmit">Submit Post</button>
                 <button type="reset" class="btnCancel" id="btnCancel" onclick="cancelPost()">Cancel</button>
             </div>
@@ -255,9 +320,11 @@ background-color:rgb(199 244 249 / 40%);
                     <input type="text" class="tag-input-value" id="tag-input" name="tag"
                         placeholder="Press & to see tags" />
                     <div class="tag-options-list" id="tag-options-list">
-                        <div class="tag" data-tag="&dosth"> &dosth</div>
-                        <div class="tag" data-tag="&sakhi"> &sakhi</div>
-                        <div class="tag" data-tag="&maraya"> &maraya</div>
+                        {% for tag in tags %}
+                        <div class="tag" data-tag="{{tag.tag}}"> &{{tag.tag}}</div>
+                        {% endfor %}
+                        
+                      
                       
                         <!-- More tags can be added here -->
                     </div>
@@ -329,8 +396,12 @@ background-color:rgb(199 244 249 / 40%);
     const selectedTags = []; // Array to store selected tags
     const tagOptionsList = document.getElementById("tag-options-list");
     const tagInput = document.getElementById("tag-input");
+    const hiddenTagsInput = document.getElementById("selected-tags-hidden");
     const maxTags = 3; // Maximum number of tags the user can select
-
+    function updateHiddenTagsInput() {
+        hiddenTagsInput.value = selectedTags.join(',');
+        console.log(hiddenTagsInput)
+    }
     // Hide the tag list initially
     tagOptionsList.style.display = 'none';
 
@@ -482,6 +553,60 @@ background-color:rgb(199 244 249 / 40%);
         validateTagInput();
     });
 
+    tagOptionsList.addEventListener("click", (e) => {
+        const tagElement = e.target;
+        if (tagElement.classList.contains("tag")) {
+            const tagValue = tagElement.dataset.tag;
+
+            if (!selectedTags.includes(tagValue)) {
+                if (selectedTags.length < maxTags) {
+                    selectedTags.push(tagValue);
+                    tagInput.value = selectedTags.join(", "); // Display selected tags
+                    updateHiddenTagsInput(); // Update hidden input
+                } else {
+                    tagNotification.textContent = `You can select up to ${maxTags} tags.`;
+                }
+            }
+        }
+    });
+    document.getElementById("post-form").addEventListener("submit", function (event) {
+        // Update the hidden input field with the selected tags before submission
+        const hiddenTagsInput = document.getElementById("selected-tags-hidden");
+        hiddenTagsInput.value = selectedTags.join(','); // Join selected tags with a comma
+        console.log("Form submitted with tags:", hiddenTagsInput.value);
+    });
+    
+    {% comment %} const socket = new WebSocket('ws://localhost:8000/ws/messages/');
+
+    socket.onopen = () => {
+        console.log('WebSocket connection established');
+    };
+
+    socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        const messageContainer = document.getElementById('message-container');
+        const newMessage = document.createElement('li');
+        newMessage.textContent = `Message from ${data.sender.roll_number} to ${data.recipient} and messege is  ${data.message}`;
+        messageContainer.appendChild(newMessage);
+    };
+
+    socket.onclose = () => {
+        console.log('WebSocket connection closed');
+    };
+
+    document.getElementById('send-message-btn').addEventListener('click', () => {
+        const message = document.getElementById('message').value;
+        const payload = {
+            sender_id: senderId,
+            tags: selectedTags,
+            message: message,
+        };
+        socket.send(JSON.stringify(payload));
+        console.log('Message sent:', payload);
+
+        // Clear selected tags and message after sending
+        
+    }); {% endcomment %}
 
 </script>
 {% endblock content %}

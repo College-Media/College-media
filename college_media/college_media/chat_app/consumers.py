@@ -2,12 +2,13 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer # type: ignore
 from django.contrib.auth import get_user_model
 from .models import  Message,Notification
-from staff_app .models import CoustomUser,Tag,TagMessage
+from staff_app .models import CoustomUser
+from user_app . models import Tag,TagMessage
 from asgiref.sync import sync_to_async
 from channels.db import database_sync_to_async # type: ignore
 User = get_user_model()
 from datetime import datetime
-from .models import Student, Tag, Message
+from .models import Student,Message
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -130,7 +131,7 @@ class Notifications(AsyncWebsocketConsumer):
 import json
 from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
-from .models import Tag, TagMessage, Student
+
 
 class MessageConsumer(AsyncWebsocketConsumer):
     async def connect(self):
