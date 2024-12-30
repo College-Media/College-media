@@ -30,7 +30,7 @@ box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 8px rgba(0, 0, 0, 0.08);
 display: flex;
 flex-direction: column;
 row-gap: 10px;
-margin:0 10px 10px 20px;
+margin:0 10px 10px 10px;
 align-items:center;
 flex: 1;
 max-height:100%;
@@ -83,10 +83,10 @@ border-radius:10px;
 display:flex;
 flex-direction:row;
 flex-shrink:1;
-flex-wrap:wrap;
+<!-- flex-wrap:wrap; -->
 justify-content:center;
-width:100%;
-height:100%;
+<!-- width:100%;
+height:100%; -->
 }
 .btnCancel, .btnSubmit{
 cursor:pointer;
@@ -96,6 +96,7 @@ padding:10px;
 background-color:rgb(79, 213, 228);
 margin:10px;
 color:white;
+max-width:100px;
 font-weight:bold;
 font-size:medium;
 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -127,7 +128,6 @@ width:300px;
 height:460px;
 min-height:100%;
 flex:1;
-
 margin:10px ;                  
 padding:10px;
 border-radius:10px;
@@ -144,15 +144,25 @@ height:100%;
 }
 .container-right img{
 border-radius:10px;
-width:100%;
-height:50%;
+width:80%;
+height:54%;
+display:flex;
+margin:auto;
+
 }
 @media(max-width:600px){
+    .container-m{
+        margin-top:0;
+        padding:0px 25px;
+        overflow-y:auto;
+    }
 .container-right{
 display:none;
+max-width:100%;
 }
 .container-left{
 max-width:100%;
+padding-top:0px;
 }
 .form-container-descript{
 max-width:90%;
@@ -165,14 +175,13 @@ font-size: medium;
 display: flex;
 position: relative;
 flex-direction:column;
-<!-- gap: 10px; -->
-<!-- margin-top: 10px;   -->
+margin-top: 10px;  
 }
 .tag-container {
 display: flex;
 position: relative;
 flex-direction:column;
-gap: 10px;
+<!-- gap: 10px; -->
 <!-- margin-top: 10px -->
 }
 .tag-options-list {
@@ -231,7 +240,10 @@ background-color:rgb(199 244 249 / 40%);
                     <button type="reset" class="btnCancel" id="btnCancel" onclick="cancelPost()">Cancel</button>
                 </div> -->
             </div>
-
+            <div class="buttons">
+                <button type="submit" class="btnSubmit">Submit Post</button>
+                <button type="reset" class="btnCancel" id="btnCancel" onclick="cancelPost()">Cancel</button>
+            </div>
         </div>
 
         <div class="container-right" id="image-display-right">
@@ -257,10 +269,10 @@ background-color:rgb(199 244 249 / 40%);
         </div>
         
 
-        <div class="buttons">
+        <!-- <div class="buttons">
             <button type="submit" class="btnSubmit">Submit Post</button>
             <button type="reset" class="btnCancel" id="btnCancel" onclick="cancelPost()">Cancel</button>
-        </div>
+        </div> -->
     </form>
     </div>
 </div>
@@ -442,6 +454,9 @@ background-color:rgb(199 244 249 / 40%);
         if (tagNotification) {
             tagNotification.remove(); // Remove notification if canceled
         }
+        document.getElementById('image-display').style.display = "none";
+        document.querySelector('.svg-element').style.display = 'block';
+        document.getElementById("image-display-right").style.display = "none";
     }
 
     // Function to handle clearing the input and deselecting all tags
