@@ -1,15 +1,99 @@
 {% extends "staff_pages/staff_base.html" %}
 
-
 {% block content %}
+<style>
+    .right {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 2px solid rgb(42, 174, 188);
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+
+    .right h1 {
+        color: rgb(42, 174, 188);
+        margin-bottom: 20px;
+    }
+
+    form label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    form input[type="file"] {
+        padding: 10px;
+        border: 2px solid rgb(42, 174, 188);
+        border-radius: 5px;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    form button {
+        background-color: rgb(42, 174, 188);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    form button:hover {
+        background-color: rgb(32, 154, 168);
+    }
+
+    {% comment %} ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+    }
+
+    ul li {
+        background-color: rgb(42, 174, 188);
+        color: #fff;
+        padding: 10px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+    } {% endcomment %}
+
+    .loader {
+        display: none;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid rgb(42, 174, 188);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
 <div class="right">
     <h1>Upload Excel File</h1>
-    <form method="POST" enctype="multipart/form-data" action="">
+    <form method="POST" enctype="multipart/form-data" action="" id="upload-form">
         {% csrf_token %}
         <label for="file">Choose an Excel File:</label>
-        <input type="file" name="file" id="file" accept=".xlsx, .xls">
+        <input type="file" name="file" id="file" accept=".xlsx, .xls" required>
         <button type="submit">Upload</button>
     </form>
+
+    <div class="loader" id="loader"></div>
+
     {% if messages %}
         <ul>
             {% for message in messages %}
@@ -17,6 +101,14 @@
             {% endfor %}
         </ul>
     {% endif %}
-
 </div>
+
+<script>
+    const form = document.getElementById('upload-form');
+    const loader = document.getElementById('loader');
+
+    form.addEventListener('submit', () => {
+        loader.style.display = 'block';
+    });
+</script>
 {% endblock content %}
