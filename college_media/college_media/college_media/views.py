@@ -215,30 +215,85 @@ def like_post(request, post_id):
     })
 
 #code for comments
+def get_comments(request, post_id):
+    try:
+        post = Post.objects.get(id=post_id)
+        comments = post.comments.select_related('student').values(
+            'student__name', 'student__roll_number', 'content', 'created_at'
+        )
+        return JsonResponse({'status': 'success', 'comments': list(comments)})
+    except Post.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Post not found'}, status=404)
 
-@login_required
-def submit_comment(request, post_id):
+import json
+from django.views.decorators.csrf import csrf_exempt
+# Add a new comment
+@csrf_exempt
+def add_comment(request):
     if request.method == 'POST':
-        content = request.POST.get('content')
-        post = get_object_or_404(Post, id=post_id)
-        
-        # Save the new comment
-        comment = Comment.objects.create(post=post, student=request.user, content=content)
-        
-        # Return the new comment data as JSON response
+        try:
+            print("Request Body:", request.body)  # Debug
+            data = json.loads(request.body)
+            print("Parsed Data:", data)  # Debug
+        except json.JSONDecodeError as e:
+            print("JSON Decode Error:", str(e))  # Debug
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
+
+        if not all(key in data for key in ('post_id', 'student_id', 'content')):
+            print("Missing keys in data:", data)  # Debug
+            return JsonResponse({'status': 'error', 'message': 'Missing fields'}, status=400)
+
+        try:
+            post = Post.objects.get(id=data['post_id'])
+            student = Student.objects.get(id=data['student_id'])
+        except Post.DoesNotExist:
+            print("Post not found for ID:", data['post_id'])  # Debug
+            return JsonResponse({'status': 'error', 'message': 'Post not found'}, status=404)
+        except Student.DoesNotExist:
+            print("Student not found for ID:", data['student_id'])  # Debug
+            return JsonResponse({'status': 'error', 'message': 'Student not found'}, status=404)
+
+        # Save comment
+        comment = Comment.objects.create(post=post, student=student, content=data['content'])
         return JsonResponse({
-            'success': True,
-            'student_name': comment.student.name,
-            'content': comment.content,
-            'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M:%S')
+            'status': 'success',
+            'comment': {
+                'student_name': student.name,
+                'student_roll_number': student.roll_number,
+                'content': comment.content,
+                'created_at': comment.created_at.isoformat(),
+            }
         })
 
-@login_required
-def get_comments(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-    comments = post.comments.order_by('-created_at').values('student__name', 'content', 'created_at')
-    
-    return JsonResponse(list(comments), safe=False)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=400)
+
+def get_post_with_comments(request, post_id):
+    try:
+        post = Post.objects.get(id=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Post not found'}, status=404)
+
+    comments = post.comments.all().order_by('-created_at')  # Fetch related comments
+    comments_data = [
+        {
+            'student_name': comment.student.name,
+            'student_roll_number': comment.student.roll_number,
+            'content': comment.content,
+            'created_at': comment.created_at.isoformat(),
+        }
+        for comment in comments
+    ]
+    return JsonResponse({
+        'status': 'success',
+        'post': {
+            'id': post.id,
+            'image_url': post.image.url,
+            'student_name': post.student.name,
+            'student_roll_number': post.student.roll_number,
+        },
+        'comments': comments_data,
+    })
+
 
 def deletepost(request,post_id):
     posts=Post.objects.get(id=post_id)
