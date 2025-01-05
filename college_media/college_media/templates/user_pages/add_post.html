@@ -580,37 +580,6 @@ fill:white;
         console.log("Form submitted with tags:", hiddenTagsInput.value);
     });
 
-    {% comment %} const socket = new WebSocket('ws://localhost:8000/ws/messages/');
-
-    socket.onopen = () => {
-        console.log('WebSocket connection established');
-    };
-
-    socket.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        const messageContainer = document.getElementById('message-container');
-        const newMessage = document.createElement('li');
-        newMessage.textContent = `Message from ${data.sender.roll_number} to ${data.recipient} and messege is  ${data.message}`;
-        messageContainer.appendChild(newMessage);
-    };
-
-    socket.onclose = () => {
-        console.log('WebSocket connection closed');
-    };
-
-    document.getElementById('send-message-btn').addEventListener('click', () => {
-        const message = document.getElementById('message').value;
-        const payload = {
-            sender_id: senderId,
-            tags: selectedTags,
-            message: message,
-        };
-        socket.send(JSON.stringify(payload));
-        console.log('Message sent:', payload);
-
-        // Clear selected tags and message after sending
-
-    }); {% endcomment %}
 
 </script>
 {% endblock content %}

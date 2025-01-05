@@ -232,28 +232,29 @@ from django.views.decorators.csrf import csrf_exempt
 def add_comment(request):
     if request.method == 'POST':
         try:
-            print("Request Body:", request.body)  # Debug
-            data = json.loads(request.body)
-            print("Parsed Data:", data)  # Debug
+            print("Request Body:", request.body)  # Debugging line: log the request body
+            data = json.loads(request.body)  # Parse the incoming JSON data
+            print("Parsed Data:", data)  # Debugging line: log the parsed data
         except json.JSONDecodeError as e:
-            print("JSON Decode Error:", str(e))  # Debug
+            print("JSON Decode Error:", str(e))  # Debugging line: log JSON decode errors
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
 
+        # Ensure required fields are in the request data
         if not all(key in data for key in ('post_id', 'student_id', 'content')):
-            print("Missing keys in data:", data)  # Debug
+            print("Missing keys in data:", data)  # Debugging line: log missing keys
             return JsonResponse({'status': 'error', 'message': 'Missing fields'}, status=400)
 
         try:
-            post = Post.objects.get(id=data['post_id'])
-            student = Student.objects.get(id=data['student_id'])
+            post = Post.objects.get(id=data['post_id'])  # Get the Post object
+            student = Student.objects.get(id=data['student_id'])  # Get the Student object
         except Post.DoesNotExist:
-            print("Post not found for ID:", data['post_id'])  # Debug
-            return JsonResponse({'status': 'error', 'message': 'Post not found'}, status=404)
+            print(f"Post not found for ID: {data['post_id']}")  # Debugging line: log Post not found
+            return JsonResponse({'status': 'error', 'message': f'Post with ID {data["post_id"]} not found'}, status=404)
         except Student.DoesNotExist:
-            print("Student not found for ID:", data['student_id'])  # Debug
-            return JsonResponse({'status': 'error', 'message': 'Student not found'}, status=404)
+            print(f"Student not found for ID: {data['student_id']}")  # Debugging line: log Student not found
+            return JsonResponse({'status': 'error', 'message': f'Student with ID {data["student_id"]} not found'}, status=404)
 
-        # Save comment
+        # Save the new comment in the database
         comment = Comment.objects.create(post=post, student=student, content=data['content'])
         return JsonResponse({
             'status': 'success',
