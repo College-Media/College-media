@@ -106,16 +106,21 @@ def tags(request):
     for tag in tags:
         if tag.tag not in unique_tags:
             unique_tags[tag.tag] = tag
-
+    print("UNIQUE TAGS:",unique_tags)
+    only_tags=[]
+    for i in unique_tags:
+        only_tags.append(i)
+        print(only_tags)
     # Convert unique tags dictionary to a list of Tag objects
     unique_tags_list = list(unique_tags.values())
     print(unique_tags_list)
-    return render(request, 'user_pages/user_tags.html', {'tags': unique_tags_list})
+    taged_persons=Tag.objects.filter(tag__in=only_tags )
+    print("_________________________________________________")
+    print("total persons",taged_persons)
+    return render(request, 'user_pages/user_tags.html', {'tags': unique_tags_list,'taged_persons':taged_persons})
 
 def delete_tag(request, tag_id):
     tag = get_object_or_404(Tag, id=tag_id)
-    
-    
     if request.method == 'POST':
         if 'new_tag' in request.POST:
             new_tag_value = request.POST['new_tag']
@@ -160,12 +165,19 @@ def tag_messages_load(request,tag):
     # Convert unique tags dictionary to a list of Tag objects
     unique_tags_list = list(unique_tags.values())
     print(unique_tags_list)
-    
+    taged_persons=Tag.objects.filter(tag__in=unique_tags_list )
+    print("_________________________________________________")
+    print(taged_persons)
     tag_messeges=TagMessage.objects.filter(tag=tag)
     print("_________________________________________")
-    
+    for tag in unique_tags_list:
+        print("TAG is:",tag)
+        for person in taged_persons:
+         
+            if tag.tag == person.tag:
+                print("TAGGED PERSON IS:",person.tag_person)
     print(tag_messeges)
-    return render(request, 'user_pages/tag-messages.html', {'tags': unique_tags_list,'tag_messeges':tag_messeges,'tag':main_tag})
+    return render(request, 'user_pages/tag-messages.html', {'tags': unique_tags_list,'tag_messeges':tag_messeges,'tag':main_tag,})
 
 def multi_tag_messeges(request):
     roll_number=request.user
@@ -181,3 +193,12 @@ def multi_tag_messeges(request):
     unique_tags_list = list(unique_tags.values())
     print(unique_tags_list)
     return render(request, 'user_pages/multi_tag_messeges.html', {'tags': unique_tags_list})
+
+def delete_person(request, tag_id):
+    tag = get_object_or_404(Tag, id=tag_id)
+    if request.method == 'POST':
+            Tag.objects.get(id=tag_id).delete()
+            print("deletd tag will be")
+            print(tag.tag_person)
+            messages.success(request,"{} is deleted successfully".format(tag.tag_person),extra_tags="tag_deleted")
+    return redirect('tags') 
