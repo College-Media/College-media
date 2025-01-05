@@ -273,26 +273,32 @@ def get_post_with_comments(request, post_id):
     except Post.DoesNotExist:
         return JsonResponse({'status': 'error', 'message': 'Post not found'}, status=404)
 
-    comments = post.comments.all().order_by('-created_at')  # Fetch related comments
+    # Fetch comments with related student data
+    comments = post.comments.select_related('student').all().order_by('-created_at')
+   
     comments_data = [
         {
-            'student_name': comment.student.name,
-            'student_roll_number': comment.student.roll_number,
-            'content': comment.content,
-            'created_at': comment.created_at.isoformat(),
+            'student_name': comment.student.name,  # Fetch the student's name
+            'student_roll_number': comment.student.roll_number,  # Fetch the student's roll number
+            'content': comment.content,  # Comment content
+            'created_at': comment.created_at.isoformat(),  # Timestamp
         }
         for comment in comments
+        
     ]
+
     return JsonResponse({
         'status': 'success',
         'post': {
             'id': post.id,
-            'image_url': post.image.url,
+            'image_url': post.image.url if post.image else None,  # Handle missing images gracefully
             'student_name': post.student.name,
             'student_roll_number': post.student.roll_number,
         },
-        'comments': comments_data,
+        "comments": comments_data
+    
     })
+
 
 
 def deletepost(request,post_id):
