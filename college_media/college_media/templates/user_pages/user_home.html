@@ -225,7 +225,7 @@ html {
     </div>
     <div class="add-comment" style="margin-top: 20px;">
         <input type="text" id="new-comment" placeholder="Add a comment" style="width: 80%; padding: 10px; margin-right: 10px;" />
-        <button onclick="addComment('{{ post.id }}')" style="padding: 10px;">Post Comment</button>
+        <button onclick="addComment('{{ post.id }}', {{ student.id }})" style="padding: 10px;">Post Comment</button>
     </div>
 </div>      
         </div>
@@ -248,6 +248,10 @@ html {
         }
     }
     
+    function getCSRFToken() {
+        const csrfCookie = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
+        return csrfCookie ? csrfCookie.split('=')[1] : null;
+    }
     
 
     history.scrollRestoration = "manual"; // Prevents automatic scroll restoration
@@ -387,7 +391,7 @@ function showComment(postId, imageUrl, studentName, rollNumber) {
     const postImg = document.getElementById('post-img');
     const commentsContainer = document.getElementById('comments-container');
     const commentsDisplay = document.getElementById('comments-display');
-    const ws = new WebSocket(`ws://${window.location.host}/ws/comments/${postId}/`);
+
     // Set post details
     profileName.textContent = `${studentName} (${rollNumber})`;
     postImg.src = imageUrl;
@@ -412,38 +416,6 @@ function showComment(postId, imageUrl, studentName, rollNumber) {
 
     // Show the comment section
     commentsDisplay.style.display = 'block';
-    ws.onmessage = function(event) {
-        const data = JSON.parse(event.data);
-        console.log('Message received from WebSocket:', data);
-        const commentDiv = document.createElement("div");
-
-        const user = data.user === "{{ user.username }}" ? "You" : data.user;
-        const connectionMessage = document.createElement("div");
-    connectionMessage.innerHTML = `<strong>${user}:</strong> ${data.content}`;
-    document.getElementById("comments-container").appendChild(connectionMessage);
-    };
-
-    // Function to send the comment to the WebSocket
-    
-}
-function addComment(postId) {
-    const commentContent = document.getElementById("new-comment").value;
-    studentId='{{ request.user.roll_number }}';
-    if (commentContent.trim() !== "") {
-        // Send the message to WebSocket with post_id and student_id
-        const message = {
-            content: commentContent,
-            post_id: postId,
-            student_id: studentId
-        };
-        console.log(message)
-
-        // Send comment content to the WebSocket
-        ws.send(JSON.stringify(message));
-
-        // Clear the input field
-        document.getElementById("new-comment").value = "";
-    }
 }
 
 // Close the comment section
@@ -453,17 +425,44 @@ function closeComments() {
 }
 
 // Add a new comment
+function addComment(postId, studentId) {
+    const newCommentInput = document.getElementById('new-comment');
+    const newComment = newCommentInput.value.trim();
 
+    if (newComment) {
+        fetch('/comments/add/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken(), // Ensure the token is passed here
+            },
+            body: JSON.stringify({
+                post_id: postId,
+                student_id: studentId,
+                content: newComment,
+            }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => console.log('Comment added:', data))
+            .catch(error => console.error('Error adding comment:', error));
+        
+        
+    } else {
+        alert("Comment cannot be empty!");
+    }
+}
 
 // Helper: Get CSRF token
 function getCSRFToken() {
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     return csrfToken;
 }
-//---------------------------------------------------------------------------------------//
-{% comment %} const ws = new WebSocket(`ws://${window.location.host}/ws/comments/`); {% endcomment %}
 
-    // On WebSocket message received, display the comment in the comments box
-    
+
 </script>
 {% endblock content %}

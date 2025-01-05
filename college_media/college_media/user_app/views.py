@@ -31,10 +31,7 @@ def add_post(request):
     for tag in tags:
         if tag.tag not in unique_tags:
             unique_tags[tag.tag] = tag
-
-    # Convert unique tags dictionary to a list of Tag objects
     unique_tags_list = list(unique_tags.values())
-    print(unique_tags_list)
     if request.method=='POST':
         body=request.POST['body']
         img=request.FILES['img']
@@ -43,7 +40,10 @@ def add_post(request):
         print(selected_tags)
         user=request.user
         student_instence=get_object_or_404(Student, user=user)
-        post=Post.objects.create(student=student_instence,content=body,image=img ,is_approved=False)
+        post=Post.objects.create(student=student_instence,content=body,image=img ,is_approved=False) #my required thing
+
+
+
         post.save()
         tags = [tag.strip() for tag in selected_tags.split(",") if tag.strip()]
         unique_tags = set(tags) 
@@ -72,8 +72,9 @@ def add_post(request):
 
         messages.success(request, "Post sent for verification and notifications have been sent!",extra_tags='post_sent')
         return redirect('/user_dash/add_post')    
-
     return render(request, "user_pages/add_post.html", {'tags': unique_tags_list})
+
+
 def user_profile(request):
     user=request.user
     student_info=Student.objects.get(user=user) 
