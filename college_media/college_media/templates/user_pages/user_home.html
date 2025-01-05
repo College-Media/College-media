@@ -401,7 +401,7 @@ function showComment(postId, imageUrl, studentName, rollNumber) {
                 data.comments.forEach(comment => {
                     const commentElement = document.createElement('div');
                     commentElement.className = "comment-item";
-                    commentElement.textContent = `${comment.student__name} (${comment.student__roll_number}): ${comment.content}`;
+                    commentElement.textContent = `${comment.student_name} (${comment.student_roll_number}): ${comment.content}`;
                     commentsContainer.appendChild(commentElement);
                 });
             } else {
@@ -465,38 +465,6 @@ function addComment(postId, studentId) {
 function getCSRFToken() {
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     return csrfToken;
-}
-function showPostWithComments(postId) {
-    fetch(`/posts/${postId}/comments/`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.status === 'success') {
-                const postContainer = document.getElementById('post-container');
-                postContainer.innerHTML = `
-                    <h3>${data.post.student_name} (${data.post.student_roll_number})</h3>
-                    <img src="${data.post.image_url}" alt="Post Image">
-                    <div id="comments-container">
-                        ${data.comments.map(comment => `
-                            <div class="comment-item">
-                                <strong>${comment.student_name} (${comment.student_roll_number}):</strong>
-                                ${comment.content}
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-            } else {
-                alert('Failed to load post: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error("Error loading post with comments:", error);
-            alert("An error occurred. Please try again.");
-        });
 }
 
 
