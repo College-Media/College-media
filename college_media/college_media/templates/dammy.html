@@ -1,4 +1,4 @@
- {% extends "user_pages/base.html" %}
+{% extends "user_pages/base.html" %}
 {% block style %}
 body {
     font-family: Arial, sans-serif;
@@ -192,3 +192,42 @@ button:hover {
     </div>
 </div>
 {% endblock content %} 
+function addComment(postId, studentId) {
+    const newCommentInput = document.getElementById('new-comment');
+    const newComment = newCommentInput.value.trim();
+
+    if (newComment) {
+        fetch('/comments/add/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken(),
+            },
+            body: JSON.stringify({
+                post_id: postId,
+                student_id: studentId,
+                content: newComment,
+            }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    console.log("Comment added:", data);
+                } else {
+                    alert(`Error: ${data.message}`);
+                }
+            })
+            .catch(error => {
+                console.error("Error adding comment:", error);
+                alert("An error occurred. Please try again.");
+            });
+        
+    } else {
+        alert("Comment cannot be empty!");
+    }
+}
