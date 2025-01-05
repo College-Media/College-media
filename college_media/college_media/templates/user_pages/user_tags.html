@@ -223,13 +223,20 @@ fill:#c91919;
       </div>
 
       <div class="tag-body-p" id="tag-person-{{ tag.id }}">
-
+        console.log({{tag.id}})
         <!-- for loop for tags -->
+        {% for person in taged_persons%}
+         <!-- Assuming `name` is a field in the `Student` model -->
+        {% if tag.tag == person.tag %}
+        
+        
+        
         <div class="tagged-people-list">
-          <div>Person name</div>
+          <div>{{ person.tag_person }}</div>
           <div class="delete-tag-person">
-            <form method="post" action="{% url 'delete_tag' tag.id %}" style="display:inline;">
+            <form method="post" action="{% url 'delete_person' person.id %}" style="display:inline;">
               {% csrf_token %}
+              console.log({{person.id}})
               <button type="submit" class="delete"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
                   viewBox="0 -960 960 960" width="24px" fill="#EA3323">
                   <path
@@ -238,19 +245,8 @@ fill:#c91919;
             </form>
           </div>
         </div>
-        <div class="tagged-people-list">
-          <div>Person name</div>
-          <div class="delete-tag-person">
-            <form method="post" action="{% url 'delete_tag' tag.id %}" style="display:inline;">
-              {% csrf_token %}
-              <button type="submit" class="delete"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                  viewBox="0 -960 960 960" width="24px" fill="#EA3323">
-                  <path
-                    d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
-                </svg></button>
-            </form>
-          </div>
-        </div>
+        {% endif %}
+        {% endfor %}
 
         <!-- for loop for tags -->
 

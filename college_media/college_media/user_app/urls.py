@@ -11,6 +11,7 @@ urlpatterns = [
     path('tag_messages',views.tag_messages,name="tag_messages"),
     path('tag_messages/<str:tag>/', views.tag_messages_load, name='tag_messages_load'), 
     path('multi_tag_messeges',views.multi_tag_messeges,name='multi_tag_messeges'),
+    path('tag/delete_person/<int:tag_id>/', views.delete_person, name='delete_person'),
     
     
 ]
