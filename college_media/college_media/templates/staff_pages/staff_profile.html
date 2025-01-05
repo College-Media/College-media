@@ -306,7 +306,7 @@ z-index: 1002;
 
 #editPostForm,
 #editProfileForm {
-display: none;
+
 position: fixed;
 top: 50%;
 left: 50%;
@@ -323,7 +323,9 @@ width: 350px;
 text-align: center;
 border-radius: 8px;
 }
-
+#editProfileForm {
+    display: none;
+    }
 .closeBtn {
 position: absolute;
 top: 5px;
@@ -359,24 +361,41 @@ background-color: rgba(88, 6, 113, 0.91);
 color: white;
 }
 
-#post-edit-action-table,
+
 #profile-edit-pic-table {
-
-width: 100%;
-cursor: pointer;
-position: fixed;
-
-border-top-left-radius: 10px;
-border-top-right-radius: 10px;
-background-color: white;
-bottom: 0;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-z-index: 1003;
-margin-left: 0;
-transition: height 0.5s ease-out;
-
-}
+    display:none;
+    width: 100%;
+    cursor: pointer;
+    position: fixed;
+    
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: white;
+    bottom: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+    z-index: 1003;
+    margin-left: 0;
+    transition: height 0.5s ease-out;
+    
+    }
+    #post-edit-action-table {
+    
+    width: 100%;
+    cursor: pointer;
+    position: fixed;
+    
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: white;
+    bottom: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+    z-index: 1003;
+    margin-left: 0;
+    transition: height 0.5s ease-out;
+    
+    }
 
 #profile-edit-pic-table ul,
 #post-edit-action-table ul {
@@ -445,13 +464,18 @@ padding: 10px;
 }
 
 .right-profile img {
-width: 80px;
-height: 80px;
+width: 90px;
+height: 90px;
+margin:0;
 }
 
 .right-profile #profile-image-placeholder-large {
-width: 80px;
-height: 80px;
+width: 90px;
+height: 90px;
+margin:0;
+}
+#editBtn1{
+    font-size: small;
 }
 }
 
@@ -789,7 +813,30 @@ content: "ℹ️";
 .message.warning::before {
 content: "⚠️";
 }
-
+.profile-update-form-in-pro{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:center;
+    border:none;
+    padding:0 5px;
+    gap:15px;
+    }
+    .profile-update-form-in-pro input[type="file"] {
+    display: none;
+    }
+    #uploadBtn{
+        display:none;
+        border: 1px solid rgb(115 215 200);
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        
+    }
+    /* Style the custom label as a button */
+    .custom-file-label:hover, #uploadBtn:hover{
+    cursor:pointer;
+    color:rgb(42, 174, 188);
+    }
+    
 {% endblock styleProfile %}
 
 
@@ -880,15 +927,15 @@ content: "⚠️";
 <div id="editProfileForm">
     <button id="closeButton" class="closeBtn">&times;</button>
     <h3>EDIT PROFILE</h3>
-    <form method="POST">
+    <form method="POST" class="main-form-for-profile-table">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="username">
         <div id="overlay2"></div>
-        <div id="profile-in-edit">
+        <div id="profile-in-edit" class="previewImg">
             {% if student_info.profile_image %}
             <img id="profile-image-edit" src="{{ student_info.profile_image.url }}" alt="Profile Picture">
             {% else %}
-            <div id="profile-image-placeholder-large">
+            <div id="profile-image-placeholder-large" class="previewImg">
                 {{ student_info.name|slice:":2"|upper }} <!-- First two letters of the student's name -->
             </div>
             {% endif %}
@@ -908,7 +955,7 @@ content: "⚠️";
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="hidden" name="form_type" value="profile_pic">
-                    <label for="img">Choose a profile image:</label>
+                    <label for="img" class="custom-file-label">Update Profile</label>
                     <input type="file" id="img" name="img" accept="image/*" required>
                     <button type="submit">Upload</button>
                 </form>
@@ -946,6 +993,44 @@ content: "⚠️";
 
 
 <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+        const fileInput = document.querySelector("#img");
+        const previewContainer = document.querySelector(".previewImg");
+        const previewImg = previewContainer.querySelector("img");
+        const uploadBtn1=document.getElementById('uploadBtn');
+        fileInput.addEventListener("change", function () {
+            const file = this.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    if (previewImg) {
+                        previewImg.src = e.target.result; // Update the existing <img> src
+                        previewImg.style.display = "block"; // Ensure the image is visible
+                    } else {
+                        // Create an <img> tag if it doesn't exist
+                        const imgElement = document.createElement("img");
+                        imgElement.src = e.target.result;
+                        imgElement.alt = "Profile Preview";
+                        imgElement.style.maxWidth = "100%";
+                        imgElement.style.borderRadius = "50%";
+                        previewContainer.innerHTML = ""; // Clear existing content
+                        previewContainer.appendChild(imgElement); // Add new <img>
+                    }
+                    uploadBtn1.style.display="block";
+                };
+
+                reader.readAsDataURL(file); // Read the file as a data URL
+            } else {
+                if (previewImg) {
+                    previewImg.style.display = "none"; // Hide the image if no file selected
+                }
+            }
+        });
+    });
+
 
     // Function to show the post details and allow the user to delete it
     function showpost(imgurl, postId) {
