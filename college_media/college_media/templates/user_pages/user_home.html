@@ -248,6 +248,10 @@ html {
         }
     }
     
+    function getCSRFToken() {
+        const csrfCookie = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
+        return csrfCookie ? csrfCookie.split('=')[1] : null;
+    }
     
 
     history.scrollRestoration = "manual"; // Prevents automatic scroll restoration
@@ -430,7 +434,7 @@ function addComment(postId, studentId) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': getCSRFToken(),
+                'X-CSRFToken': getCSRFToken(), // Ensure the token is passed here
             },
             body: JSON.stringify({
                 post_id: postId,
@@ -444,17 +448,9 @@ function addComment(postId, studentId) {
                 }
                 return response.json();
             })
-            .then(data => {
-                if (data.status === 'success') {
-                    console.log("Comment added:", data);
-                } else {
-                    alert(`Error: ${data.message}`);
-                }
-            })
-            .catch(error => {
-                console.error("Error adding comment:", error);
-                alert("An error occurred. Please try again.");
-            });
+            .then(data => console.log('Comment added:', data))
+            .catch(error => console.error('Error adding comment:', error));
+        
         
     } else {
         alert("Comment cannot be empty!");

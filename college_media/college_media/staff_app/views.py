@@ -71,8 +71,7 @@ def home(request):
     posts = Post.objects.select_related('student').order_by('?') 
     liked_by=Student.objects.get(roll_number=request.user)    
     liked_post_ids = Like.objects.filter(liked_by=liked_by).values_list('post_id', flat=True)
-    likes=Like.objects.all()
-   
+    likes=Like.objects.all()   
     return render(request,"staff_pages/staf_home.html",{'posts':posts,'liked_post_ids': set(liked_post_ids),'likes':likes})
 
 def option_student_add(request):
@@ -84,8 +83,7 @@ def staff_post_request(request):
 
 
 def approve_or_reject_post(request):
-    if request.method=="POST":
-        
+    if request.method=="POST":        
         accept= request.POST.get('accept')
         reject=request.POST.get('reject')
         
@@ -174,3 +172,5 @@ def add_students(request):
         return redirect("/staff_dash/add_students")
 
     return render(request,"staff_pages/add_multiple_student.html")
+
+# def staff_post(request):
