@@ -3,7 +3,10 @@ from channels.generic.websocket import AsyncWebsocketConsumer # type: ignore
 from django.contrib.auth import get_user_model
 from .models import  Message,Notification
 from staff_app .models import CoustomUser
-from user_app . models import Tag,TagMessage
+from user_app . models import Tag,TagMessage,Post,Comment
+import logging
+logger = logging.getLogger(__name__)
+
 from asgiref.sync import sync_to_async
 from channels.db import database_sync_to_async # type: ignore
 User = get_user_model()
@@ -226,3 +229,75 @@ class MessageConsumer(AsyncWebsocketConsumer):
             'sender': sender_data,
             'message': message,
         }))
+
+
+
+
+
+
+
+class CommentConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        # Assuming post_id is part of the URL or message data
+        self.post_id = self.scope['url_route']['kwargs']['post_id']  # You might need to pass post_id in the URL pattern
+
+        # Join the WebSocket group for the specific post
+        await self.channel_layer.group_add(
+            f"post_{self.post_id}",
+            self.channel_name
+        )
+        await self.accept()
+
+    async def disconnect(self, close_code):
+        # Leave the group when the WebSocket is closed
+        await self.channel_layer.group_discard(
+            f"post_{self.post_id}",
+            self.channel_name
+        )
+        pass
+
+    async def receive(self, text_data):
+        data = json.loads(text_data)
+        content = data['content']
+        post_id = data['post_id']
+        student_id = data['student_id']
+
+        # Get the post and student objects asynchronously
+        post = await sync_to_async(Post.objects.get)(id=post_id)
+        student = await sync_to_async(Student.objects.get)(roll_number=student_id)
+
+        # Create and save the comment asynchronously
+        comment = await sync_to_async(Comment.objects.create)(
+            post=post,
+            student=student,
+            content=content
+        )
+
+        username = await self.get_student_username(student)
+
+        # Send the new comment to the WebSocket group (broadcast to connected clients)
+        await self.channel_layer.group_send(
+            f"post_{post_id}",  # Group name
+            {
+                'type': 'comment_message',
+                'content': comment.content,
+                'user': username,
+                'comment_id': comment.id,
+            }
+        )
+
+    async def comment_message(self, event):
+        content = event['content']
+        user = event['user']
+        comment_id = event['comment_id']
+
+        # Send comment data back to WebSocket clients
+        await self.send(text_data=json.dumps({
+            'content': content,
+            'user': user,
+            'comment_id': comment_id,
+        }))
+
+    @database_sync_to_async
+    def get_student_username(self, student):
+        return student.user.username if student.user else 'Unknown User'

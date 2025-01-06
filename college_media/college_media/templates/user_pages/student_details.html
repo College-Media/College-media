@@ -138,9 +138,14 @@ font-size: large;
 color: rgb(42, 174, 188);
 text-decoration:underline;
 font-style:italic;
+
 }
 #add-tag-btn{
-color: rgb(42, 174, 188);
+  color: rgb(18 125 136);
+  border: 1px solid rgb(42, 174, 188);
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgb(232 246 249);
 }
 #add-tag-btn:hover{
 text-decoration:underline;
@@ -589,6 +594,7 @@ max-width:340px;
 max-height:450px;
 height:450px;
 margin-top: 0;
+flex:1 0 30%;
 }
 
 .disc{
@@ -869,9 +875,6 @@ flex-grow:1;
         <li><label>{{ student_info.email}}</label></li>
         <li><label>{{ student_info.name}}</label></li>
         <li><label>{{ student_info.roll_number}}</label></li>
-        <li>
-          <div id="added-tags">&dhosth</div>
-        </li>
         <li>
           <div id="add-tag-btn">Add Tag</div>
         </li>
