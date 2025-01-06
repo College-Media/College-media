@@ -223,7 +223,7 @@ fill:#c91919;
       </div>
 
       <div class="tag-body-p" id="tag-person-{{ tag.id }}">
-        console.log({{tag.id}})
+
         <!-- for loop for tags -->
         {% for person in taged_persons%}
          <!-- Assuming `name` is a field in the `Student` model -->
@@ -236,7 +236,6 @@ fill:#c91919;
           <div class="delete-tag-person">
             <form method="post" action="{% url 'delete_person' person.id %}" style="display:inline;">
               {% csrf_token %}
-              console.log({{person.id}})
               <button type="submit" class="delete"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
                   viewBox="0 -960 960 960" width="24px" fill="#EA3323">
                   <path
