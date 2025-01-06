@@ -370,6 +370,21 @@
         justify-content: center;
        
       }
+
+      .notification-link {
+        color: rgb(42, 174, 188); /* Default color */
+        text-decoration: none;    /* Optional: Remove underline */
+        font-weight: bold;        /* Optional: Make the link text bold */
+    }
+
+    .notification-link:hover {
+        color: rgb(31, 139, 150); /* Slightly darker color on hover */
+        text-decoration: underline; /* Optional: Add underline on hover */
+    }
+
+    .notification-link:visited {
+        color: rgb(34, 145, 156); /* Optional: Different color for visited links */
+    }
 {% endblock style %}
 {% block content %}
 
@@ -381,7 +396,7 @@
           {% for notification in notifications %}
           <section class="bg-neutral-50 p-4 rounded-md shadow-md hover:shadow-lg transition-shadow">
             <h2 class="text-lg font-semibold text-neutral-950">from {{notification.sender}}</h2> 
-            <p class="text-sm text-neutral-700"><a href="/view_post/{{notification.post_number}} " style="color: blue;"> {{notification.content}}</a></p>
+            <p class="text-sm text-neutral-700"><a href="/view_post/{{notification.post_number}} "  class="notification-link"> {{notification.content}}</a></p>
              
            </section> 
           {% endfor %}
