@@ -41,9 +41,6 @@ def add_post(request):
         user=request.user
         student_instence=get_object_or_404(Student, user=user)
         post=Post.objects.create(student=student_instence,content=body,image=img ,is_approved=False) #my required thing
-
-
-
         post.save()
         tags = [tag.strip() for tag in selected_tags.split(",") if tag.strip()]
         unique_tags = set(tags) 
@@ -59,9 +56,8 @@ def add_post(request):
                 Main_Notifications.objects.create(
                     sender=student_instence,
                     receiver=tag.tag_person,
-                    content=f"You have been tagged in a post: {post.content}",
+                    content=f"You have been tagged in a post: {post.id}",
                 )
-
                 # Create a TagMessage
                 TagMessage.objects.create(
                     sender=student_instence,

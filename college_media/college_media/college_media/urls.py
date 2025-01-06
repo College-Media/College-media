@@ -20,7 +20,8 @@ urlpatterns = [
 
     path('like/<int:post_id>/', views.like_post, name='like_post'), #like url 
     path('like-counts/', views.like_counts, name='like_counts'), #like url 
-
+    path('view_post/<int:post_id>/', views.view_post, name='view_post'), #view post url
+    
     path("chat",views.message,name="message"),
     path('student_details/<str:roll_number>/', views.student_detail, name='student_detail'),
     path('delete_profile_pic/', views.delete_profile_pic,name='deletepost'),# delete post 
