@@ -223,9 +223,9 @@ html {
     <div class="comments-show-area" id="comments-container" style="margin-top: 20px;">
         <!-- Comments will be dynamically added here -->
     </div>
-    <div class="add-comment" style="margin-top: 20px;">
+    <div id ="add-comment" class="add-comment" style="margin-top: 20px;">
         <input type="text" id="new-comment" placeholder="Add a comment" style="width: 80%; padding: 10px; margin-right: 10px;" />
-        <button onclick="addComment('{{ post.id }}', {{ student.id }})" style="padding: 10px;">Post Comment</button>
+        <button onclick="addComment('{{ post.id }}')" style="padding: 10px;">Post Comment</button>
     </div>
 </div>      
         </div>
@@ -423,46 +423,70 @@ function closeComments() {
     const commentsDisplay = document.getElementById('comments-display');
     commentsDisplay.style.display = 'none';
 }
-
-// Add a new comment
-function addComment(postId, studentId) {
-    const newCommentInput = document.getElementById('new-comment');
-    const newComment = newCommentInput.value.trim();
-
-    if (newComment) {
-        fetch('/comments/add/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCSRFToken(), // Ensure the token is passed here
-            },
-            body: JSON.stringify({
-                post_id: postId,
-                student_id: studentId,
-                content: newComment,
-            }),
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => console.log('Comment added:', data))
-            .catch(error => console.error('Error adding comment:', error));
-        
-        
-    } else {
-        alert("Comment cannot be empty!");
-    }
-}
-
-// Helper: Get CSRF token
 function getCSRFToken() {
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     return csrfToken;
 }
+socket = new WebSocket('ws://' + window.location.host + '/ws/comments/');
+function addComment(postId) {
+    // Ensure the WebSocket connection is established only once
+        
+        // Get the student ID from the Django template (this should be passed from the backend)
+        const studentId = '{{ request.user.roll_number }}';
 
+        // Establish WebSocket connection (only once)
+        
 
+        socket.onopen = function(e) {
+            console.log('WebSocket connection established!');
+        };
+
+        socket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            const content = data.content;
+            const user = data.user;
+            const commentId = data.comment_id;
+
+            // Create a new comment card dynamically
+            
+        };
+
+        socket.onerror = function(e) {
+            console.log('WebSocket error: ', e);
+        };
+
+        socket.onclose = function(e) {
+            console.log('WebSocket closed unexpectedly');
+        };
+    
+
+    // Get the comment content from the input field
+    const commentContent = document.getElementById('new-comment').value;
+
+    // If the comment is not empty, send it to the server
+    if (commentContent.trim() !== '') {
+        const message = {
+            'content': commentContent,
+            'post_id': postId,
+            'student_id': '{{ request.user.roll_number }}'  // Get the logged-in student's ID
+        };
+        console.log('Sending comment:', message);
+        // Send the comment data to the WebSocket server
+        socket.send(JSON.stringify(message));
+        const commentCard = document.createElement('div');
+            commentCard.classList.add('comment-card');
+            commentCard.innerHTML = `
+                <div class="content">${commentContent}</div>
+                <div class="user">${studentId}</div>
+            `;
+
+            // Append the comment card to the comment section
+            document.getElementById('comments-container').appendChild(commentCard);
+        // Clear the input field after sending the comment
+        document.getElementById('new-comment').value = '';
+    } else {
+        console.log('Comment cannot be empty.');
+    }
+}
 </script>
 {% endblock content %}
