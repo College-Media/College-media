@@ -36,27 +36,22 @@ def add_post(request):
         body=request.POST['body']
         img=request.FILES['img']
         selected_tags=request.POST.get('selected_tags')
-        print("-------------------------------------------------------------------")
-        print(selected_tags)
         user=request.user
         student_instence=get_object_or_404(Student, user=user)
         post=Post.objects.create(student=student_instence,content=body,image=img ,is_approved=False) #my required thing
         post.save()
         tags = [tag.strip() for tag in selected_tags.split(",") if tag.strip()]
         unique_tags = set(tags) 
-        print(tags)
         for tag_name in unique_tags:
-            print("comes inside the loop")
             tags = Tag.objects.filter(tag=tag_name, tag_given_by=roll_number)
             print(tags)
             for tag in tags:
                 # Notify the tag_person
-                print("sender{} receiver:{} ".format(student_instence,tag.tag_person))
-                print("comes inside if ")
                 Main_Notifications.objects.create(
                     sender=student_instence,
                     receiver=tag.tag_person,
-                    content=f"You have been tagged in a post: {post.id}",
+                    content=f"You have been tagged in a post: {post.content}",
+                    post_id=post.id
                 )
                 # Create a TagMessage
                 TagMessage.objects.create(

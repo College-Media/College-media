@@ -381,7 +381,7 @@
           {% for notification in notifications %}
           <section class="bg-neutral-50 p-4 rounded-md shadow-md hover:shadow-lg transition-shadow">
             <h2 class="text-lg font-semibold text-neutral-950">from {{notification.sender}}</h2> 
-            <p class="text-sm text-neutral-700"><a href="/view_post/{}"> {{notification.content}}</a></p>
+            <p class="text-sm text-neutral-700"><a href="/view_post/{{notification.post_id}}"> {{notification.content}}</a></p>
              
            </section> 
           {% endfor %}
