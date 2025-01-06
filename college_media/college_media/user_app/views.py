@@ -51,7 +51,7 @@ def add_post(request):
                     sender=student_instence,
                     receiver=tag.tag_person,
                     content=f"You have been tagged in a post: {post.content}",
-                    post_id=post.id
+                    post_number=post.id,
                 )
                 # Create a TagMessage
                 TagMessage.objects.create(

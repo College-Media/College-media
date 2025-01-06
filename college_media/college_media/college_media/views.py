@@ -344,4 +344,4 @@ def notification(request):
 
 def view_post(request, post_id):
     post = Post.objects.get(id=post_id)
-    return render(request, 'view_post.html', {'post': post})
+    return render(request, "user_pages/view_post.html", {'post': post})

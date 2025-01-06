@@ -29,7 +29,7 @@ class Main_Notifications(models.Model):
     is_read=models.BooleanField(default=False)
     created_at=models.DateTimeField(auto_now_add=True)
     content=models.TextField(blank=True)
-    post_id=models.CharField(max_length=50,blank=True,null=True)
+    post_number=models.CharField(max_length=50,blank=True,null=True)
     
     def __str__(self) :
         return f"{self.sender}-{self.receiver}-{self.is_read}-{self.created_at}"
