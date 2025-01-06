@@ -236,25 +236,25 @@ class MessageConsumer(AsyncWebsocketConsumer):
 
 
 
+
 class CommentConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         # Assuming post_id is part of the URL or message data
-        self.post_id = self.scope['url_route']['kwargs']['post_id']  # You might need to pass post_id in the URL pattern
+        self.group_name = "comments"  # Group name can be customized
 
-        # Join the WebSocket group for the specific post
+        # Add the WebSocket connection to the group
         await self.channel_layer.group_add(
-            f"post_{self.post_id}",
+            self.group_name,
             self.channel_name
         )
-        await self.accept()
+        await self.accept()  # Accept the WebSocket connection
 
     async def disconnect(self, close_code):
-        # Leave the group when the WebSocket is closed
+        # Remove the WebSocket connection from the group upon disconnection
         await self.channel_layer.group_discard(
-            f"post_{self.post_id}",
+            self.group_name,
             self.channel_name
         )
-        pass
 
     async def receive(self, text_data):
         data = json.loads(text_data)
@@ -277,7 +277,7 @@ class CommentConsumer(AsyncWebsocketConsumer):
 
         # Send the new comment to the WebSocket group (broadcast to connected clients)
         await self.channel_layer.group_send(
-            f"post_{post_id}",  # Group name
+            self.group_name,  # Group name
             {
                 'type': 'comment_message',
                 'content': comment.content,
@@ -301,3 +301,4 @@ class CommentConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def get_student_username(self, student):
         return student.user.username if student.user else 'Unknown User'
+

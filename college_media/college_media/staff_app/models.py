@@ -30,5 +30,6 @@ class Main_Notifications(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     content=models.TextField(blank=True)
     
+    
     def __str__(self) :
         return f"{self.sender}-{self.receiver}-{self.is_read}-{self.created_at}"

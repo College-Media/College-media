@@ -5,6 +5,6 @@ websocket_urlpatterns = [
     path('ws/chat/<int:receiver_id>/', consumers.ChatConsumer.as_asgi()),
     path('ws/notification/', consumers.Notifications.as_asgi()),
     path('ws/messages/', consumers.MessageConsumer.as_asgi()),
-    path("ws/comments/<int:post_id>/",consumers.CommentConsumer.as_asgi()),
+    path("ws/comments/",consumers.CommentConsumer.as_asgi()),
     
 ]

@@ -341,3 +341,7 @@ def notification(request):
     notification=Main_Notifications.objects.filter(receiver=sender,is_read=False)
     print(notification)
     return render(request,"user_pages/user_notification.html",{"notifications":notification})
+
+def view_post(request, post_id):
+    post = Post.objects.get(id=post_id)
+    return render(request, 'view_post.html', {'post': post})
