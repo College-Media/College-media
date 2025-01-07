@@ -16,6 +16,7 @@ def home(request):
 def login_page(request):
         if request.method=="POST":
             name=request.POST.get('roll')
+            name=name.upper()
             pass1=request.POST.get('password')
             # remember=request.POST['rem']/
             request.session['remember']='1'
