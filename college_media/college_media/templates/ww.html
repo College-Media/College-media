@@ -40,7 +40,8 @@
       border-radius: 10px;
       padding: 15px;
       margin-top: 20px;
-      position: relative;
+      position: absolute;
+      z-index: 10;
     }
 
     .comment-card.active {
@@ -49,24 +50,20 @@
 
     .card-header {
       display: flex;
+      flex-direction: column;
       align-items: center;
       gap: 10px;
     }
 
     .card-header img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-    }
-
-    .card-header h4 {
-      margin: 0;
-      font-size: 18px;
-      color: #333;
+      width: 100%;
+      max-width: 350px;
+      height: auto;
+      border-radius: 10px;
     }
 
     .comments-section {
-      margin-top: 15px;
+      margin-top: 10px;
       max-height: 200px;
       overflow-y: auto;
       border-top: 1px solid #ddd;
@@ -82,10 +79,22 @@
       border-radius: 4px;
     }
 
-    .comments-section p {
+    .comment {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .comment .roll-number {
+      font-weight: bold;
+      color: rgb(42, 174, 188);
+      min-width: 60px;
+    }
+
+    .comment .message {
       font-size: 14px;
       color: #555;
-      margin-bottom: 10px;
     }
 
     .comment-input {
@@ -128,11 +137,10 @@
 
   <div class="comment-card" id="commentCard">
     <div class="card-header">
-      <img src="https://via.placeholder.com/40" alt="User">
-      <h4>User Comments</h4>
+      <img src="https://picsum.photos/400/300" alt="Random Post Image">
     </div>
     <div class="comments-section" id="commentsSection">
-      <!-- Comments will appear here -->
+      <!-- Previously added comments will appear here -->
     </div>
     <div class="comment-input">
       <input type="text" id="commentInput" placeholder="Add a comment..." />
@@ -141,25 +149,50 @@
   </div>
 
   <script>
+    const commentCard = document.getElementById('commentCard');
+
     function toggleCommentCard() {
-      const commentCard = document.getElementById('commentCard');
       commentCard.classList.toggle('active');
     }
 
     function addComment() {
+      const rollNumberInput = document.getElementById('rollNumberInput');
       const commentInput = document.getElementById('commentInput');
       const commentsSection = document.getElementById('commentsSection');
 
-      if (commentInput.value.trim() !== '') {
-        const newComment = document.createElement('p');
-        newComment.textContent = commentInput.value;
+      const rollNumber = rollNumberInput.value.trim();
+      const comment = commentInput.value.trim();
+
+      if (rollNumber !== '' && comment !== '') {
+        const newComment = document.createElement('div');
+        newComment.classList.add('comment');
+
+        const rollNumberElem = document.createElement('div');
+        rollNumberElem.classList.add('roll-number');
+        rollNumberElem.textContent = rollNumber;
+
+        const messageElem = document.createElement('div');
+        messageElem.classList.add('message');
+        messageElem.textContent = comment;
+
+        newComment.appendChild(rollNumberElem);
+        newComment.appendChild(messageElem);
         commentsSection.appendChild(newComment);
-        commentInput.value = ''; // Clear the input
+
+        rollNumberInput.value = '';
+        commentInput.value = ''; // Clear inputs
         commentsSection.scrollTop = commentsSection.scrollHeight; // Scroll to the latest comment
       } else {
-        alert('Please enter a comment!');
+        alert('Please enter both Roll Number and a comment!');
       }
     }
+
+    // Close the comment card when clicking outside of it
+    document.addEventListener('click', (event) => {
+      if (!commentCard.contains(event.target) && !event.target.matches('.comment-btn')) {
+        commentCard.classList.remove('active');
+      }
+    });
   </script>
 </body>
 </html>
