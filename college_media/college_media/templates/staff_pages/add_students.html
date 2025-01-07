@@ -231,6 +231,47 @@ margin-bottom:10px;
     background-color: green;
     color: white;
 }
+.message {
+    margin: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    flex-grow: 1;
+    padding: 0 10px;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+    height: 50px;
+    color: rgb(252, 252, 252);
+    font-weight: bold;
+    max-width: 300px;
+    background-color: rgb(16, 108, 33);
+    
+    border-radius: 10px;
+    }
+    
+    .message-red {
+    margin: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    flex-grow: 1;
+    padding: 0 10px;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+    height: 50px;
+    color: rgb(252, 252, 252);
+    font-weight: bold;
+    max-width: 300px;
+    background-color: rgb(251, 39, 46);
+    
+    border-radius: 10px;
+    }
 {% endblock style %}
 {% block content %}{% if messages %}
 {% for message in messages %}
@@ -244,8 +285,8 @@ margin-bottom:10px;
     </div>
     <div class="message-text">{{message}}</div>
 </div>
-{% elif 'tag_updated' in message.tags %}
-<div class="message">
+{% elif 'student_exists' in message.tags %}
+<div class="message-red">
     <div class="message-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960"
             width="30px" fill="white">
             <path
