@@ -254,6 +254,7 @@ html {
 </div>
 
 <script>
+    socket = new WebSocket('ws://' + window.location.host + '/ws/comments/');
     function checkAndRedirect(rollNumber, currentUsername, postUsername) {
         // Debugging logs
 
@@ -458,10 +459,11 @@ function getCSRFToken() {
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     return csrfToken;
 }
-socket = new WebSocket('ws://' + window.location.host + '/ws/comments/');
+
+
 function addComment(postId) {
     // Ensure the WebSocket connection is established only once
-        
+    
         // Get the student ID from the Django template (this should be passed from the backend)
         const studentId = '{{ request.user.roll_number }}';
 
@@ -501,9 +503,10 @@ function addComment(postId) {
             'post_id': postId,
             'student_id': '{{ request.user.roll_number }}'  // Get the logged-in student's ID
         };
-        console.log('Sending comment:', message);
+        
         // Send the comment data to the WebSocket server
         socket.send(JSON.stringify(message));
+        console.log('Sending comment:', message);
         const commentCard = document.createElement('div');
             commentCard.classList.add('comment-card');
             commentCard.innerHTML = `
