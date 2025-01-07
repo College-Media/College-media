@@ -10,7 +10,8 @@ from django.core.mail import send_mail # type: ignore
 from django.conf import settings
 # from openpyxl import load_workbook #toload excl file
 import os
-
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 # code for sending main
 def mail_send(subject,message,mail):
     recipient_list = [mail]  # The recipient’s email
@@ -33,6 +34,7 @@ def add_student(request):
         section = request.POST.get('section')
         school_name = request.POST.get('class')
         tag = request.POST.get('tag')
+        print(dob)
         
         # Check if student already exists
         s = CoustomUser.objects.filter(username=roll_num)
@@ -55,6 +57,23 @@ def add_student(request):
             )
             
             # Create tag
+            subject="College Media:You are added in college media"
+            html_content = render_to_string('email.html', {'roll_num': roll_num,'name': name,  'dob': dob})
+    
+            # Optionally, create a plain-text version for email clients that don't support HTML
+            plain_text_content = strip_tags(html_content)
+            message="Yor login is :{} and password is :{}".format(roll_num,dob)
+            mail=email
+            email_from = settings.DEFAULT_FROM_EMAIL
+            recipient_list = [email]  # The recipient’s email
+            send_mail(
+                    subject, 
+                    plain_text_content,  
+                    email_from,
+                    recipient_list,
+                    html_message=html_content  # This is required for HTML content
+                    
+                    )
             tag_giver = Student.objects.get(user=request.user)
             tag_reciver = Student.objects.get(user=user)
             Tag.objects.create(
