@@ -10,8 +10,10 @@ from django.core.mail import send_mail # type: ignore
 from django.conf import settings
 # from openpyxl import load_workbook #toload excl file
 import os
-
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 # code for sending main
+from django.db import IntegrityError
 def mail_send(subject,message,mail):
     recipient_list = [mail]  # The recipient’s email
     email_from = settings.DEFAULT_FROM_EMAIL
@@ -33,15 +35,25 @@ def add_student(request):
         section = request.POST.get('section')
         school_name = request.POST.get('class')
         tag = request.POST.get('tag')
+        print(dob)
         
-        # Check if student already exists
-        s = CoustomUser.objects.filter(username=roll_num)
-        if s:
-            messages.error(request, "Student already exists", extra_tags='student_add')
-            print("student alredy exists")
+        # Check if student with the given roll number already exists in CoustomUser
+        existing_user = CoustomUser.objects.filter(username=roll_num).exists()
+        # Check if student with the given email already exists in Student or CoustomUser
+        existing_email = CoustomUser.objects.filter(email=email).exists()
+        existing_student_email = Student.objects.filter(email=email).exists()
+
+        if existing_user:
+            messages.error(request, "A student with this roll number already exists.", extra_tags='student_exists')
+            print("Student already exists by roll number")
             return redirect("add_student")  # Redirect to the add_student page
-        else:
-            # Create new user and student
+        elif existing_email or existing_student_email:
+            messages.error(request, "A student with this email already exists.", extra_tags='student_exists')
+            print("Student already exists by email")
+            return redirect("add_student")  # Redirect to the add_student page
+
+        try:
+            # Create a new user and student
             user = CoustomUser.objects.create_user(roll_num, email, dob)
             user.roll_number = roll_num
             user.is_student = True
@@ -54,14 +66,40 @@ def add_student(request):
                 name=name, email=email, section=section, school=school_name, dob=dob
             )
             
-            # Create tag
+            # Send welcome email
+            subject = "College Media: You are added to college media"
+            html_content = render_to_string('email.html', {'roll_num': roll_num, 'name': name, 'dob': dob})
+    
+            # Optionally, create a plain-text version for email clients that don't support HTML
+            plain_text_content = strip_tags(html_content)
+            message = "Your login is: {} and your password is: {}".format(roll_num, dob)
+            mail = email
+            email_from = settings.DEFAULT_FROM_EMAIL
+            recipient_list = [email]  # The recipient’s email
+            send_mail(
+                subject, 
+                plain_text_content,  
+                email_from,
+                recipient_list,
+                html_message=html_content  # This is required for HTML content
+            )
+            
+            # Create tag relation
             tag_giver = Student.objects.get(user=request.user)
             tag_reciver = Student.objects.get(user=user)
             Tag.objects.create(
                 tag_given_by=tag_giver, tag_person=tag_reciver, tag=tag, universal=True
             )
+
+            # Success message
             print("Student added successfully")
-            messages.success(request, "Student added successfully")
+            messages.success(request, "Student added successfully", extra_tags='student_added')
+            return redirect("add_student")  # Redirect to the add_student page
+
+        except IntegrityError as e:
+            # Catch IntegrityError (e.g., if roll_number or email is duplicated)
+            messages.error(request, "An error occurred while adding the student. Please try again.", extra_tags='student_exists')
+            print("IntegrityError: ", e)
             return redirect("add_student")  # Redirect to the add_student page
 
     return render(request, "staff_pages/add_students.html")
