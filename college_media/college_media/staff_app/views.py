@@ -8,7 +8,7 @@ from django.contrib import messages # type: ignore
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail # type: ignore
 from django.conf import settings
-from openpyxl import load_workbook #toload excl file
+# from openpyxl import load_workbook #toload excl file
 import os
 
 # code for sending main

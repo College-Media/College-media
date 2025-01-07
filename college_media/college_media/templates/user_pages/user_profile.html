@@ -831,6 +831,12 @@ cursor:pointer;
 color:rgb(42, 174, 188);
 }
 
+.like-count {
+    display: block;
+    margin-top: 8px;
+    font-size: 16px;
+    color: grey;
+}
 {% endblock styleProfile %}
 
 
@@ -963,30 +969,46 @@ color:rgb(42, 174, 188);
 <div id="editPostForm">
 
     <form>
-
         <div id="overlay2"></div>
         <div id="post-in-edit-actions">
             <img id="post-img" src="" alt="Profile Picture">
+            <span id="like-count" class="like-count"></span> <!-- Added like count span -->
         </div>
-
     </form>
 
     <div id="post-edit-action-table">
-        <div><svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="grey">
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="grey">
                 <path d="M160-450v-60h640v60H160Z" />
-            </svg></div>
+            </svg>
+        </div>
         <ul>
             <li>What to do</li>
             <li id="deletePostBtn">Delete</li>
             <li id="cancelBtnP">Cancel</li>
         </ul>
     </div>
+
 </div>
 <!-- Form for post display end -->
 
 
 
 <script>
+    function updateLikeCounts() {
+        fetch('/like-counts/')
+            .then(response => response.json())
+            .then(data => {
+                // Assuming the post ID for this example is "post-img" or replace with your actual logic to fetch post ID.
+                const postId = "post-img"; 
+                const likeCountElement = document.getElementById("like-count");
+    
+                if (likeCountElement && data[postId]) {
+                    likeCountElement.innerText = `${data[postId]} likes`;
+                }
+            })
+            .catch(error => console.error('Error updating like counts:', error));
+    }
 
     document.addEventListener("DOMContentLoaded", () => {
         const fileInput = document.querySelector("#img");
@@ -1028,18 +1050,34 @@ color:rgb(42, 174, 188);
 
 
     // Function to show the post details and allow the user to delete it
-    function showpost(imgurl, postId) {
+    function showpost(imgurl, postId) { 
         const deleteButton = document.querySelector('#post-edit-action-table #deletePostBtn'); // Delete button
         const postElement = document.getElementById('post-img'); // Image element to display the selected image
+        const likeCountElement = document.getElementById('like-count'); // Like count element
+    
         postElement.src = imgurl; // Set the image in the popup
-
+    
         // Set the postId as a data attribute for the delete button
         deleteButton.setAttribute('data-post-id', postId);
-
+    
+        // Fetch and show the like count for the specific post
+        fetch('/like-counts/')
+            .then(response => response.json())
+            .then(data => {
+                // Ensure the like count is displayed for the current post
+                if (likeCountElement && data[postId] !== undefined) {
+                    likeCountElement.innerText = `${data[postId]} likes`;
+                } else {
+                    likeCountElement.innerText = '0 likes'; // Default to 0 if no data is found
+                }
+            })
+            .catch(error => console.error('Error updating like counts:', error));
+    
         // Show the popup and overlay
         document.getElementById('editPostForm').style.display = 'block';
         document.getElementById('overlay').style.display = 'block';
     }
+    
 
     // Event listener for the delete button
     document.addEventListener('DOMContentLoaded', function () {
