@@ -88,7 +88,7 @@ justify-content:center;
 <!-- width:100%;
 height:100%; -->
 }
-.btnCancel, .btnSubmit{
+#btnNext, .btnCancel, .btnSubmit{
 cursor:pointer;
 border:none;
 border-radius:10px;
@@ -104,6 +104,9 @@ font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 .btnCancel:hover, .btnSubmit:hover{
 background-color:rgb(42, 174, 188);
 
+}
+#btnNext{
+    display:none;
 }
 #imageInput {
 display:none;
@@ -157,7 +160,7 @@ padding:0px 25px;
 overflow-y:auto;
 }
 .container-right{
-display:none;
+display:none !important;
 max-width:100%;
 }
 .container-left{
@@ -170,12 +173,28 @@ max-width:90%;
 .upload-button {
 font-size: medium;
 }
+#btnNext{
+    display:block;
+    padding:10px;
+}
+
+#Submit-btn{
+    display:none;
+}
+
 }
 .tags-specify{
 display: flex;
 position: relative;
 flex-direction:column;
 margin-top: 10px;
+}
+#tag-specify-in-Mobile{
+    display:none;
+    position: relative;
+flex-direction:column;
+margin-top: 10px;
+
 }
 .tag-container {
 display: flex;
@@ -249,6 +268,7 @@ border-radius: 10px;
 .message-icon svg{
 fill:white;
 }
+
 {% endblock style %}
 
 {% block content %}
@@ -308,9 +328,29 @@ fill:white;
                     <button type="reset" class="btnCancel" id="btnCancel" onclick="cancelPost()">Cancel</button>
                 </div> -->
             </div>
+            <div class="tags-specify1" id="tag-specify-in-Mobile">
+                <label for="tags">Select Tags</label>
+                <div class="tag-container">
+                    <input type="text" class="tag-input-value" id="tag-input" name="tag"
+                        placeholder="Press & to see tags" />
+                    <div class="tag-options-list" id="tag-options-list">
+                        {% for tag in tags %}
+                        <div class="tag" data-tag="{{tag.tag}}"> &{{tag.tag}}</div>
+                        {% endfor %}
+
+
+
+                        <!-- More tags can be added here -->
+                    </div>
+                </div>
+                <!-- Notification area for tag input errors -->
+                <div id="tag-notification" style="color:red; font-size:12px;"></div>
+
+            </div>
             <div class="buttons">
                 <input type="hidden" id="selected-tags-hidden" name="selected_tags" value="">
-                <button type="submit" class="btnSubmit">Submit Post</button>
+                <button type="submit" class="btnSubmit" id="Submit-btn">Submit Post</button>
+                <div id="btnNext"  onclick="nextInPost()">Next</div>
                 <button type="reset" class="btnCancel" id="btnCancel" onclick="cancelPost()">Cancel</button>
             </div>
         </div>
@@ -517,8 +557,38 @@ fill:white;
         validateTagInput();
     });
 
+
+  
+    function nextInPost() {
+    // Prevent default form submission behavior
+    event.preventDefault();
+
+    // Get the description form container
+    const formDescription = document.querySelector('.form-container-descript');
+    const tagInMobile = document.querySelector('#tag-specify-in-Mobile');
+    const subBtn= document.querySelector('.btnSubmit');
+    const nextBtn= document.querySelector('#btnNext');
+    // Hide the form description container
+    if (formDescription) {
+        formDescription.style.display = 'none';
+        tagInMobile.style.display='flex';
+        subBtn.style.display='block';
+        nextBtn.style.display='none';
+    }
+
+    // Optionally, you can display a confirmation message or move to another part of the form
+    alert('Proceeding to the next step!');
+}
+
+
+
+
     // Function to clear selected tags (optional, for the cancel button or other use cases)
     function cancelPost() {
+        const formDescription = document.querySelector('.form-container-descript');
+    const tagInMobile = document.querySelector('#tag-specify-in-Mobile');
+    const subBtn= document.querySelector('.btnSubmit');
+    const nextBtn= document.querySelector('#btnNext');
         selectedTags.length = 0; // Clear selected tags array
         const tags = document.querySelectorAll('.tag');
         tags.forEach(tag => {
@@ -529,6 +599,12 @@ fill:white;
         if (tagNotification) {
             tagNotification.remove(); // Remove notification if canceled
         }
+        if (formDescription) {
+        formDescription.style.display = 'block';
+        tagInMobile.style.display='none';
+        subBtn.style.display='none';
+        nextBtn.style.display='block';
+    }
         document.getElementById('image-display').style.display = "none";
         document.querySelector('.svg-element').style.display = 'block';
         document.getElementById("image-display-right").style.display = "none";
@@ -579,6 +655,8 @@ fill:white;
         hiddenTagsInput.value = selectedTags.join(','); // Join selected tags with a comma
         console.log("Form submitted with tags:", hiddenTagsInput.value);
     });
+
+
 
 
 </script>
