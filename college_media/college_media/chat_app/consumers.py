@@ -261,6 +261,11 @@ class CommentConsumer(AsyncWebsocketConsumer):
         content = data['content']
         post_id = data['post_id']
         student_id = data['student_id']
+        print("--------------------------------------------------------")
+        print("Content:", content)
+        print("Post ID:", post_id)
+        print("Student ID:", student_id)
+        
 
         # Get the post and student objects asynchronously
         post = await sync_to_async(Post.objects.get)(id=post_id)

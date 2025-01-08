@@ -145,6 +145,24 @@ column-gap:10px;
         height:160px;
     }
 }
+
+.comments-show-area::-webkit-scrollbar{
+    width:10px;
+}
+.comments-show-area span{
+  margin:5px 5%;
+  font-size:12px;
+}
+.user-comment-area{
+    padding:5px;
+    border-bottom:0.5px solid rgba(206, 203, 203, 0.474);
+}
+.label-in-comment{
+    border:1px solid black;
+    border-radius:20px;
+    width:fit-content;
+    padding:4px;
+}
 html {
     scroll-behavior: smooth;
 }
@@ -236,6 +254,7 @@ html {
 </div>
 
 <script>
+    socket = new WebSocket('ws://' + window.location.host + '/ws/comments/');
     function checkAndRedirect(rollNumber, currentUsername, postUsername) {
         // Debugging logs
 
@@ -402,10 +421,24 @@ function showComment(postId, imageUrl, studentName, rollNumber) {
         .then(data => {
             if (data.status === 'success') {
                 commentsContainer.innerHTML = ""; // Clear existing comments
+
                 data.comments.forEach(comment => {
+                    // Create a new comment element using the given HTML structure
                     const commentElement = document.createElement('div');
-                    commentElement.className = "comment-item";
-                    commentElement.textContent = `${comment.student_name} (${comment.student_roll_number}): ${comment.content}`;
+                    commentElement.className = 'user-comment-area';
+
+                    const labelElement = document.createElement('label');
+                    labelElement.className = 'label-in-comment';
+                    labelElement.textContent = comment.student_roll_number;
+
+                    const spanElement = document.createElement('span');
+                    spanElement.textContent = comment.content;
+
+                    // Append label and span to the comment container
+                    commentElement.appendChild(labelElement);
+                    commentElement.appendChild(spanElement);
+
+                    // Append the comment element to the comments container
                     commentsContainer.appendChild(commentElement);
                 });
             } else {
@@ -417,7 +450,6 @@ function showComment(postId, imageUrl, studentName, rollNumber) {
     // Show the comment section
     commentsDisplay.style.display = 'block';
 }
-
 // Close the comment section
 function closeComments() {
     const commentsDisplay = document.getElementById('comments-display');
@@ -427,10 +459,11 @@ function getCSRFToken() {
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     return csrfToken;
 }
-socket = new WebSocket('ws://' + window.location.host + '/ws/comments/');
+
+
 function addComment(postId) {
     // Ensure the WebSocket connection is established only once
-        
+    
         // Get the student ID from the Django template (this should be passed from the backend)
         const studentId = '{{ request.user.roll_number }}';
 
@@ -470,9 +503,10 @@ function addComment(postId) {
             'post_id': postId,
             'student_id': '{{ request.user.roll_number }}'  // Get the logged-in student's ID
         };
-        console.log('Sending comment:', message);
+        
         // Send the comment data to the WebSocket server
         socket.send(JSON.stringify(message));
+        console.log('Sending comment:', message);
         const commentCard = document.createElement('div');
             commentCard.classList.add('comment-card');
             commentCard.innerHTML = `
